@@ -1,0 +1,27 @@
+// Base styles and utilities
+@use "abstracts/variables" as *;
+@use "abstracts/mixins" as *;
+
+// Base framework styles
+@use "base/reset";
+@use "base/typography";
+@use "base/forms" as base-forms;
+
+// Component styles
+@use "components/navigation";
+@use "components/forms";
+@use "components/pagination";
+@use "components/comments";
+@use "components/theme-toggle";
+
+// Layout components
+@use "layout/header";
+@use "layout/hero";
+
+// WordPress theme compatibility
+@use "wordpress/wordpress";
+
+// Page-specific styles (add as needed)
+// @use "pages/home";
+// @use "pages/single";
+// @use "pages/archive";

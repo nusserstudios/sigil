@@ -1,0 +1,70 @@
+// WordPress-specific styles and compatibility fixes
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+// WordPress alignment classes
+.alignleft {
+    float: left;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+.alignright {
+    float: right;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+.aligncenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.alignwide {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.alignfull {
+    width: 100vw;
+    max-width: none;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+}
+
+// WordPress gallery styles
+.wp-block-gallery {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+// WordPress image captions
+.wp-caption {
+    max-width: 100%;
+    
+    .wp-caption-text {
+        font-size: 0.875rem;
+        color: var(--muted-color);
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+}
+
+// Screen reader text
+.screen-reader-text {
+    @include visually-hidden;
+}
+
+// WordPress embeds
+.wp-block-embed {
+    margin: var(--spacing) 0;
+    
+    iframe {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16/9;
+    }
+} 

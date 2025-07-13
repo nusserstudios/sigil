@@ -1,0 +1,57 @@
+// Site header layout
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.site-header {
+    position: relative;
+    padding-block: var(--space-2xs);
+    border-bottom: 1px solid var(--muted-border-color);
+
+    .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding-block: 0;
+    }
+    
+    .header-content {
+        @include container;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+    }
+    
+    .site-branding {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        
+        .site-title-area {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .site-title {
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.25rem;
+            color: var(--color);
+        }
+        
+        .separator {
+            color: var(--muted-color);
+        }
+        
+        .site-description {
+            font-size: 0.875rem;
+            color: var(--muted-color);
+        }
+    }
+
+    button {
+        margin-block: auto;
+    }
+} 

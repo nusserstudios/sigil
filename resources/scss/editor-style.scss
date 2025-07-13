@@ -1,0 +1,206 @@
+// Import custom settings for WordPress Editor
+@use "abstracts/variables" as *;
+
+// Import abstracts for variables and mixins
+@use "abstracts/variables" as *;
+@use "abstracts/mixins" as *;
+
+/* Editor-specific styles */
+.editor-styles-wrapper {
+  font-family: var(--font-family);
+  color: var(--color);
+  background: var(--background-color);
+  
+  /* Heading styles in editor */
+  h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: $theme-spacing-md;
+    color: var(--color);
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: $theme-spacing-sm;
+    color: var(--color);
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: $theme-spacing-sm;
+    color: var(--color);
+  }
+
+  h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: $theme-spacing-xs;
+    color: var(--color);
+  }
+
+  h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: $theme-spacing-xs;
+    color: var(--color);
+  }
+
+  h6 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: $theme-spacing-xs;
+    color: var(--color);
+  }
+
+  /* Paragraph styles */
+  p {
+    margin-bottom: $theme-spacing-sm;
+    line-height: var(--line-height);
+  }
+
+  /* List styles */
+  ul, ol {
+    margin-bottom: $theme-spacing-sm;
+    padding-left: $theme-spacing-md;
+  }
+
+  li {
+    margin-bottom: $theme-spacing-xs;
+  }
+
+  /* Block quotes */
+  blockquote {
+    margin: $theme-spacing-md 0;
+    padding: $theme-spacing-sm $theme-spacing-md;
+    border-left: 4px solid var(--primary);
+    background: var(--code-background-color);
+    font-style: italic;
+  }
+
+  /* Code blocks */
+  pre {
+    background: var(--code-background-color);
+    border-radius: var(--border-radius);
+    padding: $theme-spacing-sm;
+    overflow-x: auto;
+    margin-bottom: $theme-spacing-sm;
+  }
+
+  code {
+    background: var(--code-background-color);
+    padding: 0.125rem 0.25rem;
+    border-radius: var(--border-radius);
+    font-size: 0.875rem;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: $theme-spacing-md;
+  }
+
+  th, td {
+    padding: $theme-spacing-xs;
+    border: 1px solid var(--border-color);
+    text-align: left;
+  }
+
+  th {
+    background: var(--code-background-color);
+    font-weight: 600;
+  }
+
+  /* WordPress blocks */
+  .wp-block-group {
+    margin-bottom: $theme-spacing-md;
+  }
+
+  .wp-block-columns {
+    margin-bottom: $theme-spacing-md;
+  }
+
+  .wp-block-image {
+    margin-bottom: $theme-spacing-md;
+    
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--border-radius);
+    }
+  }
+
+  .wp-block-gallery {
+    margin-bottom: $theme-spacing-md;
+  }
+
+  .wp-block-quote {
+    margin: $theme-spacing-md 0;
+    padding: $theme-spacing-sm $theme-spacing-md;
+    border-left: 4px solid var(--primary);
+    background: var(--code-background-color);
+    font-style: italic;
+  }
+
+  .wp-block-pullquote {
+    margin: $theme-spacing-lg 0;
+    padding: $theme-spacing-md;
+    border-top: 4px solid var(--primary);
+    border-bottom: 4px solid var(--primary);
+    text-align: center;
+    font-size: 1.25rem;
+    font-style: italic;
+  }
+
+  .wp-block-button {
+    margin-bottom: $theme-spacing-sm;
+  }
+
+  .wp-block-separator {
+    margin: $theme-spacing-lg 0;
+    border: none;
+    border-top: 1px solid var(--border-color);
+  }
+
+  /* Alignment classes */
+  .alignleft {
+    float: left;
+    margin-right: $theme-spacing-md;
+    margin-bottom: $theme-spacing-sm;
+  }
+
+  .alignright {
+    float: right;
+    margin-left: $theme-spacing-md;
+    margin-bottom: $theme-spacing-sm;
+  }
+
+  .aligncenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: $theme-spacing-sm;
+  }
+
+  .alignwide {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .alignfull {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+}
+
+/* Block editor content */
+.entry-content,
+.block-editor-block-list__layout {
+  font-family: var(--font-family);
+  line-height: var(--line-height);
+} 

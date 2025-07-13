@@ -1,0 +1,76 @@
+// Theme mixins
+@use "variables" as *;
+
+// Media query mixin
+@mixin media($type, $breakpoint: null) {
+    @if $type == xs {
+        @media (min-width: $theme-breakpoint-xs) { @content; }
+    } @else if $type == sm {
+        @media (min-width: $theme-breakpoint-sm) { @content; }
+    } @else if $type == md {
+        @media (min-width: $theme-breakpoint-md) { @content; }
+    } @else if $type == lg {
+        @media (min-width: $theme-breakpoint-lg) { @content; }
+    } @else if $type == xl {
+        @media (min-width: $theme-breakpoint-xl) { @content; }
+    } @else if $type == max and $breakpoint == xs {
+        @media (max-width: #{$theme-breakpoint-xs - 1px}) { @content; }
+    } @else if $type == max and $breakpoint == sm {
+        @media (max-width: #{$theme-breakpoint-sm - 1px}) { @content; }
+    } @else if $type == max and $breakpoint == md {
+        @media (max-width: #{$theme-breakpoint-md - 1px}) { @content; }
+    } @else if $type == max and $breakpoint == lg {
+        @media (max-width: #{$theme-breakpoint-lg - 1px}) { @content; }
+    } @else if $type == max and $breakpoint == xl {
+        @media (max-width: #{$theme-breakpoint-xl - 1px}) { @content; }
+    } @else {
+        @media (min-width: $type) { @content; }
+    }
+}
+
+// Container mixin
+@mixin container($max-width: 1200px) {
+    width: 100%;
+    max-width: $max-width;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--spacing);
+    padding-right: var(--spacing);
+}
+
+// Flexbox center mixin
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// Button reset mixin
+@mixin button-reset {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+}
+
+// Visually hidden mixin (screen reader only)
+@mixin visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+// Focus outline mixin
+@mixin focus-outline($color: var(--primary-focus)) {
+    outline: 2px solid $color;
+    outline-offset: 2px;
+}

@@ -1,0 +1,28 @@
+{
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "sigil/sigil",
+    "description": "Sigil WordPress SCSS + Vite boilerplate theme.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeremy Nusser",
+            "email": "hello@nusserstudios.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "sigil\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=8.0.2",
+        "sigil/framework": "^5.0.3",
+        "automattic/jetpack-autoloader": "^2.10"
+    },
+    "config": {
+        "allow-plugins": {
+            "automattic/jetpack-autoloader": true
+        }
+    }
+}

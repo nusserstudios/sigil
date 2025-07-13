@@ -1,0 +1,25 @@
+{
+	"name": "sigil",
+	"version": "0.1.0",
+	"description": "WordPress theme with custom framework and Sass.",
+	"author": "Jeremy Nusser",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sigil/sigil"
+	},
+	"theme_uri": "https://github.com/sigil/sigil",
+	"author_uri": "https://sigil.io",
+	"text_domain": "sigil",
+	"license": "MIT",
+	"scripts": {
+		"dev": "touch .vite-dev && vite",
+		"build": "rm -f .vite-dev && vite build",
+		"build:watch": "rm -f .vite-dev && vite build --watch"
+	},
+	"devDependencies": {
+		"chokidar": "^4.0.3",
+		"sass": "^1.89.2",
+		"sass-embedded": "^1.89.2",
+		"vite": "^7.0.2"
+	}
+}

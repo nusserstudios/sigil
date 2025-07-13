@@ -1,0 +1,679 @@
+// Navigation component styles with off-canvas menu
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+// ========================================
+// MENU OVERLAY & MOBILE MENU TOGGLE
+// ========================================
+
+.menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 999;
+    opacity: 0;
+
+    &.active {
+        display: block;
+        opacity: 1;
+    }
+}
+
+body.menu-open {
+    overflow: hidden;
+}
+
+#primary-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    margin-left: auto;
+    color: inherit;
+    z-index: 997;
+
+    svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    path {
+        stroke: var(--text-color);
+    }
+
+    &:hover path {
+        stroke: var(--primary);
+    }
+}
+
+// ========================================
+// OFF-CANVAS NAVIGATION STRUCTURE
+// ========================================
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.nav-links {
+    position: static;
+    width: auto;
+    height: auto;
+    background: none;
+    padding: 0;
+    box-shadow: none;
+}
+
+.nav-close {
+    display: none;
+    position: absolute;
+    top: var(--space-2xs);
+    right: var(--space-2xs);
+    width: 31px;
+    height: 31px;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+
+    svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    path {
+        fill: var(--text-color);
+    }
+
+    &:hover path {
+        fill: var(--primary);
+    }
+}
+
+// ========================================
+// MAIN NAVIGATION STYLES
+// ========================================
+
+.main-navigation {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    ul {
+        display: flex;
+        flex-direction: row;
+        gap: var(--space-3xs);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    li {
+        position: relative;
+        list-style: none;
+        display: flex;
+        align-items: center;
+
+        a {
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+            text-decoration: none;
+            padding: var(--space-2xs) 0;
+            font-size: var(--font-base);
+            font-weight: 500;
+            position: relative;
+            white-space: nowrap;
+
+            // Hover effect with underline
+            &::after {
+                content: "";
+                position: absolute;
+                bottom: -3px;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background-color: var(--primary);
+                transform: scaleX(0);
+            }
+
+            &:hover,
+            &:focus {
+                color: var(--primary);
+
+                &::after {
+                    transform: scaleX(1);
+                }
+            }
+        }
+
+        &.active > a,
+        &.current-menu-item > a {
+            color: var(--primary);
+
+            &::after {
+                transform: scaleX(1);
+            }
+        }
+    }
+
+    // Menu items with children
+    .menu-item-has-children {
+        display: flex;
+        align-items: center;
+        gap: var(--space-4xs);
+
+        > a {
+            // No extra padding needed with flexbox
+        }
+
+        // Desktop hover behavior
+        &:hover .sub-menu {
+            display: block;
+        }
+
+        // Rotate toggle when hovering over menu item text
+        &:hover .submenu-toggle svg {
+            transform: rotate(180deg);
+        }
+
+        // Active state takes precedence - when submenu is open
+        &.active .submenu-toggle svg,
+        &.current-menu-item .submenu-toggle svg {
+            transform: rotate(180deg);
+        }
+
+        // Nested submenu items - rotate toggle when hovering over nested menu item
+        .sub-menu & {
+            &:hover .submenu-toggle svg {
+                transform: rotate(0deg);
+            }
+
+            // Active state for nested items
+            &.active .submenu-toggle svg,
+            &.current-menu-item .submenu-toggle svg {
+                transform: rotate(90deg);
+            }
+        }
+    }
+
+    // Submenu styles
+    .sub-menu {
+        display: none;
+        position: absolute;
+        top: calc(100% + 0.125rem);
+        left: 0;
+        min-width: 200px;
+        background: var(--background-color);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: var(--space-2xs) 0;
+        margin: 0;
+        z-index: 1000;
+        flex-direction: column;
+
+        &.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        // Nested submenus
+        .sub-menu {
+            top: 0;
+            left: calc(100% + var(--space-2xs));
+
+            // Handle edge detection for right side of screen
+            .edge & {
+                left: auto;
+                right: calc(100% + var(--space-2xs));
+            }
+        }
+
+        li {
+            width: 100%;
+            display: flex;
+            align-items: center;
+
+            a {
+                display: flex;
+                align-items: center;
+                padding: var(--space-4xs) var(--space-xs);
+                color: var(--text-color);
+                font-size: var(--font-sm);
+                white-space: nowrap;
+                border: none;
+                width: 100%;
+
+                &::after {
+                    display: none;
+                }
+
+                &:hover,
+                &:focus {
+                    background: var(--muted-background-color);
+                    color: var(--primary);
+                }
+            }
+        }
+
+        // Nested submenu items
+        .menu-item-has-children {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            gap: 0;
+
+            > a {
+                flex: 1;
+            }
+
+            > .submenu-toggle {
+                flex-shrink: 0;
+            }
+        }
+    }
+
+    // Submenu toggle button
+    .submenu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        flex-shrink: 0;
+
+        svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        polyline {
+            stroke: var(--muted-color);
+            stroke-width: 8;
+        }
+
+        // Hover state rotation
+        &:hover svg {
+            transform: rotate(45deg);
+        }
+
+        // Active state rotation (takes precedence over hover)
+        &.active svg {
+            transform: rotate(180deg);
+        }
+
+        // Combined hover and active state
+        &.active:hover svg {
+            transform: rotate(225deg);
+        }
+
+        &:hover polyline {
+            stroke: var(--primary);
+        }
+
+        // Nested submenu toggle
+        .sub-menu .menu-item-has-children & {
+            margin-right: var(--space-2xs);
+
+            svg {
+                transform: rotate(-90deg);
+            }
+
+            // Hover state for nested toggle
+            &:hover svg {
+                transform: rotate(-45deg);
+            }
+
+            // Active state for nested toggle
+            &.active svg {
+                transform: rotate(90deg);
+            }
+
+            // Combined hover and active state for nested toggle
+            &.active:hover svg {
+                transform: rotate(135deg);
+            }
+        }
+    }
+}
+
+// ========================================
+// FADE IN ANIMATION
+// ========================================
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// ========================================
+// MOBILE RESPONSIVE STYLES
+// ========================================
+
+@media (width <= 48rem) {
+    // Show mobile toggle and hide desktop nav
+    #primary-menu-toggle {
+        display: block;
+    }
+
+    .nav-container .main-navigation {
+        display: none;
+    }
+
+    // Off-canvas panel
+    .nav-links {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 92vw;
+        height: 100vh;
+        max-width: 95%;
+        background: var(--background-color);
+        padding: 0;
+        overflow-x: visible;
+
+        z-index: 1000;
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+
+        .main-navigation {
+            display: block;
+            width: 100%;
+            margin-top: var(--space-l);
+
+            ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                flex-direction: column;
+                gap: 0;
+            }
+
+            li {
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                &:last-child {
+                    border-bottom: none;
+                }
+
+                a {
+                    display: block;
+                    padding: var(--space-2xs);
+                    color: var(--text-color);
+                    font-weight: 500;
+                    font-size: var(--font-lg);
+                    flex: 1;
+
+                    &::after {
+                        display: none;
+                    }
+                }
+            }
+
+            // Menu items with children in mobile
+            .menu-item-has-children {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                gap: var(--space-2xs);
+
+                > a {
+                    flex: 1;
+                }
+
+                > .submenu-toggle {
+                    flex-shrink: 0;
+                    margin-right: var(--space-2xs);
+                }
+            }
+
+            // Mobile submenu styles
+            .sub-menu {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 100%;
+                width: 92vw;
+                height: 100vh;
+                background: var(--background-color);
+                padding: 0;
+                margin: 0;
+                z-index: 1001;
+                border: none;
+                border-radius: 0;
+                box-shadow: none;
+
+                &.active {
+                    display: block;
+                    animation: none;
+                }
+
+                // Back button for mobile submenus
+                .menu-back {
+                    display: block !important;
+                    margin: 0;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+                    .back-button {
+                        display: flex;
+                        align-items: center;
+                        gap: var(--space-2xs);
+                        width: 100%;
+                        padding: var(--space-2xs);
+                        color: var(--text-color);
+                        font-weight: 500;
+                        font-size: var(--font-base);
+                        background: none;
+                        border: none;
+                        cursor: pointer;
+                        text-align: left;
+
+                        svg {
+                            width: 16px;
+                            height: 16px;
+                            transform: rotate(90deg);
+                            flex-shrink: 0;
+                        }
+                    }
+                }
+
+                // Nested submenu positioning
+                .sub-menu {
+                    position: fixed;
+                    top: 0;
+                    left: 100%;
+                    width: 92vw;
+                    height: 100vh;
+                }
+
+                li {
+                    width: 100%;
+
+                    a {
+                        display: block;
+                        color: var(--text-color);
+                        font-size: var(--font-base);
+                    }
+                }
+            }
+
+            // Mobile submenu toggle
+            .submenu-toggle {
+                width: 16px;
+                height: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                svg {
+                    width: 12px;
+                    height: 12px;
+                    transform: rotate(-90deg);
+                }
+
+                polyline {
+                    stroke: var(--muted-color);
+                    stroke-width: 8;
+                }
+            }
+
+            // Mobile menu sliding behavior
+            &.submenu-active {
+                transform: translate(-100%);
+            }
+
+            .sub-menu.submenu-active {
+                transform: translate(-100%);
+            }
+        }
+    }
+
+    // Show nav-links when menu is open
+    body.menu-open .nav-links {
+        left: 0;
+    }
+
+    // Show close button in mobile
+    .nav-close {
+        display: block;
+    }
+
+    // Add back buttons to submenus
+    .main-navigation .sub-menu {
+        &::before {
+            content: "";
+            display: block;
+        }
+    }
+}
+
+// ========================================
+// DESKTOP STYLES (> 48rem)
+// ========================================
+
+@media (width > 48rem) {
+    // Hide mobile elements
+    .menu-overlay,
+    #primary-menu-toggle,
+    .menu-back,
+    .nav-close {
+        display: none !important;
+    }
+
+    // Show desktop navigation
+    .nav-container .main-navigation {
+        display: flex;
+    }
+
+    .nav-links {
+        display: contents;
+        position: static;
+        width: auto;
+        height: auto;
+        background: none;
+        padding: 0;
+        box-shadow: none;
+    }
+
+    .main-navigation {
+        ul {
+            display: flex;
+            flex-direction: row;
+            gap: var(--space-xs);
+        }
+
+        li a {
+            font-size: var(--font-base);
+        }
+
+        .sub-menu {
+            a {
+                font-size: var(--font-sm);
+                
+                &:hover {
+                    background: var(--muted-background-color);
+                    color: var(--primary);
+                }
+            }
+        }
+    }
+}
+
+// ========================================
+// ACCESSIBILITY ENHANCEMENTS
+// ========================================
+
+// Focus styles
+.main-navigation a:focus,
+.submenu-toggle:focus,
+#primary-menu-toggle:focus,
+.nav-close:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+// Screen reader text
+.screen-reader-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+// High contrast mode support
+@media (forced-colors: active) {
+    .main-navigation a:focus,
+    .submenu-toggle:focus,
+    #primary-menu-toggle:focus {
+        outline: 2px solid var(--primary);
+    }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+    .nav-links,
+    .main-navigation,
+    .sub-menu,
+    .submenu-toggle svg,
+    #primary-menu-toggle,
+    .menu-overlay {
+        transition: none !important;
+        animation: none !important;
+    }
+} 

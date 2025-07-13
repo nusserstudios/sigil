@@ -1,0 +1,245 @@
+// Typography Base Styles
+@use "../abstracts/variables" as *;
+
+// Headings
+// ========================================
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: var(--typography-spacing-vertical);
+    font-weight: 700;
+    line-height: 1.125;
+}
+
+h1 {
+    font-size: 2rem;
+    line-height: 1.125;
+    @media (min-width: $theme-breakpoint-sm) {
+        font-size: 2.5rem;
+    }
+}
+
+h2 {
+    font-size: 1.75rem;
+    line-height: 1.15;
+    @media (min-width: $theme-breakpoint-sm) {
+        font-size: 2rem;
+    }
+}
+
+h3 {
+    font-size: 1.5rem;
+    line-height: 1.175;
+    @media (min-width: $theme-breakpoint-sm) {
+        font-size: 1.75rem;
+    }
+}
+
+h4 {
+    font-size: 1.25rem;
+    line-height: 1.2;
+    @media (min-width: $theme-breakpoint-sm) {
+        font-size: 1.5rem;
+    }
+}
+
+h5 {
+    font-size: 1.125rem;
+    line-height: 1.225;
+    @media (min-width: $theme-breakpoint-sm) {
+        font-size: 1.25rem;
+    }
+}
+
+h6 {
+    font-size: 1rem;
+    line-height: 1.25;
+    @media (min-width: $theme-breakpoint-sm) {
+        font-size: 1.125rem;
+    }
+}
+
+// Paragraphs and inline text
+// ========================================
+
+p {
+    margin-top: 0;
+    margin-bottom: var(--typography-spacing-vertical);
+}
+
+address,
+blockquote,
+dl,
+figure,
+form,
+ol,
+p,
+pre,
+table,
+ul {
+    margin-bottom: var(--typography-spacing-vertical);
+}
+
+// Lists
+// ========================================
+
+ol,
+ul {
+    padding-left: var(--typography-spacing-vertical);
+    
+    li {
+        margin-bottom: calc(var(--typography-spacing-vertical) * 0.25);
+    }
+}
+
+// Links
+// ========================================
+
+a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: var(--text-underline-offset);
+    
+    &:hover {
+        color: var(--primary-hover);
+    }
+    
+    &:focus {
+        outline: var(--outline-width) solid var(--primary-focus);
+        outline-offset: var(--outline-width);
+    }
+}
+
+// Emphasis and inline formatting
+// ========================================
+
+mark {
+    padding: 0.125rem 0.25rem;
+    background-color: var(--text-selection-color);
+    border-radius: var(--border-radius);
+}
+
+ins {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+del {
+    color: var(--muted-color);
+}
+
+s {
+    color: var(--muted-color);
+}
+
+// Code and preformatted text
+// ========================================
+
+code,
+kbd,
+pre,
+samp {
+    font-family: var(--font-family-monospace);
+}
+
+code,
+kbd,
+samp {
+    font-size: 0.875em;
+    padding: 0.125rem 0.25rem;
+    border-radius: var(--border-radius);
+}
+
+code {
+    background: var(--code-background-color);
+    color: var(--color);
+    word-wrap: break-word;
+}
+
+kbd {
+    background: var(--color);
+    color: var(--background-color);
+    font-weight: bolder;
+}
+
+pre {
+    font-size: 0.875em;
+    line-height: 1.25;
+    tab-size: 2;
+    background: var(--code-background-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing);
+    overflow: auto;
+    
+    > code {
+        background: none;
+        padding: 0;
+        font-size: inherit;
+        color: inherit;
+    }
+}
+
+// Blockquotes
+// ========================================
+
+blockquote {
+    display: block;
+    margin: var(--typography-spacing-vertical) 0;
+    padding: var(--spacing);
+    border-left: 0.25rem solid var(--muted-border-color);
+    background: var(--code-background-color);
+    
+    > :first-child {
+        margin-top: 0;
+    }
+    
+    > :last-child {
+        margin-bottom: 0;
+    }
+    
+    footer {
+        margin-top: calc(var(--typography-spacing-vertical) * 0.5);
+        color: var(--muted-color);
+        font-style: normal;
+        
+        &::before {
+            content: "—";
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+// Abbreviations
+// ========================================
+
+abbr[title] {
+    border-bottom: var(--border-width) dotted var(--border-color);
+    text-decoration: none;
+    cursor: help;
+}
+
+// Superscript and subscript
+// ========================================
+
+sub,
+sup {
+    position: relative;
+    font-size: 0.75em;
+    line-height: 0;
+    vertical-align: baseline;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+sup {
+    top: -0.5em;
+}
+
+// Selection
+// ========================================
+
+::selection {
+    background-color: var(--text-selection-color);
+} 

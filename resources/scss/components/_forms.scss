@@ -1,0 +1,44 @@
+// Form component styles
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.search-form {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 300px;
+    
+    input[type="search"] {
+        flex: 1;
+        margin: 0;
+    }
+    
+    button {
+        margin: 0;
+        white-space: nowrap;
+        padding: 0.5rem;
+    }
+}
+
+// Comment form styles
+.comment-form-author,
+.comment-form-email,
+.comment-form-url {
+    input {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+}
+
+.comment-submit-btn {
+    background: var(--primary);
+    color: var(--primary-inverse);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    cursor: pointer;
+    
+    &:hover {
+        background: var(--primary-hover);
+    }
+} 

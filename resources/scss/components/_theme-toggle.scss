@@ -1,0 +1,275 @@
+/**
+ * Theme Toggle Component
+ * 
+ * Styles for light/dark mode toggle buttons
+ */
+
+// ========================================
+// THEME TOGGLE BUTTON STYLES
+// ========================================
+
+#theme-toggle {
+    position: relative;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    z-index: 999;
+    
+    // Hide on extra small screens
+    @media (max-width: 575px) {
+        display: none !important;
+    }
+    
+    // Icon styles
+    svg {
+        width: 1.25rem;
+        height: 1.25rem;
+        pointer-events: none; // Prevent clicks on SVG from interfering
+    }
+    
+    // Hover states
+    &:hover {
+        transform: scale(1.1);
+    }
+    
+    &:focus {
+        outline: 2px solid var(--primary-focus);
+        outline-offset: 2px;
+    }
+}
+
+// ========================================
+// MOBILE THEME TOGGLE STYLES
+// ========================================
+
+#mobile-theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    color: var(--color);
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: var(--border-radius);
+    
+    // Icon styles
+    svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        flex-shrink: 0;
+    }
+    
+    // Text styles
+    .toggle-text {
+        flex: 1;
+        font-weight: 500;
+    }
+    
+    // Hover states
+    &:hover {
+        background-color: var(--dropdown-hover-background-color);
+        color: var(--primary);
+    }
+    
+    &:focus {
+        outline: 2px solid var(--primary-focus);
+        outline-offset: 2px;
+    }
+}
+
+// ========================================
+// ICON VISIBILITY CONTROL
+// ========================================
+
+// Light mode: show dark icon (to switch to dark)
+:root:not(.dark) {
+    #theme-toggle-light-icon {
+        display: none;
+    }
+    
+    #theme-toggle-dark-icon {
+        display: block;
+    }
+}
+
+// Dark mode: show light icon (to switch to light)
+.dark {
+    #theme-toggle-light-icon {
+        display: block;
+    }
+    
+    #theme-toggle-dark-icon {
+        display: none;
+    }
+}
+
+// ========================================
+// THEME TOGGLE ANIMATIONS
+// ========================================
+
+#theme-toggle,
+#mobile-theme-toggle {
+    svg {
+        transition: transform 0.3s, opacity 0.3s;
+    }
+    
+    &:hover svg {
+        transform: rotate(15deg);
+    }
+    
+    &:active svg {
+        transform: scale(0.95);
+    }
+}
+
+// ========================================
+// CONTRAST BUTTON STYLES (MOBILE)
+// ========================================
+
+.contrast {
+    background: var(--card-background-color);
+    border: 1px solid var(--border-color);
+    color: var(--color);
+    
+    &:hover {
+        background: var(--dropdown-hover-background-color);
+        border-color: var(--primary);
+    }
+    
+    &:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px var(--primary-focus);
+    }
+}
+
+// ========================================
+// THEME TRANSITION SMOOTHING
+// ========================================
+
+// Smooth transitions for theme changes
+* {
+    transition: none;
+}
+
+// Prevent transitions on initial load and theme changes
+.preload,
+.preload *,
+.preload *::before,
+.preload *::after {
+    transition: none !important;
+    animation: none !important;
+    transition-delay: 0s !important;
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    transition-duration: 0s !important;
+}
+
+// Comprehensive transition prevention for theme changes
+body.preload {
+    // Universal override for all elements during theme change
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+    
+    // Specific override for link elements (handles inline styles)
+    a {
+        transition: none !important;
+    }
+    
+    // Theme toggle specific overrides
+    #theme-toggle svg,
+    #mobile-theme-toggle svg,
+    #theme-toggle-light-icon,
+    #theme-toggle-dark-icon {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+// ========================================
+// THEME TOGGLE POSITIONING
+// ========================================
+
+// Position theme toggle in header navigation
+.nav-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    #theme-toggle {
+        order: 1;
+        margin-right: 0.5rem;
+        
+        @media (min-width: 768px) {
+            order: 2;
+            margin-left: 1rem;
+            margin-right: 0.625rem;
+        }
+    }
+    
+    #primary-menu-toggle {
+        order: 2;
+        
+        @media (min-width: 768px) {
+            order: 3;
+        }
+    }
+}
+
+// Position mobile theme toggle in off-canvas menu
+.nav-links {
+    #mobile-theme-toggle {
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+        border-top: 1px solid var(--border-color);
+        padding-top: 1rem;
+    }
+}
+
+// ========================================
+// ACCESSIBILITY IMPROVEMENTS
+// ========================================
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+    #theme-toggle,
+    #mobile-theme-toggle {
+        border: 2px solid var(--border-color);
+        
+        &:focus {
+            border-color: var(--primary);
+            outline: 3px solid var(--primary-focus);
+        }
+    }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+    #theme-toggle,
+    #mobile-theme-toggle {
+        svg {
+            transition: none;
+        }
+        
+        &:hover svg {
+            transform: none;
+        }
+        
+        &:active svg {
+            transform: none;
+        }
+    }
+    
+    * {
+        transition: none !important;
+    }
+} 
