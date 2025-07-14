@@ -51,11 +51,11 @@
                 <div class="site-branding">
                     <div class="site-title-area">
                         <?php if (is_front_page() && is_home()) : ?>
-                            <h1 class="site-title">
+                            <div class="site-title">
                                 <a href="<?php echo esc_url(home_url('/')); ?>" rel="home">
                                     <?php bloginfo('name'); ?>
                                 </a>
-                            </h1>
+                            </div>
                         <?php else : ?>
                             <a href="<?php echo esc_url(home_url('/')); ?>" class="site-title" rel="home">
                                 <?php bloginfo('name'); ?>

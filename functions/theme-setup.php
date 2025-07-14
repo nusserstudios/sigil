@@ -30,10 +30,7 @@ function sigil_setup() {
         'caption',
     ]);
 
-    // Register navigation menus
-    register_nav_menus([
-        'primary' => __('Primary Menu', 'sigil'),
-    ]);
+    // Navigation menus are registered in off-canvas-menu.php
 }
 add_action('after_setup_theme', 'sigil_setup');
 

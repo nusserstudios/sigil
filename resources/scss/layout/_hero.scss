@@ -7,11 +7,10 @@
     align-items: center;
     justify-content: center;
     padding: var(--space-m) var(--spacing);
+    min-height: 50vh;
+    background: url('../../assets/images/backgrounds/ripple.svg') no-repeat center center;
     background-size: cover;
     background-position: center center;
-    min-height: 50vh;
-    background: url('/static/images/backgrounds/ripple.svg') no-repeat center center;
-    background-size: cover;
     
     .hero-content {
         text-align: center;

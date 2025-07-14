@@ -38,6 +38,32 @@
     padding-right: var(--spacing);
 }
 
+// WordPress Block Alignment Container Mixins
+@mixin align-content {
+    max-width: var(--wp--style--global--content-size);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+}
+
+@mixin align-wide {
+    max-width: var(--wp--style--global--wide-size);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+}
+
+@mixin align-full {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+}
+
 // Flexbox center mixin
 @mixin flex-center {
     display: flex;
@@ -74,3 +100,4 @@
     outline: 2px solid $color;
     outline-offset: 2px;
 }
+

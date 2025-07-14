@@ -1,0 +1,80 @@
+// WordPress Block Alignment Containers
+// Handles content, wide, and full width alignments for blocks
+
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+// Main content container
+.wp-block-post-content {
+    @include align-content;
+}
+
+// Content alignment (default)
+.align-content,
+.wp-block[data-align="center"] {
+    @include align-content;
+}
+
+// Wide alignment
+.align-wide,
+.wp-block[data-align="wide"] {
+    @include align-wide;
+}
+
+// Full width alignment
+.align-full,
+.wp-block[data-align="full"] {
+    @include align-full;
+}
+
+// Responsive adjustments for smaller screens
+@media (max-width: 768px) {
+    .align-wide,
+    .wp-block[data-align="wide"] {
+        @include align-content;
+    }
+    
+    .align-full,
+    .wp-block[data-align="full"] {
+        padding-left: var(--container-padding);
+        padding-right: var(--container-padding);
+    }
+}
+
+// Ensure blocks with alignment have proper spacing
+.wp-block {
+    &.align-content,
+    &.align-wide,
+    &.align-full {
+        margin-bottom: var(--block-spacing-vertical);
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+// Special handling for specific block types that benefit from full width
+.wp-block-image.align-full,
+.wp-block-cover.align-full,
+.wp-block-group.align-full {
+    margin-left: calc(-1 * var(--container-padding));
+    margin-right: calc(-1 * var(--container-padding));
+    width: calc(100% + (2 * var(--container-padding)));
+}
+
+// Ensure proper nesting for blocks inside containers
+.wp-block-group,
+.wp-block-columns {
+    &.align-content {
+        @include align-content;
+    }
+    
+    &.align-wide {
+        @include align-wide;
+    }
+    
+    &.align-full {
+        @include align-full;
+    }
+} 

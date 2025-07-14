@@ -71,6 +71,18 @@
     --block-spacing-horizontal: var(--spacing);
 
     // ========================================
+    // WORDPRESS BLOCK ALIGNMENT CONTAINERS
+    // ========================================
+    --wp--style--global--content-size: 840px;
+    --wp--style--global--wide-size: 1100px;
+    --container-padding: var(--spacing);
+
+    // ========================================
+    // STATIC ASSET PATHS
+    // ========================================
+    --static-path: '/static';
+
+    // ========================================
     // BORDERS & OUTLINES
     // ========================================
     --border-radius: 0.25rem;
@@ -338,4 +350,9 @@ $theme-shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23)
 $theme-z-dropdown: 100;
 $theme-z-fixed: 1000;
 $theme-z-modal: 1050;
-$theme-z-tooltip: 1070; 
+$theme-z-tooltip: 1070;
+
+// WordPress Block Alignment Containers
+$theme-content-width: var(--wp--style--global--content-size);
+$theme-wide-width: var(--wp--style--global--wide-size);
+$theme-container-padding: var(--container-padding); 

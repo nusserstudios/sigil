@@ -15,7 +15,7 @@ export default defineConfig(({ command }) => {
             cors: true,
             origin: 'http://localhost:3000',
             host: '0.0.0.0', // Allow external connections
-            https: false, // Use HTTP for dev server to avoid SSL issues
+            https: false, // Use HTTP for dev server - mixed content handled by CSP
             watch: {
                 usePolling: true,
                 interval: 100,
@@ -25,6 +25,10 @@ export default defineConfig(({ command }) => {
                 'Access-Control-Allow-Origin': 'https://sigil.test',
                 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            },
+            // Serve static assets directly from static folder in development
+            fs: {
+                allow: ['..']
             }
         },
         css: {
@@ -56,19 +60,19 @@ export default defineConfig(({ command }) => {
                         if (/\.(css)$/.test(assetInfo.name)) {
                             return 'css/[name].[hash].[ext]'
                         }
-                        // Remove image processing - images will be served from static folder
-                        // if (/\.(png|jpe?g|gif|svg|webp|avif)$/.test(assetInfo.name)) {
-                        //     return 'images/[name].[hash].[ext]'
-                        // }
+                        if (/\.(png|jpe?g|gif|svg|webp|avif|ico)$/.test(assetInfo.name)) {
+                            return 'images/[name].[hash].[ext]'
+                        }
                         if (/\.(woff2?|eot|ttf|otf)$/.test(assetInfo.name)) {
                             return 'fonts/[name].[hash].[ext]'
                         }
                         return 'assets/[name].[hash].[ext]'
                     }
                 },
-                // Exclude images from processing
+                // Only exclude large media files from processing
                 external: (id) => {
-                    return /\.(png|jpe?g|gif|svg|webp|avif)$/.test(id);
+                    // Exclude large media files that shouldn't be processed
+                    return /\.(mp4|webm|ogg|mp3|wav|pdf)$/.test(id);
                 }
             },
         },

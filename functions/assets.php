@@ -61,16 +61,13 @@ function pico_load_vite_assets() {
             return $tag;
         }, 10, 2);
         
-        // Set CSS custom properties for dev mode
+        // Dev mode setup
         add_action('wp_head', function() use ($dev_server) {
-            $theme_uri = get_template_directory_uri();
-            echo "<style>:root { --hero-bg-image: url('{$theme_uri}/ripple.svg'); }</style>\n";
             echo "<!-- Vite dev server detected at {$dev_server} -->\n";
             echo "<!-- CSS will be loaded via JavaScript module -->\n";
             echo "<!-- Scripts loaded: vite-client, pico-app-js -->\n";
-            
             // Allow mixed content for development by removing the CSP restriction
-            echo '<meta http-equiv="Content-Security-Policy" content="default-src \'self\' \'unsafe-inline\' \'unsafe-eval\' http://localhost:3000 ws://localhost:3000 data: blob:; script-src \'self\' \'unsafe-inline\' \'unsafe-eval\' http://localhost:3000; style-src \'self\' \'unsafe-inline\' http://localhost:3000; img-src \'self\' https: data: blob:; connect-src \'self\' ws://localhost:3000 http://localhost:3000;">' . "\n";
+            echo '<meta http-equiv="Content-Security-Policy" content="default-src \'self\' \'unsafe-inline\' \'unsafe-eval\' http://localhost:3000 ws://localhost:3000 data: blob:; script-src \'self\' \'unsafe-inline\' \'unsafe-eval\' http://localhost:3000; style-src \'self\' \'unsafe-inline\' http://localhost:3000; img-src \'self\' https: http: data: blob:; connect-src \'self\' ws://localhost:3000 http://localhost:3000;">' . "\n";
         });
         
         // Add debugging to footer to show HMR status
@@ -104,10 +101,10 @@ function pico_load_vite_assets() {
     } else {
         // Production mode - load built assets
         $manifest_path = get_template_directory() . '/dist/.vite/manifest.json';
+        $theme_uri = get_template_directory_uri();
         
         if (file_exists($manifest_path)) {
             $manifest = json_decode(file_get_contents($manifest_path), true);
-            $theme_uri = get_template_directory_uri();
             
             // Load CSS
             if (isset($manifest['resources/scss/app.scss']['file'])) {
@@ -136,23 +133,7 @@ function pico_load_vite_assets() {
             }
         }
         
-        // Set CSS custom properties for production mode
-        add_action('wp_head', function() use ($manifest_path, $manifest) {
-            $theme_uri = get_template_directory_uri();
-            $hero_bg_url = '';
-            
-            // Look for the hashed image file in manifest
-            if (isset($manifest['resources/images/backgrounds/ripple.svg'])) {
-                $hero_bg_url = $theme_uri . '/dist/' . $manifest['resources/images/backgrounds/ripple.svg']['file'];
-            } else {
-                // Fallback to direct path if not found in manifest
-                $hero_bg_url = $theme_uri . '/dist/images/ripple.svg';
-            }
-            
-            echo "<style>:root { --hero-bg-image: url('{$hero_bg_url}'); }</style>\n";
-            echo "<!-- Using production build from {$manifest_path} -->\n";
-            echo "<!-- Hero background: {$hero_bg_url} -->\n";
-        });
+        // Production mode - assets are handled by manifest
     }
 }
 

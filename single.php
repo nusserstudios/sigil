@@ -8,11 +8,11 @@
 get_header();
 ?>
 
-<div class="container">
+<main class="wp-block-post-content">
     <div class="single-content">
         <?php if (have_posts()): ?>
             <?php while (have_posts()): the_post(); ?>
-                <?php get_template_part('template-parts/content', 'single'); ?>
+                <?php get_template_part('inc/content', 'single'); ?>
 
                 <?php if (comments_open() || get_comments_number()): ?>
                     <?php comments_template(); ?>
@@ -20,7 +20,7 @@ get_header();
             <?php endwhile; ?>
         <?php endif; ?>
     </div>
-</div>
+</main>
 
 <?php
 get_footer();

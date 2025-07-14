@@ -32,7 +32,7 @@ get_header();
     </section>
 <?php endif; ?>
 
-<div class="container">
+<main class="wp-block-post-content">
 	<?php if (!is_singular()): ?>
 		<?php if (is_archive()): ?>
 			<header class="page-header">
@@ -100,7 +100,7 @@ get_header();
 
         <?php Sigil\Pagination::render(); ?>
     <?php endif; ?>
-</div>
+</main>
 
 <?php
 get_footer();
