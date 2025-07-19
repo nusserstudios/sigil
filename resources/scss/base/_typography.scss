@@ -1,22 +1,50 @@
 // Typography Base Styles
 @use "../abstracts/variables" as *;
 
+@media (width < 600px) {
+    main {
+        font-size: 104%
+    }
+}
+
+@media (width >= 768px) {
+    main {
+        font-size: 106%
+    }
+}
+
+@media (width >= 1024px) {
+    main {
+        font-size: 108%
+    }
+}
+
+@media (width >= 1280px) {
+    main {
+        font-size: 110%
+    }
+}
+
+@media (width >= 1536px) {
+    main {
+        font-size: 112%
+    }
+}
+
+
+
 // Headings
 // ========================================
 
 h1, h2, h3, h4, h5, h6 {
     margin-block: var(--space-m);
-    margin-bottom: var(--typography-spacing-vertical);
     font-weight: 700;
     line-height: 1.125;
 }
 
 h1 {
-    font-size: 2rem;
+    font-size: clamp(2rem, 2.74vi + 1.76rem, 3.5rem);
     line-height: 1.125;
-    @media (min-width: $theme-breakpoint-sm) {
-        font-size: 2.5rem;
-    }
 }
 
 h2 {
@@ -145,7 +173,7 @@ samp {
 code,
 kbd,
 samp {
-    font-size: 0.875em;
+    font-size: 1rem;
     padding: 0.125rem 0.25rem;
     border-radius: var(--border-radius);
 }
@@ -182,12 +210,14 @@ pre {
 // Blockquotes
 // ========================================
 
-blockquote {
+blockquote,
+.wp-block-quote {
     display: block;
     margin: var(--typography-spacing-vertical) 0;
     padding: var(--spacing);
-    border-left: 0.25rem solid var(--muted-border-color);
-    background: var(--code-background-color);
+    border-left: 0.25rem solid var(--primary);
+    background-color: var(--foreground-color);
+    color: var(--color);
     
     > :first-child {
         margin-top: 0;
@@ -199,7 +229,6 @@ blockquote {
     
     footer {
         margin-top: calc(var(--typography-spacing-vertical) * 0.5);
-        color: var(--muted-color);
         font-style: normal;
         
         &::before {

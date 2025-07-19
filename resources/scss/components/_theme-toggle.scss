@@ -1,7 +1,7 @@
 /**
  * Theme Toggle Component
  * 
- * Styles for light/dark mode toggle buttons
+ * Styles for light/dark mode toggle buttons with SVG morphing animations
  */
 
 // ========================================
@@ -10,33 +10,96 @@
 
 #theme-toggle {
     position: relative;
-    display: inline-flex !important;
+    color: var(--color);
+    background: none;
+    border: none;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer !important;
-    pointer-events: auto !important;
+    cursor: pointer;
+    pointer-events: auto;
     z-index: 999;
+    margin-top: -0.1rem;
     
     // Hide on extra small screens
     @media (max-width: 575px) {
-        display: none !important;
+        display: none;
     }
     
     // Icon styles
     svg {
-        width: 1.25rem;
-        height: 1.25rem;
+        width: 1.5rem;
+        height: 1.5rem;
         pointer-events: none; // Prevent clicks on SVG from interfering
     }
     
-    // Hover states
-    &:hover {
-        transform: scale(1.1);
-    }
-    
     &:focus {
-        outline: 2px solid var(--primary-focus);
-        outline-offset: 2px;
+        outline: none;
+    }
+}
+
+.dark #theme-toggle {
+    color: var(--primary-inverse);
+}
+
+// ========================================
+// SVG MORPHING ANIMATION STYLES
+// ========================================
+
+// Global CSS custom properties for theme toggle
+:root {
+    --theme-toggle-duration: .4s;
+}
+
+svg.icon-theme-toggle {
+    --theme-toggle-duration: .4s
+}
+
+svg.icon-theme-toggle :first-child path {
+    transition-duration: calc(var(--theme-toggle-duration) * .6);
+    transition-property: transform,d;
+    transition-timing-function: cubic-bezier(0,0,.5,1)
+}
+
+svg.icon-theme-toggle g circle,svg.icon-theme-toggle g path {
+    transform-origin: center;
+    transition: transform calc(var(--theme-toggle-duration) * .65) cubic-bezier(0,0,0,1.25) calc(var(--theme-toggle-duration) * .35)
+}
+
+svg.icon-theme-toggle.moon g circle {
+    transform: scale(1.4);
+    transition-delay: 0s
+}
+
+svg.icon-theme-toggle.moon g path {
+    transform: scale(.75);
+    transition-delay: 0s
+}
+
+svg.icon-theme-toggle.moon :first-child path {
+    d: path("M-9 3h25a1 1 0 0017 13v30H0Z");
+    transition-delay: calc(var(--theme-toggle-duration) * .4);
+    transition-timing-function: cubic-bezier(0,0,0,1.25)
+}
+
+@supports not (d:path("")) {
+    svg.icon-theme-toggle.moon :first-child path {
+        transform: translate3d(-9px,14px,0)
+    }
+}
+
+// Legacy theme toggle morphing container (for backward compatibility)
+.theme-toggle-morph {
+    position: relative;
+    width: 1.25rem;
+    height: 1.25rem;
+    
+    svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }
 }
 
@@ -83,8 +146,10 @@
     }
 }
 
+
+
 // ========================================
-// ICON VISIBILITY CONTROL
+// ICON VISIBILITY CONTROL (Legacy Support)
 // ========================================
 
 // Light mode: show dark icon (to switch to dark)
@@ -120,7 +185,7 @@
     }
     
     &:hover svg {
-        transform: rotate(15deg);
+        transform: scale(1.05);
     }
     
     &:active svg {
@@ -162,12 +227,12 @@
 .preload *,
 .preload *::before,
 .preload *::after {
-    transition: none !important;
-    animation: none !important;
-    transition-delay: 0s !important;
-    animation-delay: 0s !important;
-    animation-duration: 0s !important;
-    transition-duration: 0s !important;
+    transition: none;
+    animation: none;
+    transition-delay: 0s;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    transition-duration: 0s;
 }
 
 // Comprehensive transition prevention for theme changes
@@ -176,13 +241,13 @@ body.preload {
     *,
     *::before,
     *::after {
-        transition: none !important;
-        animation: none !important;
+        transition: none;
+        animation: none;
     }
     
     // Specific override for link elements (handles inline styles)
     a {
-        transition: none !important;
+        transition: none;
     }
     
     // Theme toggle specific overrides
@@ -190,8 +255,18 @@ body.preload {
     #mobile-theme-toggle svg,
     #theme-toggle-light-icon,
     #theme-toggle-dark-icon {
-        transition: none !important;
-        animation: none !important;
+        transition: none;
+        animation: none;
+    }
+    
+    // Morphing animation overrides during theme change
+    svg.icon-theme-toggle {
+        :first-child path,
+        g circle,
+        g path {
+            transition: none;
+            animation: none;
+        }
     }
 }
 
@@ -243,17 +318,22 @@ body.preload {
 @media (prefers-contrast: high) {
     #theme-toggle,
     #mobile-theme-toggle {
-        border: 2px solid var(--border-color);
+        border: none;
         
         &:focus {
-            border-color: var(--primary);
-            outline: 3px solid var(--primary-focus);
+            border-color: none;
+            outline: none;
         }
     }
 }
 
 // Reduced motion support
 @media (prefers-reduced-motion: reduce) {
+    // Disable CSS custom property animations
+    :root {
+        --theme-toggle-duration: 0s;
+    }
+    
     #theme-toggle,
     #mobile-theme-toggle {
         svg {
@@ -269,7 +349,16 @@ body.preload {
         }
     }
     
+    // Disable morphing animations for reduced motion
+    svg.icon-theme-toggle {
+        :first-child path,
+        g circle,
+        g path {
+            transition: none;
+        }
+    }
+    
     * {
-        transition: none !important;
+        transition: none;
     }
 } 

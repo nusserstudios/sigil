@@ -36,7 +36,8 @@ class Pagination
         $max = (int) $wp_query->max_num_pages;
         $links = self::generate_pagination_links($paged, $max);
 
-        echo '<nav aria-label="Page navigation"><ul class="pagination">';
+        echo '<nav class="pagination-navigation" aria-label="' . esc_attr__('Posts pagination', 'sigil') . '" role="navigation">';
+        echo '<ul class="pagination">';
 
         self::render_previous_link($paged, $links);
         self::render_page_links($paged, $links);
@@ -73,48 +74,63 @@ class Pagination
             return;
         }
 
-        if (get_previous_posts_link()) {
+        $prev_link = get_previous_posts_link();
+        if ($prev_link) {
+            $prev_url = get_pagenum_link($paged - 1);
             printf(
-                '<li><span class="page-link">%s</span></li>',
-                get_previous_posts_link(
-                    sprintf('<span aria-hidden="true">%s</span><span class="screen-reader-text">Previous page</span>', self::SVG_PREV)
-                )
+                '<li><a href="%s" class="page-link page-link-prev" aria-label="%s" rel="prev">%s<span class="screen-reader-text">%s</span></a></li>',
+                esc_url($prev_url),
+                esc_attr__('Go to previous page', 'sigil'),
+                self::SVG_PREV,
+                esc_html__('Previous page', 'sigil')
             );
         }
 
         if (!in_array(2, $links)) {
-            echo '<li class="page-item-spacer">...</li>';
+            echo '<li class="page-item-spacer" aria-hidden="true">...</li>';
         }
     }
 
     private static function render_page_links(int $paged, array $links): void
     {
         foreach ($links as $link) {
-            $class = $paged === $link ? 'page-link current' : 'page-link';
-            printf(
-                '<li><a href="%s" class="%s">%s</a></li>',
-                esc_url(get_pagenum_link($link)),
-                esc_attr($class),
-                esc_html($link)
-            );
+            if ($paged === $link) {
+                // Current page - use span with aria-current
+                printf(
+                    '<li><span class="page-link current" aria-current="page" aria-label="%s">%s</span></li>',
+                    esc_attr(sprintf(__('Current page %d', 'sigil'), $link)),
+                    esc_html($link)
+                );
+            } else {
+                // Other pages - use links with aria-label
+                printf(
+                    '<li><a href="%s" class="page-link" aria-label="%s">%s</a></li>',
+                    esc_url(get_pagenum_link($link)),
+                    esc_attr(sprintf(__('Go to page %d', 'sigil'), $link)),
+                    esc_html($link)
+                );
+            }
         }
     }
 
     private static function render_next_link(int $paged, int $max, array $links): void
     {
-        if (get_next_posts_link()) {
-            printf(
-                '<li><span class="page-link">%s</span></li>',
-                get_next_posts_link(
-                    sprintf('<span aria-hidden="true">%s</span><span class="screen-reader-text">Next page</span>', self::SVG_NEXT)
-                )
-            );
-        }
-
         if (!in_array($max, $links)) {
             if (!in_array($max - 1, $links)) {
-                echo '<li class="page-item-spacer">...</li>';
+                echo '<li class="page-item-spacer" aria-hidden="true">...</li>';
             }
+        }
+
+        $next_link = get_next_posts_link();
+        if ($next_link) {
+            $next_url = get_pagenum_link($paged + 1);
+            printf(
+                '<li><a href="%s" class="page-link page-link-next" aria-label="%s" rel="next">%s<span class="screen-reader-text">%s</span></a></li>',
+                esc_url($next_url),
+                esc_attr__('Go to next page', 'sigil'),
+                self::SVG_NEXT,
+                esc_html__('Next page', 'sigil')
+            );
         }
     }
 } 

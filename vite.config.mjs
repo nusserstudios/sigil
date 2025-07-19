@@ -87,7 +87,7 @@ export default defineConfig(({ command }) => {
                     const watchPaths = [
                         '*.php',                        // Root PHP files
                         '**/*.php',
-                        'template-parts/**/*.php',      // Template parts
+                        'inc/**/*.php',      // Template parts
                         'src/**/*.php',                 // Source files
                         '*/*.html',
                         '**/*.html'                     // HTML files

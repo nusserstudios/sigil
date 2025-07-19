@@ -138,4 +138,35 @@ function pico_load_vite_assets() {
 }
 
 // Load assets
-add_action('wp_enqueue_scripts', 'pico_load_vite_assets'); 
+add_action('wp_enqueue_scripts', 'pico_load_vite_assets');
+
+/**
+ * Load customizer preview scripts
+ */
+function sigil_load_customizer_assets() {
+    // Only load in customizer preview
+    if (is_customize_preview()) {
+        wp_enqueue_script(
+            'sigil-customizer-preview',
+            get_template_directory_uri() . '/resources/js/customizer.js',
+            ['jquery', 'customize-preview'],
+            filemtime(get_template_directory() . '/resources/js/customizer.js'),
+            true
+        );
+    }
+}
+add_action('wp_enqueue_scripts', 'sigil_load_customizer_assets');
+
+/**
+ * Load customizer controls scripts in admin
+ */
+function sigil_load_customizer_controls() {
+    wp_enqueue_script(
+        'sigil-customizer-controls',
+        get_template_directory_uri() . '/resources/js/customizer.js',
+        ['jquery', 'customize-controls'],
+        filemtime(get_template_directory() . '/resources/js/customizer.js'),
+        true
+    );
+}
+add_action('customize_controls_enqueue_scripts', 'sigil_load_customizer_controls'); 

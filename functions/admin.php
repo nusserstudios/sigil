@@ -55,3 +55,12 @@ function sigil_admin_footer_text($text) {
 }
 // Uncomment to enable custom footer text
 // add_filter('admin_footer_text', 'sigil_admin_footer_text'); 
+
+// Show template name in footer
+function show_template() {
+	if ( current_user_can( 'administrator' ) ) {
+		global $template;
+		echo '<div class="template-name" style="position: fixed; bottom: 0; left: 0; background: rgba(0,0,0,0.5); color: #fff; padding: 5px 10px; font-size: 0.85rem; font-family: monospace; z-index: 999;">Template: ' . basename( $template ) . '</div>';
+	}
+}
+add_action( 'wp_footer', 'show_template' );

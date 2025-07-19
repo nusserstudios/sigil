@@ -19,7 +19,20 @@ export class OffCanvasMenu {
         this.setupEventListeners();
         this.moveNavigation();
         this.addSubmenuToggles();
+        this.initializeMenuState();
         this.isInitialized = true;
+    }
+
+    /**
+     * Initialize proper menu state
+     */
+    initializeMenuState() {
+        // Set initial aria-hidden state for off-canvas menu
+        const navLinks = document.querySelector('.nav-links');
+        if (navLinks) {
+            navLinks.setAttribute('aria-hidden', 'true');
+            this.setElementsFocusable(navLinks, false);
+        }
     }
 
     /**
@@ -35,13 +48,27 @@ export class OffCanvasMenu {
         // Close button
         const closeButton = document.querySelector('.nav-close');
         if (closeButton) {
-            closeButton.addEventListener('click', this.closeMobileMenu.bind(this));
+            closeButton.addEventListener('click', (e) => {
+                this.closeMobileMenu();
+                // Return focus to the menu toggle button
+                const toggle = document.querySelector('#primary-menu-toggle');
+                if (toggle) {
+                    toggle.focus();
+                }
+            });
         }
 
         // Overlay click
         const overlay = document.querySelector('.menu-overlay');
         if (overlay) {
-            overlay.addEventListener('click', this.closeMobileMenu.bind(this));
+            overlay.addEventListener('click', (e) => {
+                this.closeMobileMenu();
+                // Return focus to the menu toggle button
+                const toggle = document.querySelector('#primary-menu-toggle');
+                if (toggle) {
+                    toggle.focus();
+                }
+            });
         }
 
         // Escape key
@@ -97,22 +124,37 @@ export class OffCanvasMenu {
      * Move navigation between desktop and mobile positions
      */
     moveNavigation() {
+        const navLinks = document.querySelector('.nav-links');
+        
         if (window.innerWidth <= this.mobileBreakpoint) {
             const mainNav = document.querySelector('.nav-container .main-navigation');
-            const navLinks = document.querySelector('.nav-links');
             
             if (mainNav && navLinks && !navLinks.querySelector('.main-navigation')) {
                 navLinks.appendChild(mainNav);
                 this.addBackButtonsToMobileSubmenus();
+                
+                // Ensure proper aria-hidden state for mobile
+                if (!document.body.classList.contains('menu-open')) {
+                    navLinks.setAttribute('aria-hidden', 'true');
+                    this.setElementsFocusable(navLinks, false);
+                }
             }
         } else {
             const navContainer = document.querySelector('.nav-container');
-            const navLinks = document.querySelector('.nav-links');
             const mainNav = navLinks?.querySelector('.main-navigation');
             
             if (mainNav && navContainer && !navContainer.querySelector('.main-navigation')) {
                 navContainer.insertBefore(mainNav, navContainer.querySelector('#primary-menu-toggle'));
                 this.removeBackButtonsFromSubmenus();
+                
+                // Reset aria-hidden for desktop - navigation should be accessible
+                if (navLinks) {
+                    navLinks.setAttribute('aria-hidden', 'false');
+                    this.setElementsFocusable(navLinks, true);
+                }
+                
+                // Close mobile menu if it was open
+                this.closeMobileMenu();
             }
         }
         
@@ -125,6 +167,13 @@ export class OffCanvasMenu {
     closeMobileMenu() {
         document.body.classList.remove('menu-open');
         document.querySelector('.menu-overlay')?.classList.remove('active');
+        
+        // Hide the navigation from screen readers and make focusable elements unfocusable
+        const navLinks = document.querySelector('.nav-links');
+        if (navLinks) {
+            navLinks.setAttribute('aria-hidden', 'true');
+            this.setElementsFocusable(navLinks, false);
+        }
         
         // Reset any open submenus
         document.querySelectorAll('.sub-menu').forEach(submenu => {
@@ -149,6 +198,19 @@ export class OffCanvasMenu {
     openMobileMenu() {
         document.body.classList.add('menu-open');
         document.querySelector('.menu-overlay')?.classList.add('active');
+        
+        // Show the navigation to screen readers and make focusable elements focusable
+        const navLinks = document.querySelector('.nav-links');
+        if (navLinks) {
+            navLinks.setAttribute('aria-hidden', 'false');
+            this.setElementsFocusable(navLinks, true);
+            
+            // Focus the close button for keyboard accessibility
+            const closeButton = navLinks.querySelector('.nav-close');
+            if (closeButton) {
+                closeButton.focus();
+            }
+        }
         
         // Set mobile menu toggle
         const toggle = document.querySelector('#primary-menu-toggle');
@@ -175,6 +237,12 @@ export class OffCanvasMenu {
     handleEscapeKey(e) {
         if (e.key === 'Escape' && document.body.classList.contains('menu-open')) {
             this.closeMobileMenu();
+            
+            // Return focus to the menu toggle button
+            const toggle = document.querySelector('#primary-menu-toggle');
+            if (toggle) {
+                toggle.focus();
+            }
         }
     }
 
@@ -189,7 +257,7 @@ export class OffCanvasMenu {
                 toggleButton.className = 'submenu-toggle';
                 toggleButton.setAttribute('aria-expanded', 'false');
                 toggleButton.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" aria-hidden="true">
                         <polyline points="7 12.86 25 37.14 43 12.86" fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="8" />
                     </svg>
                     <span class="screen-reader-text">Toggle submenu</span>
@@ -284,25 +352,27 @@ export class OffCanvasMenu {
     }
 
     /**
-     * Handle menu item clicks (mobile)
+     * Handle menu item clicks (all screen sizes)
      */
     handleMenuItemClick(e) {
         const menuLink = e.target.closest('.menu-item-has-children > a');
-        if (menuLink && window.innerWidth <= this.mobileBreakpoint) {
+        if (menuLink) {
             e.preventDefault();
             this.toggleSubmenu(menuLink.parentNode);
         }
     }
 
     /**
-     * Handle submenu toggle button clicks
+     * Handle submenu toggle button clicks (disabled - using nav item clicks instead)
      */
     handleSubmenuToggle(e) {
+        // Submenu toggle buttons are now visual indicators only
+        // Click events are handled by the nav item itself
         const toggleButton = e.target.closest('.submenu-toggle');
         if (toggleButton) {
             e.preventDefault();
             e.stopPropagation();
-            this.toggleSubmenu(toggleButton.parentNode);
+            // Do nothing - let the nav item handle the click
         }
     }
 
@@ -386,6 +456,31 @@ export class OffCanvasMenu {
                 }
             });
         }
+    }
+
+    /**
+     * Set focusable elements inside a container to be focusable or not
+     * @param {Element} container - The container element
+     * @param {boolean} focusable - Whether elements should be focusable
+     */
+    setElementsFocusable(container, focusable) {
+        const focusableElements = container.querySelectorAll(
+            'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        
+        focusableElements.forEach(element => {
+            if (focusable) {
+                // Remove tabindex -1 to make focusable
+                if (element.getAttribute('tabindex') === '-1') {
+                    element.removeAttribute('tabindex');
+                }
+            } else {
+                // Add tabindex -1 to make unfocusable
+                if (!element.hasAttribute('tabindex') || element.getAttribute('tabindex') !== '-1') {
+                    element.setAttribute('tabindex', '-1');
+                }
+            }
+        });
     }
 }
 

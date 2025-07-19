@@ -5,15 +5,14 @@
  * @package Sigil
  */
 ?>
-        </main>
-
+    </main>
         <?php do_action('sigil_content_end'); ?>
     </div>
 
     <?php do_action('sigil_content_after'); ?>
 
     <footer id="colophon" class="site-footer" role="contentinfo">
-        <div class="container">
+        <div class="footer-container">
             <?php do_action('sigil_footer'); ?>
             <div class="footer-content">
                 <small>&copy; <?php echo esc_html(date_i18n('Y')); ?> - <?php bloginfo('name'); ?></small>

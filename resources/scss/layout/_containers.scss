@@ -78,3 +78,9 @@
         @include align-full;
     }
 } 
+
+.footer-container {
+    @include container;
+    margin-inline: auto;
+    padding-inline: var(--container-padding);
+}

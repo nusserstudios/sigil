@@ -153,8 +153,20 @@ export class ThemeToggle {
         const desktopToggle = getElement(this.desktopToggleSelector);
         const mobileToggle = getElement(this.mobileToggleSelector);
 
+        // Update SVG morphing for new icon-theme-toggle structure
+        const desktopSvg = desktopToggle ? desktopToggle.querySelector('svg.icon-theme-toggle') : null;
+        const mobileSvg = mobileToggle ? mobileToggle.querySelector('svg.icon-theme-toggle') : null;
+
         if (this.currentTheme === 'dark') {
-            // Show light icon (to switch to light mode)
+            // Add moon class for SVG morphing
+            if (desktopSvg) {
+                addClass(desktopSvg, 'moon');
+            }
+            if (mobileSvg) {
+                addClass(mobileSvg, 'moon');
+            }
+
+            // Legacy icon handling (for backward compatibility)
             if (lightIcon) {
                 removeClass(lightIcon, 'hidden');
                 lightIcon.style.display = 'block';
@@ -175,7 +187,15 @@ export class ThemeToggle {
                 this.updateMobileToggleContent(mobileToggle, 'light');
             }
         } else {
-            // Show dark icon (to switch to dark mode)
+            // Remove moon class for SVG morphing
+            if (desktopSvg) {
+                removeClass(desktopSvg, 'moon');
+            }
+            if (mobileSvg) {
+                removeClass(mobileSvg, 'moon');
+            }
+
+            // Legacy icon handling (for backward compatibility)
             if (lightIcon) {
                 addClass(lightIcon, 'hidden');
                 lightIcon.style.display = 'none';
@@ -207,6 +227,17 @@ export class ThemeToggle {
         const svg = button.querySelector('svg');
         const text = button.querySelector('.toggle-text');
         
+        // For the new icon-theme-toggle structure, we don't need to update innerHTML
+        // The morphing is handled by CSS and the moon class
+        if (svg && svg.classList.contains('icon-theme-toggle')) {
+            // Just update the text content
+            if (text) {
+                text.textContent = targetMode === 'dark' ? 'Turn on dark mode' : 'Turn off dark mode';
+            }
+            return;
+        }
+
+        // Legacy handling for old SVG structure
         if (targetMode === 'dark') {
             // Currently light, show option to go dark
             if (svg) {

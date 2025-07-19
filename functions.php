@@ -34,6 +34,7 @@ $function_files = [
     'pagination.php',       // Pagination helpers
     'admin.php',            // Admin functionality
     'theme-options.php',    // Theme options and customizer
+    'seo.php',              // SEO enhancements and meta tags
 ];
 
 foreach ($function_files as $file) {

@@ -10,9 +10,9 @@
  */
 function sigil_render_off_canvas_menu() {
     ?>
-    <div class="nav-links">
-        <button type="button" class="nav-close" aria-label="Close menu">
-            <svg xmlns="http://www.w3.org/2000/svg" width="31.205" height="31.205" viewBox="0 0 31.205 31.205">
+    <div class="nav-links" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e('Mobile navigation menu', 'sigil'); ?>">
+        <button type="button" class="nav-close" aria-label="<?php esc_attr_e('Close navigation menu', 'sigil'); ?>">
+            <svg xmlns="http://www.w3.org/2000/svg" width="31.205" height="31.205" viewBox="0 0 31.205 31.205" aria-hidden="true">
                 <path id="x-mark" d="M32.205,28.188,20.6,16.576,32.205,4.981,28.188,1,16.583,12.6,4.986,1,1,4.986,12.611,16.611,1,28.219l3.986,3.986,11.635-11.62,11.6,11.62Z" transform="translate(-1 -1)" fill="#726e6e"/>
             </svg>
         </button>
@@ -20,7 +20,7 @@ function sigil_render_off_canvas_menu() {
         // The main navigation will be moved here via JavaScript on mobile
         ?>
     </div>
-    <div class="menu-overlay"></div>
+    <div class="menu-overlay" aria-hidden="true"></div>
     <?php
 }
 
@@ -46,7 +46,8 @@ class Sigil_Menu_Walker extends Walker_Nav_Menu {
      */
     function start_lvl(&$output, $depth = 0, $args = null) {
         $indent = str_repeat("\t", $depth);
-        $output .= "\n$indent<ul class=\"sub-menu\">\n";
+        // Add proper ARIA role for submenu
+        $output .= "\n$indent<ul class=\"sub-menu\" role=\"menu\">\n";
     }
 
     /**
@@ -75,7 +76,18 @@ class Sigil_Menu_Walker extends Walker_Nav_Menu {
         $id = apply_filters('nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args);
         $id = $id ? ' id="' . esc_attr($id) . '"' : '';
 
-        $output .= $indent . '<li' . $id . $class_names . '>';
+        // Add proper ARIA role for menu items
+        $aria_role = '';
+        if ($depth === 0) {
+            $aria_role = ' role="menuitem"';
+            if ($has_children) {
+                $aria_role = ' role="menuitem" aria-haspopup="true" aria-expanded="false"';
+            }
+        } else {
+            $aria_role = ' role="menuitem"';
+        }
+
+        $output .= $indent . '<li' . $id . $class_names . $aria_role . '>';
 
         $attributes = !empty($item->attr_title) ? ' title="' . esc_attr($item->attr_title) . '"' : '';
         $attributes .= !empty($item->target) ? ' target="' . esc_attr($item->target) . '"' : '';
@@ -89,8 +101,8 @@ class Sigil_Menu_Walker extends Walker_Nav_Menu {
         
         // Add submenu toggle button for items with children
         if ($has_children) {
-            $item_output .= '<button class="submenu-toggle" aria-expanded="false">';
-            $item_output .= '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">';
+            $item_output .= '<button class="submenu-toggle" aria-expanded="false" aria-label="' . esc_attr(sprintf(__('Toggle submenu for %s', 'sigil'), $item->title)) . '">';
+            $item_output .= '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" aria-hidden="true">';
             $item_output .= '<polyline points="7 12.86 25 37.14 43 12.86" fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="8" />';
             $item_output .= '</svg>';
             $item_output .= '<span class="screen-reader-text">Toggle submenu</span>';
@@ -121,10 +133,11 @@ function sigil_main_nav() {
         'container'       => 'nav',
         'container_class' => 'main-navigation',
         'container_id'    => 'site-navigation',
+        'container_aria_label' => __('Primary Navigation', 'sigil'),
         'fallback_cb'     => false,
         'depth'           => 3,
         'walker'          => new Sigil_Menu_Walker(),
-        'items_wrap'      => '<ul id="%1$s" class="%2$s" role="menubar">%3$s</ul>',
+        'items_wrap'      => '<ul id="%1$s" class="%2$s" role="menubar" aria-label="' . esc_attr__('Main menu', 'sigil') . '">%3$s</ul>',
     ));
 }
 
@@ -136,10 +149,12 @@ function sigil_footer_nav() {
         'theme_location' => 'footer-menu',
         'menu_id'        => 'footer-menu',
         'menu_class'     => 'footer-menu',
-        'container'      => false,
+        'container'      => 'nav',
+        'container_class' => 'footer-navigation',
+        'container_aria_label' => __('Footer Navigation', 'sigil'),
         'fallback_cb'    => false,
         'depth'          => 1,
-        'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+        'items_wrap'     => '<ul id="%1$s" class="%2$s" role="menubar" aria-label="' . esc_attr__('Footer menu', 'sigil') . '">%3$s</ul>',
     ));
 }
 

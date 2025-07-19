@@ -63,3 +63,191 @@
         aspect-ratio: 16/9;
     }
 } 
+
+// ========================================
+// WORDPRESS BLOCKQUOTES - Default Theme Colors
+// ========================================
+
+// Base blockquote styling using WordPress customizer colors
+blockquote,
+.wp-block-quote {
+    background-color: var(--foreground-color) !important;
+    color: var(--color) !important;
+    
+    // All text elements within blockquotes
+    p,
+    span,
+    strong,
+    em {
+        color: var(--color) !important;
+    }
+    
+    // Citation and footer styling
+    cite,
+    footer {
+        color: var(--color) !important;
+        opacity: 0.8;
+    }
+}
+
+// WordPress block quote specific
+.wp-block-quote {
+    &.is-style-large {
+        background-color: var(--foreground-color) !important;
+        color: var(--color) !important;
+        
+        p {
+            color: var(--color) !important;
+        }
+    }
+}
+
+// Ensure highest specificity for WordPress blocks
+.wp-site-blocks {
+    blockquote,
+    .wp-block-quote {
+        background-color: var(--foreground-color) !important;
+        color: var(--color) !important;
+        
+        p {
+            color: var(--color) !important;
+        }
+    }
+}
+
+// Force color inheritance for any nested elements
+blockquote *,
+.wp-block-quote * {
+    color: inherit !important;
+}
+
+// Light mode explicit styling
+:root:not(.dark),
+.light {
+    blockquote,
+    .wp-block-quote {
+        background-color: var(--foreground-color) !important;
+        color: var(--color) !important;
+        
+        * {
+            color: var(--color) !important;
+        }
+    }
+}
+
+// Dark mode explicit styling
+.dark {
+    blockquote,
+    .wp-block-quote {
+        background-color: var(--foreground-color) !important;
+        color: var(--color) !important;
+        
+        * {
+            color: var(--color) !important;
+        }
+    }
+}
+
+// System preference dark mode
+@media (prefers-color-scheme: dark) {
+    :root:not(.light) {
+        blockquote,
+        .wp-block-quote {
+            background-color: var(--foreground-color) !important;
+            color: var(--color) !important;
+            
+            * {
+                color: var(--color) !important;
+            }
+        }
+    }
+}
+
+// Debug helper - remove this after testing
+// .debug-colors {
+//     position: fixed;
+//     top: 10px;
+//     right: 10px;
+//     background: rgba(0,0,0,0.8);
+//     color: white;
+//     padding: 10px;
+//     font-size: 12px;
+//     z-index: 9999;
+//     
+//     &::before {
+//         content: "FG: " var(--foreground-color) " | BG: " var(--card-background-color);
+//     }
+// }
+
+/**
+ * Theme Component Customizations
+ * 
+ * This file contains component-specific styles that utilize the global color system
+ * defined in _variables.scss. All colors automatically adapt to light/dark mode.
+ */
+
+// ========================================
+// BUTTONS
+// ========================================
+
+.btn {
+    &.btn-primary {
+        background-color: var(--primary-background);
+        border-color: var(--primary-border);
+        
+        &:hover {
+            background-color: var(--primary-hover-background);
+            border-color: var(--primary-hover-border);
+        }
+        
+        &:focus {
+            box-shadow: 0 0 0 0.2rem var(--primary-focus);
+        }
+    }
+    
+    &.btn-secondary {
+        background-color: var(--secondary-background);
+        border-color: var(--secondary-border);
+        
+        &:hover {
+            background-color: var(--secondary-hover-background);
+            border-color: var(--secondary-hover-border);
+        }
+        
+        &:focus {
+            box-shadow: 0 0 0 0.2rem var(--secondary-focus);
+        }
+    }
+    
+    &.btn-accent {
+        background-color: var(--accent-background);
+        border-color: var(--accent-border);
+        
+        &:hover {
+            background-color: var(--accent-hover-background);
+            border-color: var(--accent-hover-border);
+        }
+        
+        &:focus {
+            box-shadow: 0 0 0 0.2rem var(--accent-focus);
+        }
+    }
+}
+
+// ========================================
+// LINKS
+// ========================================
+
+a {
+    text-decoration-color: var(--primary-underline);
+    
+    &:hover {
+        color: var(--primary-hover);
+        text-decoration-color: var(--primary-hover-underline);
+    }
+    
+    &:focus {
+        outline-color: var(--primary-focus);
+    }
+}
+

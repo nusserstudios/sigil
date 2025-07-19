@@ -129,45 +129,8 @@ body.menu-open {
         align-items: center;
 
         a {
-            display: flex;
-            align-items: center;
             color: var(--text-color);
             text-decoration: none;
-            padding: var(--space-2xs) 0;
-            font-size: var(--font-base);
-            font-weight: 500;
-            position: relative;
-            white-space: nowrap;
-
-            // Hover effect with underline
-            &::after {
-                content: "";
-                position: absolute;
-                bottom: -3px;
-                left: 0;
-                right: 0;
-                height: 2px;
-                background-color: var(--primary);
-                transform: scaleX(0);
-            }
-
-            &:hover,
-            &:focus {
-                color: var(--primary);
-
-                &::after {
-                    transform: scaleX(1);
-                }
-            }
-        }
-
-        &.active > a,
-        &.current-menu-item > a {
-            color: var(--primary);
-
-            &::after {
-                transform: scaleX(1);
-            }
         }
     }
 
@@ -179,16 +142,7 @@ body.menu-open {
 
         > a {
             // No extra padding needed with flexbox
-        }
-
-        // Desktop hover behavior
-        &:hover .sub-menu {
-            display: block;
-        }
-
-        // Rotate toggle when hovering over menu item text
-        &:hover .submenu-toggle svg {
-            transform: rotate(180deg);
+            cursor: pointer;
         }
 
         // Active state takes precedence - when submenu is open
@@ -197,12 +151,8 @@ body.menu-open {
             transform: rotate(180deg);
         }
 
-        // Nested submenu items - rotate toggle when hovering over nested menu item
+        // Nested submenu items
         .sub-menu & {
-            &:hover .submenu-toggle svg {
-                transform: rotate(0deg);
-            }
-
             // Active state for nested items
             &.active .submenu-toggle svg,
             &.current-menu-item .submenu-toggle svg {
@@ -288,19 +238,20 @@ body.menu-open {
         }
     }
 
-    // Submenu toggle button
+    // Submenu toggle button (visual indicator only)
     .submenu-toggle {
         display: flex;
         align-items: center;
         justify-content: center;
         width: 16px;
         height: 16px;
-        cursor: pointer;
+        cursor: default;
         background: none;
         border: none;
         padding: 0;
         margin: 0;
         flex-shrink: 0;
+        pointer-events: none;
 
         svg {
             width: 12px;
@@ -312,23 +263,9 @@ body.menu-open {
             stroke-width: 8;
         }
 
-        // Hover state rotation
-        &:hover svg {
-            transform: rotate(45deg);
-        }
-
-        // Active state rotation (takes precedence over hover)
+        // Active state rotation (click-based only)
         &.active svg {
             transform: rotate(180deg);
-        }
-
-        // Combined hover and active state
-        &.active:hover svg {
-            transform: rotate(225deg);
-        }
-
-        &:hover polyline {
-            stroke: var(--primary);
         }
 
         // Nested submenu toggle
@@ -339,19 +276,9 @@ body.menu-open {
                 transform: rotate(-90deg);
             }
 
-            // Hover state for nested toggle
-            &:hover svg {
-                transform: rotate(-45deg);
-            }
-
             // Active state for nested toggle
             &.active svg {
                 transform: rotate(90deg);
-            }
-
-            // Combined hover and active state for nested toggle
-            &.active:hover svg {
-                transform: rotate(135deg);
             }
         }
     }
@@ -450,6 +377,7 @@ body.menu-open {
 
                 > a {
                     flex: 1;
+                    cursor: pointer;
                 }
 
                 > .submenu-toggle {
@@ -528,13 +456,15 @@ body.menu-open {
                 }
             }
 
-            // Mobile submenu toggle
+            // Mobile submenu toggle (visual indicator only)
             .submenu-toggle {
                 width: 16px;
                 height: 16px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                cursor: default;
+                pointer-events: none;
 
                 svg {
                     width: 12px;
@@ -613,8 +543,52 @@ body.menu-open {
             gap: var(--space-xs);
         }
 
-        li a {
+        li {
             font-size: var(--font-base);
+            transition: color 0.3s ease-in-out;
+
+            a {
+                display: flex;
+                align-items: center;
+                color: var(--text-color);
+                text-decoration: none;
+                padding: var(--space-2xs) 0;
+                font-size: var(--font-base);
+                font-weight: 500;
+                position: relative;
+                white-space: nowrap;
+     
+                // Hover effect with underline
+                &::after {
+                    content: "";
+                    position: absolute;
+                    bottom: -3px;
+                    left: 0;
+                    right: 0;
+                    height: 2px;
+                    background-color: var(--primary);
+                    transform: scaleX(0);
+                    transition: transform 0.3s ease-in-out;
+                }
+    
+                &:hover,
+                &:focus {
+                    color: var(--primary);
+    
+                    &::after {
+                        transform: scaleX(1);
+                    }
+                }
+            }
+    
+            &.active > a,
+            &.current-menu-item > a {
+                color: var(--primary);
+    
+                &::after {
+                    transform: scaleX(1);
+                }
+            }
         }
 
         .sub-menu {
@@ -631,12 +605,22 @@ body.menu-open {
 }
 
 // ========================================
+// LARGE DESKTOP STYLES (> 1024px)
+// ========================================
+
+@media (width > 1024px) {
+    .main-navigation {
+        // Note: Submenu display is now handled by click events only
+        // No hover behavior for submenu display
+    }
+}
+
+// ========================================
 // ACCESSIBILITY ENHANCEMENTS
 // ========================================
 
 // Focus styles
 .main-navigation a:focus,
-.submenu-toggle:focus,
 #primary-menu-toggle:focus,
 .nav-close:focus {
     outline: 2px solid var(--primary);
@@ -659,7 +643,6 @@ body.menu-open {
 // High contrast mode support
 @media (forced-colors: active) {
     .main-navigation a:focus,
-    .submenu-toggle:focus,
     #primary-menu-toggle:focus {
         outline: 2px solid var(--primary);
     }

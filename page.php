@@ -7,32 +7,7 @@
 
 get_header();
 ?>
-<?php if (is_front_page()): ?>
-    <section class="hero-section">
-        <div class="container-fluid">
-            <div class="hero-content">
-				<div class="container">
-					<div class="hero-text">
-						<h1 class="text-balance">
-							Rapidly build your next WordPress theme with PicoCSS
-						</h1>
-						<p>
-							<strong>Sigil</strong> is a <a href="https://picocss.com">PicoCSS</a> flavoured <a href="https://wordpress.org">WordPress</a>
-							boilerplate theme. It's your go-to starting point for building custom WordPress themes with modern tools and practices.
-						</p>
-					</div>
-					<div class="hero-actions">
-						<a href="https://picocss.com" role="button" target="_blank" rel="noopener noreferrer">
-							Documentation
-						</a>
-					</div>
-				</div>
-            </div>
-        </div>
-    </section>
-<?php endif; ?>
-
-<main class="wp-block-post-content">
+<main class="align-wide">
 	<?php if (!is_singular()): ?>
 		<?php if (is_archive()): ?>
 			<header class="page-header">
@@ -94,7 +69,7 @@ get_header();
     <?php if (have_posts()): ?>
         <div class="posts-list">
             <?php while (have_posts()): the_post(); ?>
-                <?php get_template_part('inc/content', is_singular() ? 'single' : ''); ?>
+                <?php get_template_part('inc/content', 'page'); ?>
             <?php endwhile; ?>
         </div>
 

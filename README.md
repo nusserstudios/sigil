@@ -124,7 +124,7 @@ sigil/
 │       ├── pages/           # Page-specific styles
 │       └── wordpress/       # WordPress-specific styles
 ├── dist/                     # Built assets (generated)
-├── template-parts/           # WordPress template parts
+├── inc/           # WordPress template parts
 ├── functions/                # PHP functions and classes
 ├── acf/                      # Advanced Custom Fields
 ├── static/                   # Static assets (images, fonts)
@@ -201,8 +201,8 @@ The theme uses WordPress template parts for modular template structure:
 
 ```php
 // Include template parts
-get_template_part('template-parts/content', 'page');
-get_template_part('template-parts/header', 'navigation');
+get_template_part('inc/content', 'page');
+get_template_part('inc/header', 'navigation');
 ```
 
 ### Functions
