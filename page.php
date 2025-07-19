@@ -7,7 +7,7 @@
 
 get_header();
 ?>
-<main class="align-wide">
+<main>
 	<?php if (!is_singular()): ?>
 		<?php if (is_archive()): ?>
 			<header class="page-header">
@@ -67,7 +67,7 @@ get_header();
 	<?php endif; ?>
 
     <?php if (have_posts()): ?>
-        <div class="posts-list">
+        <div class="posts-list align-wide">
             <?php while (have_posts()): the_post(); ?>
                 <?php get_template_part('inc/content', 'page'); ?>
             <?php endwhile; ?>

@@ -61,7 +61,7 @@ export default defineConfig(({ command }) => {
                             return 'css/[name].[hash].[ext]'
                         }
                         if (/\.(png|jpe?g|gif|svg|webp|avif|ico)$/.test(assetInfo.name)) {
-                            return 'images/[name].[hash].[ext]'
+                            return 'images/[name].[ext]'  // Remove [hash] from images
                         }
                         if (/\.(woff2?|eot|ttf|otf)$/.test(assetInfo.name)) {
                             return 'fonts/[name].[hash].[ext]'
