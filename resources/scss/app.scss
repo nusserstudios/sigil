@@ -13,6 +13,7 @@
 @use "components/pagination";
 @use "components/comments";
 @use "components/theme-toggle";
+@use "components/buttons";
 
 // Layout components
 @use "layout/header";
@@ -21,6 +22,7 @@
 
 // WordPress theme compatibility
 @use "wordpress/wordpress";
+@use "wordpress/theme";
 
 // Page-specific styles (add as needed)
 // @use "pages/home";
