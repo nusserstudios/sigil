@@ -1,34 +1,29 @@
 <?php
+/**
+ * Sigil Theme Functions
+ *
+ * @package Sigil
+ * @since 1.0.0
+ */
 
-// Autoloader for Sigil classes
-spl_autoload_register(function ($class) {
-    $prefix = 'Sigil\\';
-    $base_dir = __DIR__ . '/functions/';
+// Prevent direct access
+if (!defined('ABSPATH')) {
+    exit;
+}
 
-    // Check if the class uses the Sigil namespace
-    $len = strlen($prefix);
-    if (strncmp($prefix, $class, $len) !== 0) {
-        return;
-    }
+// Define theme constants
+define('SIGIL_VERSION', '1.0.0');
+define('SIGIL_THEME_DIR', get_template_directory());
+define('SIGIL_THEME_URI', get_template_directory_uri());
 
-    // Get the relative class name
-    $relative_class = substr($class, $len);
-
-    // Replace the namespace prefix with the base directory, replace namespace
-    // separators with directory separators, and append with .php
-    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
-
-    // If the file exists, require it
-    if (file_exists($file)) {
-        require $file;
-    }
-});
-
-// Load modular function files
+// Load function files
 $function_files = [
     'theme-setup.php',      // Theme setup and supports
     'assets.php',           // Asset loading (Vite)
     'asset-helpers.php',    // Asset URL helpers for images
+    'enqueue-blocks.php',   // Block asset loading and registration
+    'force-block-refresh.php', // Temporary debug functions (remove when blocks work)
+    'debug-blocks.php',     // Temporary block debug info (remove when blocks work)
     'off-canvas-menu.php',  // Off-canvas menu functionality
     'walkers.php',          // Walker functionality
     'pagination.php',       // Pagination helpers
@@ -38,8 +33,8 @@ $function_files = [
 ];
 
 foreach ($function_files as $file) {
-    $file_path = __DIR__ . '/functions/' . $file;
+    $file_path = SIGIL_THEME_DIR . '/functions/' . $file;
     if (file_exists($file_path)) {
         require_once $file_path;
     }
-}
+} 

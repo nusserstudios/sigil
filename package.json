@@ -11,15 +11,31 @@
 	"author_uri": "https://sigil.io",
 	"text_domain": "sigil",
 	"license": "MIT",
+	"keywords": [
+		"wordpress",
+		"starter",
+		"theme"
+	],
+	"homepage": "https://github.com/sigil/sigil#readme",
+	"bugs": {
+		"url": "https://github.com/sigil/sigil/issues"
+	},
+	"main": "index.js",
 	"scripts": {
 		"dev": "touch .vite-dev && vite",
-		"build": "rm -f .vite-dev && vite build",
-		"build:watch": "rm -f .vite-dev && vite build --watch"
+		"build": "rm -f .vite-dev && vite build && pnpm run build:blocks",
+		"build:watch": "rm -f .vite-dev && vite build --watch",
+		"build:blocks": "wp-scripts build --webpack-src-dir=resources/blocks --output-path=dist/blocks",
+		"create-block": "cd ./resources/blocks && npx @wordpress/create-block --namespace=sigil --no-plugin",
+		"create-block:dynamic": "cd ./resources/blocks && npx @wordpress/create-block --namespace=sigil --no-plugin --variant=dynamic"
 	},
 	"devDependencies": {
+		"@vitejs/plugin-react": "^4.7.0",
+		"@wordpress/prettier-config": "^4.27.0",
+		"@wordpress/scripts": "^30.20.0",
 		"chokidar": "^4.0.3",
 		"sass": "^1.89.2",
 		"sass-embedded": "^1.89.2",
-		"vite": "^7.0.2"
+		"vite": "^7.0.5"
 	}
-}
+} 

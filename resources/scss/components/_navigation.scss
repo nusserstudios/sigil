@@ -145,17 +145,15 @@ body.menu-open {
             cursor: pointer;
         }
 
-        // Active state takes precedence - when submenu is open
-        &.active .submenu-toggle svg,
-        &.current-menu-item .submenu-toggle svg {
+        // Active state - when submenu is open (JavaScript controlled only)
+        &.active .submenu-toggle svg {
             transform: rotate(180deg);
         }
 
         // Nested submenu items
         .sub-menu & {
-            // Active state for nested items
-            &.active .submenu-toggle svg,
-            &.current-menu-item .submenu-toggle svg {
+            // Active state for nested items (JavaScript controlled only)
+            &.active .submenu-toggle svg {
                 transform: rotate(90deg);
             }
         }

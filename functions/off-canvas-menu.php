@@ -165,6 +165,12 @@ function sigil_active_nav_class($classes, $item) {
     // Get post type
     $post_type = get_post_type();
     
+    // Don't add active class to menu items with children - let JavaScript handle those
+    $has_children = in_array('menu-item-has-children', $classes);
+    if ($has_children) {
+        return $classes;
+    }
+    
     // If menu item is current page or ancestor
     if ($item->current == 1 || $item->current_item_ancestor == true) {
         $classes[] = 'active';
