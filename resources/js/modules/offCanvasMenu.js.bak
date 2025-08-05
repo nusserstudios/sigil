@@ -33,6 +33,40 @@ export class OffCanvasMenu {
             navLinks.setAttribute('aria-hidden', 'true');
             this.setElementsFocusable(navLinks, false);
         }
+        
+        // Reset all submenu states on page load with a slight delay to ensure DOM is ready
+        setTimeout(() => {
+            this.resetAllSubmenus();
+        }, 100);
+    }
+
+    /**
+     * Reset all submenu states to closed
+     */
+    resetAllSubmenus() {
+        // Reset all submenus
+        document.querySelectorAll('.sub-menu').forEach(submenu => {
+            submenu.classList.remove('active');
+        });
+        
+        // Reset all submenu toggles
+        document.querySelectorAll('.submenu-toggle').forEach(toggle => {
+            toggle.classList.remove('active');
+            toggle.setAttribute('aria-expanded', 'false');
+        });
+        
+        // Reset all menu items with children
+        document.querySelectorAll('.menu-item-has-children').forEach(menuItem => {
+            menuItem.setAttribute('aria-expanded', 'false');
+        });
+        
+        // Reset main navigation states
+        document.querySelector('.main-navigation')?.classList.remove('submenu-active');
+        
+        // Reset any nested submenu active states
+        document.querySelectorAll('.sub-menu').forEach(submenu => {
+            submenu.classList.remove('submenu-active');
+        });
     }
 
     /**
@@ -85,6 +119,17 @@ export class OffCanvasMenu {
 
         // Keyboard navigation
         document.addEventListener('keydown', this.handleKeyboardNavigation.bind(this));
+
+        // Reset submenu states before page unload
+        window.addEventListener('beforeunload', this.resetAllSubmenus.bind(this));
+
+        // Reset submenu states when page is fully loaded
+        document.addEventListener('DOMContentLoaded', this.resetAllSubmenus.bind(this));
+        
+        // Also reset on window load as a fallback
+        window.addEventListener('load', this.resetAllSubmenus.bind(this));
+
+
     }
 
     /**
@@ -176,14 +221,7 @@ export class OffCanvasMenu {
         }
         
         // Reset any open submenus
-        document.querySelectorAll('.sub-menu').forEach(submenu => {
-            submenu.classList.remove('active');
-        });
-        document.querySelectorAll('.submenu-toggle').forEach(toggle => {
-            toggle.classList.remove('active');
-            toggle.setAttribute('aria-expanded', 'false');
-        });
-        document.querySelector('.main-navigation')?.classList.remove('submenu-active');
+        this.resetAllSubmenus();
         
         // Reset mobile menu toggle
         const toggle = document.querySelector('#primary-menu-toggle');
@@ -357,8 +395,43 @@ export class OffCanvasMenu {
     handleMenuItemClick(e) {
         const menuLink = e.target.closest('.menu-item-has-children > a');
         if (menuLink) {
+            const menuItem = menuLink.parentNode;
+            const subMenu = menuItem.querySelector('.sub-menu');
+            const toggle = menuItem.querySelector('.submenu-toggle');
+            const href = menuLink.getAttribute('href');
+            
+            // Check if submenu is already open
+            const isSubMenuOpen = subMenu && subMenu.classList.contains('active');
+            
+            // Check if this is a valid navigation link
+            const isValidNavLink = href && href !== '#' && href !== '' && !href.startsWith('javascript:');
+            
+            if (isSubMenuOpen && isValidNavLink) {
+                // Submenu is open and this is a navigation link - close submenu and navigate
+                e.preventDefault();
+                
+                // Reset the arrow and close submenu immediately
+                subMenu.classList.remove('active');
+                toggle.classList.remove('active');
+                toggle.setAttribute('aria-expanded', 'false');
+                
+                // Also close any parent submenu states
+                const mainNav = document.querySelector('.nav-links .main-navigation');
+                const parentSubMenu = menuItem.closest('.sub-menu');
+                if (parentSubMenu) {
+                    parentSubMenu.classList.remove('submenu-active');
+                } else if (mainNav) {
+                    mainNav.classList.remove('submenu-active');
+                }
+                
+                // Navigate immediately
+                window.location.href = href;
+                return;
+            }
+            
+            // Otherwise, prevent default and toggle submenu
             e.preventDefault();
-            this.toggleSubmenu(menuLink.parentNode);
+            this.toggleSubmenu(menuItem);
         }
     }
 
@@ -381,13 +454,7 @@ export class OffCanvasMenu {
      */
     handleOutsideClick(e) {
         if (!e.target.closest('.main-navigation') && window.innerWidth > this.mobileBreakpoint) {
-            document.querySelectorAll('.sub-menu').forEach(submenu => {
-                submenu.classList.remove('active');
-            });
-            document.querySelectorAll('.submenu-toggle').forEach(toggle => {
-                toggle.classList.remove('active');
-                toggle.setAttribute('aria-expanded', 'false');
-            });
+            this.resetAllSubmenus();
         }
     }
 
@@ -421,6 +488,8 @@ export class OffCanvasMenu {
             }
         }
     }
+
+
 
     /**
      * Handle keyboard navigation

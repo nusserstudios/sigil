@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2734 1411" preserveAspectRatio="none" style="shape-rendering: auto; display: block; background: transparent; width: 100%; height: 100%;" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g>
+<ellipse transform="rotate(0 1367 705.50)" stroke-width="449.47" stroke="var(--svg-color-1, #007cba)" fill="none" ry="340.19" rx="659.17" cy="705.50" cx="1367"></ellipse>
+<animateTransform values="3 1367 705.50;-3 1367 705.50;3 1367 705.50" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" keyTimes="0;0.5;1" begin="0s" dur="25s" repeatCount="indefinite" calcMode="spline" type="rotate" attributeName="transform"></animateTransform>
+
+</g><g>
+<ellipse transform="rotate(6 1367 705.50)" stroke-width="449.47" stroke="var(--svg-color-2, #0099d4)" fill="none" ry="398.18" rx="771.53" cy="705.50" cx="1367"></ellipse>
+<animateTransform values="9 1367 705.50;3 1367 705.50;9 1367 705.50" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" keyTimes="0;0.5;1" begin="-1.67s" dur="25s" repeatCount="indefinite" calcMode="spline" type="rotate" attributeName="transform"></animateTransform>
+
+</g><g>
+<ellipse transform="rotate(12 1367 705.50)" stroke-width="449.47" stroke="var(--svg-color-1, #007cba)" fill="none" ry="456.18" rx="883.90" cy="705.50" cx="1367"></ellipse>
+<animateTransform values="15 1367 705.50;9 1367 705.50;15 1367 705.50" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" keyTimes="0;0.5;1" begin="-3.33s" dur="25s" repeatCount="indefinite" calcMode="spline" type="rotate" attributeName="transform"></animateTransform>
+
+</g><g>
+<ellipse transform="rotate(18 1367 705.50)" stroke-width="449.47" stroke="var(--svg-color-1, #007cba)" fill="none" ry="514.17" rx="996.27" cy="705.50" cx="1367"></ellipse>
+<animateTransform values="21 1367 705.50;15 1367 705.50;21 1367 705.50" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" keyTimes="0;0.5;1" begin="-5s" dur="25s" repeatCount="indefinite" calcMode="spline" type="rotate" attributeName="transform"></animateTransform>
+
+</g><g>
+<ellipse transform="rotate(24 1367 705.50)" stroke-width="449.47" stroke="var(--svg-color-1, #007cba)" fill="none" ry="572.16" rx="1108.63" cy="705.50" cx="1367"></ellipse>
+<animateTransform values="27 1367 705.50;21 1367 705.50;27 1367 705.50" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" keyTimes="0;0.5;1" begin="-6.67s" dur="25s" repeatCount="indefinite" calcMode="spline" type="rotate" attributeName="transform"></animateTransform>
+
+</g><g>
+<ellipse transform="rotate(30 1367 705.50)" stroke-width="449.47" stroke="var(--svg-color-1, #007cba)" fill="none" ry="630.15" rx="1221" cy="705.50" cx="1367"></ellipse>
+<animateTransform values="33 1367 705.50;27 1367 705.50;33 1367 705.50" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" keyTimes="0;0.5;1" begin="-8.33s" dur="25s" repeatCount="indefinite" calcMode="spline" type="rotate" attributeName="transform"></animateTransform>
+
+</g><g>
+<ellipse transform="rotate(36 1367 705.50)" stroke-width="449.47" stroke="var(--svg-color-1, #007cba)" fill="none" ry="688.14" rx="1333.37" cy="705.50" cx="1367"></ellipse>
+<animateTransform values="39 1367 705.50;33 1367 705.50;39 1367 705.50" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" keyTimes="0;0.5;1" begin="-10s" dur="25s" repeatCount="indefinite" calcMode="spline" type="rotate" attributeName="transform"></animateTransform>
+
+</g><g>
+<ellipse transform="rotate(42 1367 705.50)" stroke-width="449.47" stroke="var(--svg-color-1, #007cba)" fill="none" ry="746.13" rx="1445.73" cy="705.50" cx="1367"></ellipse>
+<animateTransform values="45 1367 705.50;39 1367 705.50;45 1367 705.50" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" keyTimes="0;0.5;1" begin="-11.67s" dur="25s" repeatCount="indefinite" calcMode="spline" type="rotate" attributeName="transform"></animateTransform>
+
+</g><g>
+<ellipse transform="rotate(48 1367 705.50)" stroke-width="449.47" stroke="var(--svg-color-1, #007cba)" fill="none" ry="804.13" rx="1558.10" cy="705.50" cx="1367"></ellipse>
+<animateTransform values="51 1367 705.50;45 1367 705.50;51 1367 705.50" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" keyTimes="0;0.5;1" begin="-13.33s" dur="25s" repeatCount="indefinite" calcMode="spline" type="rotate" attributeName="transform"></animateTransform>
+
+</g><g>
+<ellipse transform="rotate(54 1367 705.50)" stroke-width="449.47" stroke="var(--svg-color-1, #007cba)" fill="none" ry="862.12" rx="1670.47" cy="705.50" cx="1367"></ellipse>
+<animateTransform values="57 1367 705.50;51 1367 705.50;57 1367 705.50" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" keyTimes="0;0.5;1" begin="-15s" dur="25s" repeatCount="indefinite" calcMode="spline" type="rotate" attributeName="transform"></animateTransform>
+
+</g><g>
+<ellipse transform="rotate(60 1367 705.50)" stroke-width="449.47" stroke="var(--svg-color-1, #007cba)" fill="none" ry="920.11" rx="1782.83" cy="705.50" cx="1367"></ellipse>
+<animateTransform values="63 1367 705.50;57 1367 705.50;63 1367 705.50" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" keyTimes="0;0.5;1" begin="-16.67s" dur="25s" repeatCount="indefinite" calcMode="spline" type="rotate" attributeName="transform"></animateTransform>
+
+</g><g>
+<ellipse transform="rotate(66 1367 705.50)" stroke-width="449.47" stroke="var(--svg-color-1, #007cba)" fill="none" ry="978.10" rx="1895.20" cy="705.50" cx="1367"></ellipse>
+<animateTransform values="69 1367 705.50;63 1367 705.50;69 1367 705.50" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" keyTimes="0;0.5;1" begin="-18.33s" dur="25s" repeatCount="indefinite" calcMode="spline" type="rotate" attributeName="transform"></animateTransform>
+
+</g><g>
+<ellipse transform="rotate(72 1367 705.50)" stroke-width="449.47" stroke="var(--svg-color-1, #007cba)" fill="none" ry="1036.09" rx="2007.57" cy="705.50" cx="1367"></ellipse>
+<animateTransform values="75 1367 705.50;69 1367 705.50;75 1367 705.50" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" keyTimes="0;0.5;1" begin="-20s" dur="25s" repeatCount="indefinite" calcMode="spline" type="rotate" attributeName="transform"></animateTransform>
+
+</g><g>
+<ellipse transform="rotate(78 1367 705.50)" stroke-width="449.47" stroke="var(--svg-color-1, #007cba)" fill="none" ry="1094.08" rx="2119.93" cy="705.50" cx="1367"></ellipse>
+<animateTransform values="81 1367 705.50;75 1367 705.50;81 1367 705.50" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" keyTimes="0;0.5;1" begin="-21.67s" dur="25s" repeatCount="indefinite" calcMode="spline" type="rotate" attributeName="transform"></animateTransform>
+
+</g><g>
+<ellipse transform="rotate(84 1367 705.50)" stroke-width="449.47" stroke="var(--svg-color-1, #007cba)" fill="none" ry="1152.08" rx="2232.30" cy="705.50" cx="1367"></ellipse>
+<animateTransform values="87 1367 705.50;81 1367 705.50;87 1367 705.50" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" keyTimes="0;0.5;1" begin="-23.33s" dur="25s" repeatCount="indefinite" calcMode="spline" type="rotate" attributeName="transform"></animateTransform>
+
+</g><g></g></g><!-- [ldio] generated by https://loading.io --></svg>

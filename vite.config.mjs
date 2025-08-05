@@ -1,13 +1,17 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
+  plugins: [react()],
+  publicDir: 'static',
   build: {
     outDir: 'dist',
     rollupOptions: {
       input: {
         'app': resolve(__dirname, 'resources/js/app.js'),
         'editor': resolve(__dirname, 'resources/js/editor.js'),
+        'breakout-enhancements': resolve(__dirname, 'resources/js/breakout-enhancements.jsx'),
         'app-css': resolve(__dirname, 'resources/scss/app.scss'),
         'editor-style': resolve(__dirname, 'resources/scss/editor-style.scss'),
       },
@@ -21,7 +25,8 @@ export default defineConfig({
         '@wordpress/element',
         '@wordpress/data',
         'react',
-        'react-dom'
+        'react-dom',
+        'react/jsx-runtime'
       ],
       output: {
         entryFileNames: 'js/[name].js',

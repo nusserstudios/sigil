@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "sigil/container",
+    "version": "1.0.0",
+    "title": "Container",
+    "category": "sigil-blocks",
+    "icon": "align-center",
+    "description": "A flexible container block with customizable max-width options.",
+    "keywords": ["container", "wrapper", "layout", "max-width"],
+    "textdomain": "sigil",
+    "attributes": {
+        "maxWidth": {
+            "type": "string",
+            "default": "max-w-4xl"
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": ["wide", "full"],
+        "spacing": {
+            "margin": true,
+            "padding": true
+        },
+        "layout": {
+            "allowSwitching": false,
+            "allowInheriting": false,
+            "default": {
+                "type": "default"
+            }
+        }
+    },
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css",
+    "style": "file:./style-index.css"
+} 

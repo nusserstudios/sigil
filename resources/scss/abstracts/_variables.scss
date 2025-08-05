@@ -52,13 +52,14 @@
     --text-underline-offset: 0.1rem;
 
     // Font sizes
-    --font-xs: 0.75rem;
-    --font-sm: 0.875rem;
-    --font-base: 1rem;
-    --font-lg: 1.125rem;
-    --font-xl: 1.25rem;
-    --font-2xl: 1.5rem;
-    --font-3xl: 1.875rem;
+    --font-xs: clamp(0.75rem, 0.17vi + 0.76rem, 0.8rem);
+    --font-sm: clamp(0.8rem, 0.17vi + 0.76rem, 0.925rem);
+    --font-base: clamp(1rem, 0.34vi + 0.91rem, 1.19rem);
+    --font-md: clamp(1.1rem, 0.61vi + 1.1rem, 1.58rem);
+    --font-lg: clamp(1.125rem, 1vi + 1.31rem, 2.11rem);
+    --font-xl: clamp(1.25rem, 1.56vi + 1.56rem, 2.81rem);
+    --font-2xl: clamp(1.5rem, 2.38vi + 1.85rem, 3.75rem);
+    --font-3xl: clamp(1.875rem, 3.54vi + 2.17rem, 5rem);
 
     // Typography spacing
     --typography-spacing-vertical: clamp(1rem, 0.8641rem + 1.3043vw, 1.5rem);
@@ -74,6 +75,23 @@
     // WORDPRESS CONTAINER PADDING
     // ========================================
     --container-padding: var(--spacing);
+
+    // ========================================
+    // CONTAINER MAX-WIDTH SIZES
+    // ========================================
+    --container-3xs: 16rem; /* 256px */
+    --container-2xs: 18rem; /* 288px */
+    --container-xs: 20rem; /* 320px */
+    --container-sm: 24rem; /* 384px */
+    --container-md: 28rem; /* 448px */
+    --container-lg: 32rem; /* 512px */
+    --container-xl: 36rem; /* 576px */
+    --container-2xl: 42rem; /* 672px */
+    --container-3xl: 48rem; /* 768px */
+    --container-4xl: 56rem; /* 896px */
+    --container-5xl: 64rem; /* 1024px */
+    --container-6xl: 72rem; /* 1152px */
+    --container-7xl: 80rem; /* 1280px */
 
     // ========================================
     // STATIC ASSET PATHS

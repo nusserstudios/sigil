@@ -22,6 +22,8 @@ $function_files = [
     'assets.php',           // Asset loading (Vite)
     'asset-helpers.php',    // Asset URL helpers for images
     'enqueue-blocks.php',   // Block asset loading and registration
+    'template-wrappers.php', // Breakout grid template wrappers
+    'breakout-enhancements.php', // Block-level breakout enhancements
     'force-block-refresh.php', // Temporary debug functions (remove when blocks work)
     'debug-blocks.php',     // Temporary block debug info (remove when blocks work)
     'off-canvas-menu.php',  // Off-canvas menu functionality

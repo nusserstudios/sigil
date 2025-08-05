@@ -1,0 +1,88 @@
+// Breakout Grid Block Styles
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.wp-block-sigil-breakout-grid {
+	// Grid configuration
+	--content-width: 56rem; /* max-w-4xl = 896px */
+	--wide-width: 80rem; /* 1280px */
+	--grid-padding: 2rem; /* Side padding */
+	
+	// Create the breakout grid
+	display: grid;
+	grid-template-columns:
+		[full-start] 1fr
+		[wide-start] minmax(0, calc((var(--wide-width) - var(--content-width)) / 2))
+		[content-start] min(100% - var(--grid-padding), var(--content-width))
+		[content-end] minmax(0, calc((var(--wide-width) - var(--content-width)) / 2))
+		[wide-end] 1fr
+		[full-end];
+	
+	width: 100%;
+	margin: 0 auto;
+	row-gap: var(--space-m, 1.5rem);
+	
+	// Default: all content goes in the content area
+	> * {
+		grid-column: content;
+		margin-bottom: 0; // Grid gap handles spacing
+	}
+	
+	// Wide content spans the wide area
+	> .breakout-wide {
+		grid-column: wide;
+	}
+	
+	// Full-width content spans the entire grid
+	> .breakout-full {
+		grid-column: full;
+	}
+	
+	// Handle nested WordPress blocks properly
+	> .wp-block {
+		margin-bottom: 0; // Grid gap handles spacing
+	}
+	
+	// Responsive adjustments
+	@include media(max, sm) {
+		--grid-padding: 1rem;
+		row-gap: var(--space-s, 1rem);
+		
+		// On small screens, wide content becomes content width
+		> .breakout-wide {
+			grid-column: content;
+		}
+	}
+}
+
+// Editor-specific styles
+.editor-styles-wrapper {
+	.wp-block-sigil-breakout-grid {
+		// Visual indicator in editor
+		&::before {
+			content: "Breakout Grid Container";
+			position: absolute;
+			top: -24px;
+			left: 0;
+			background: var(--primary, #0073aa);
+			color: white;
+			padding: 4px 8px;
+			border-radius: 3px;
+			font-size: 11px;
+			font-weight: 500;
+			z-index: 1;
+			opacity: 0.8;
+		}
+		
+		// Show grid boundaries on hover
+		&:hover::before {
+			opacity: 1;
+		}
+		
+		// Visual grid outline
+		&.is-selected {
+			outline: 2px solid var(--primary, #0073aa);
+			outline-offset: 2px;
+		}
+	}
+} 

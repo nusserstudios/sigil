@@ -40,6 +40,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-block: var(--space-m);
     font-weight: 700;
     line-height: 1.125;
+    color: var(--heading-color, var(--text-color, var(--color)));
 }
 
 h1 {
@@ -106,6 +107,11 @@ pre,
 table,
 ul {
     margin-bottom: var(--typography-spacing-vertical);
+}
+
+// Text color for main content
+p, li, dt, dd {
+    color: var(--text-color, var(--color));
 }
 
 // Lists

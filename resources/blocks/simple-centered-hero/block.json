@@ -1,0 +1,142 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "sigil/hero-banner",
+    "version": "1.0.0",
+    "title": "Simple centered",
+    "category": "sigil-blocks",
+    "icon": "cover-image",
+    "description": "A simple centered content block with customizable heading and text colors for light and dark modes.",
+    "keywords": ["simple", "centered", "content", "colors"],
+    "textdomain": "sigil",
+    "attributes": {
+        "heading": {
+            "type": "string",
+            "default": ""
+        },
+        "subheading": {
+            "type": "string",
+            "default": ""
+        },
+        "buttonText": {
+            "type": "string",
+            "default": ""
+        },
+        "buttonUrl": {
+            "type": "string",
+            "default": ""
+        },
+        "overlayOpacity": {
+            "type": "number",
+            "default": 0.5
+        },
+        "breakoutType": {
+            "type": "string",
+            "default": "normal"
+        },
+        "headingColorLight": {
+            "type": "string",
+            "default": ""
+        },
+        "headingColorDark": {
+            "type": "string",
+            "default": ""
+        },
+        "textColorLight": {
+            "type": "string",
+            "default": ""
+        },
+        "textColorDark": {
+            "type": "string",
+            "default": ""
+        },
+        "backgroundColorLight": {
+            "type": "string",
+            "default": ""
+        },
+        "backgroundColorDark": {
+            "type": "string",
+            "default": ""
+        },
+        "backgroundImage": {
+            "type": "object",
+            "default": null
+        },
+        "backgroundImageId": {
+            "type": "number",
+            "default": 0
+        },
+        "backgroundOpacity": {
+            "type": "number",
+            "default": 1
+        },
+        "backgroundType": {
+            "type": "string",
+            "default": "color"
+        },
+        "sectionColor": {
+            "type": "string",
+            "default": ""
+        },
+        "overlayType": {
+            "type": "string",
+            "default": "none"
+        },
+        "overlayColor": {
+            "type": "string",
+            "default": ""
+        },
+        "overlayOpacity": {
+            "type": "number",
+            "default": 0.5
+        },
+        "overlayGradientType": {
+            "type": "string",
+            "default": "linear"
+        },
+        "overlayGradientAngle": {
+            "type": "number",
+            "default": 45
+        },
+        "overlayGradientAngleMode": {
+            "type": "string",
+            "default": "preset"
+        },
+        "overlayGradientColor1": {
+            "type": "string",
+            "default": ""
+        },
+        "overlayGradientColor2": {
+            "type": "string",
+            "default": ""
+        },
+        "overlayCustomGradient": {
+            "type": "string",
+            "default": ""
+        },
+        "backgroundBlendMode": {
+            "type": "string",
+            "default": "normal"
+        },
+        "overlayBlendMode": {
+            "type": "string",
+            "default": "normal"
+        },
+        "backgroundImageFit": {
+            "type": "string",
+            "default": "cover"
+        },
+        "backgroundImagePosition": {
+            "type": "string",
+            "default": "center"
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": ["wide", "full"]
+    },
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css",
+    "style": "file:./style-index.css",
+    "render": "file:./render.php"
+} 

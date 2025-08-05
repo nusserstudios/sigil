@@ -24,6 +24,9 @@
 @use "wordpress/wordpress";
 @use "wordpress/theme";
 
+// Block styles
+@use "blocks/blocks";
+
 // Page-specific styles (add as needed)
 // @use "pages/home";
 // @use "pages/single";

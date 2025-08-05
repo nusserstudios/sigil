@@ -1,0 +1,94 @@
+// Container Block Styles
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.wp-block-sigil-container {
+    // Base container styles are already defined in layout/_containers.scss
+    // This file can contain block-specific overrides or additional styles
+    
+    // Ensure proper spacing for nested blocks
+    > * {
+        margin-bottom: var(--block-spacing-vertical);
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    
+    // Handle nested containers gracefully
+    .wp-block-sigil-container {
+        margin-bottom: var(--block-spacing-vertical);
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    
+    // Ensure proper spacing for WordPress core blocks
+    .wp-block {
+        margin-bottom: var(--block-spacing-vertical);
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+// Editor-specific styles
+.editor-styles-wrapper {
+    .wp-block-sigil-container {
+        // Editor-specific styles
+        .container-block-editor {
+            min-height: 50px;
+            position: relative;
+            
+            .container-preview-label {
+                position: absolute;
+                top: -20px;
+                left: 0;
+                background: var(--primary);
+                color: var(--primary-inverse);
+                padding: 2px 8px;
+                border-radius: 3px;
+                font-size: 11px;
+                line-height: 1.2;
+                z-index: 1;
+                opacity: 0.8;
+                
+                small {
+                    font-weight: 500;
+                }
+            }
+            
+            // Style the InnerBlocks area
+            .block-editor-inner-blocks {
+                min-height: 50px;
+            }
+            
+            // Add visual indicator for empty container
+            &:empty::after {
+                content: attr(data-placeholder);
+                color: var(--muted-color);
+                font-style: italic;
+                padding: var(--spacing);
+                display: block;
+                text-align: center;
+                border: 2px dashed var(--muted-border-color);
+                border-radius: var(--border-radius);
+            }
+        }
+        
+        // Visual outline in editor to show container boundaries
+        &.is-selected {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+        
+        // Show container boundaries on hover
+        &:hover {
+            .container-preview-label {
+                opacity: 1;
+            }
+        }
+    }
+} 

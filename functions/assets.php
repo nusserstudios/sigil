@@ -114,7 +114,7 @@ function sigil_enqueue_editor_assets() {
         // Development mode
         wp_enqueue_script(
             'sigil-editor',
-            $dev_server . '/resources/js/app.js',
+            $dev_server . '/resources/js/editor.js',
             ['wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-block-editor'],
             null,
             true
@@ -142,12 +142,12 @@ function sigil_enqueue_editor_assets() {
             $theme_uri = get_template_directory_uri();
             
             // Load editor scripts
-            if (isset($manifest['resources/js/app.js']['file'])) {
+            if (isset($manifest['resources/js/editor.js']['file'])) {
                 wp_enqueue_script(
                     'sigil-editor',
-                    $theme_uri . '/dist/' . $manifest['resources/js/app.js']['file'],
+                    $theme_uri . '/dist/' . $manifest['resources/js/editor.js']['file'],
                     ['wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-block-editor'],
-                    filemtime(get_template_directory() . '/dist/' . $manifest['resources/js/app.js']['file']),
+                    filemtime(get_template_directory() . '/dist/' . $manifest['resources/js/editor.js']['file']),
                     true
                 );
             }

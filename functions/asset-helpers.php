@@ -95,4 +95,19 @@ function get_background_css($image_path, $options = []) {
     }
     
     return $css;
-} 
+}
+
+/**
+ * Output hero banner CSS custom properties
+ */
+function output_hero_banner_css_variables() {
+    $images = [
+        'hero-banner-bg' => 'animated-svgs/field-flux.svg'
+    ];
+    
+    output_image_css_variables($images);
+}
+
+// Hook to output hero banner CSS variables in the head
+add_action('wp_head', 'output_hero_banner_css_variables');
+add_action('admin_head', 'output_hero_banner_css_variables'); // For block editor 

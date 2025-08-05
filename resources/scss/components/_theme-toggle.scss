@@ -19,7 +19,7 @@
     cursor: pointer;
     pointer-events: auto;
     z-index: 999;
-    margin-top: -0.1rem;
+    margin-block: auto;
     
     // Hide on extra small screens
     @media (max-width: 575px) {

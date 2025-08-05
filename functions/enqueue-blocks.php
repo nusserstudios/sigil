@@ -14,17 +14,11 @@ if (!defined('ABSPATH')) {
 function sigil_register_theme_blocks() {
     $blocks_dir = get_template_directory() . '/dist/blocks';
     
-    // error_log('Sigil Blocks Debug: Looking for blocks directory at: ' . $blocks_dir);
-    // error_log('Sigil Blocks Debug: get_template_directory() returns: ' . get_template_directory());
-    
     if (!is_dir($blocks_dir)) {
-        // error_log('Sigil Blocks Debug: blocks directory not found at: ' . $blocks_dir);
         return;
     }
     
-    // error_log('Sigil Blocks Debug: Found blocks directory');
-    
-    // Find all block directories (flat structure: block-name)
+    // Find all block directories
     $block_folders = glob($blocks_dir . '/*', GLOB_ONLYDIR);
     
     foreach ($block_folders as $block_path) {

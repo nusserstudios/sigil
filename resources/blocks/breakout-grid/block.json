@@ -1,0 +1,31 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "sigil/breakout-grid",
+	"version": "1.0.0",
+	"title": "Breakout Grid",
+	"category": "sigil-blocks",
+	"icon": "grid-view",
+	"description": "A flexible grid layout with normal content (max-w-4xl), wide content (1280px), and full-width breakout sections.",
+	"keywords": ["grid", "layout", "breakout", "content", "wide"],
+	"textdomain": "sigil",
+	"attributes": {},
+	"supports": {
+		"html": false,
+		"align": ["wide", "full"],
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "default"
+			}
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

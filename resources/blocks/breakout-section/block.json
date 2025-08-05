@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "sigil/breakout-section",
+	"version": "1.0.0",
+	"title": "Breakout Section",
+	"category": "sigil-blocks",
+	"icon": "align-wide",
+	"description": "A section that can break out to wide or full width within a breakout grid.",
+	"keywords": ["breakout", "wide", "full", "section"],
+	"textdomain": "sigil",
+	"parent": ["sigil/breakout-grid"],
+	"attributes": {
+		"breakoutType": {
+			"type": "string",
+			"default": "wide"
+		}
+	},
+	"supports": {
+		"html": false,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "default"
+			}
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

@@ -1,0 +1,82 @@
+// Breakout Section Block Styles
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.wp-block-sigil-breakout-section {
+	// The breakout grid handles the positioning via CSS Grid
+	// These classes are applied to trigger the grid column assignment
+	
+	&.breakout-wide {
+		// Will be positioned by parent grid's .breakout-wide selector
+		// Add any specific wide content styling here
+		padding: var(--space-m, 1.5rem) 0;
+	}
+	
+	&.breakout-full {
+		// Will be positioned by parent grid's .breakout-full selector  
+		// Add any specific full-width content styling here
+		padding: var(--space-l, 2rem) var(--space-m, 1.5rem);
+		background: var(--card-background-color, #fff);
+	}
+	
+	// Ensure nested content has proper spacing
+	> * {
+		margin-bottom: var(--space-s, 1rem);
+		
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+	
+	// Handle nested WordPress blocks
+	> .wp-block {
+		margin-bottom: var(--space-s, 1rem);
+		
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+
+// Editor-specific styles
+.editor-styles-wrapper {
+	.wp-block-sigil-breakout-section {
+		&.breakout-wide {
+			border: 2px dashed #007cba;
+			position: relative;
+			
+			&::before {
+				content: "Wide Content";
+				position: absolute;
+				top: -20px;
+				left: 0;
+				background: #007cba;
+				color: white;
+				padding: 2px 8px;
+				border-radius: 3px;
+				font-size: 11px;
+				font-weight: 500;
+				z-index: 1;
+			}
+		}
+		
+		&.breakout-full {
+			border: 2px dashed #d63638;
+			position: relative;
+			
+			&::before {
+				content: "Full Width Content";
+				position: absolute;
+				top: -20px;
+				left: 0;
+				background: #d63638;
+				color: white;
+				padding: 2px 8px;
+				border-radius: 3px;
+				font-size: 11px;
+				font-weight: 500;
+				z-index: 1;
+			}
+		}
+	}
+} 

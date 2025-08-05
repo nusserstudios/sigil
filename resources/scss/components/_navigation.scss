@@ -127,6 +127,7 @@ body.menu-open {
         list-style: none;
         display: flex;
         align-items: center;
+        margin-bottom: auto;
 
         a {
             color: var(--text-color);
