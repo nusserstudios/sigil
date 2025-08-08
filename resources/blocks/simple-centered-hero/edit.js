@@ -11,7 +11,8 @@ export default function Edit({ attributes, setAttributes }) {
             backgroundOpacity, backgroundType, sectionColor,
             overlayType, overlayColor, overlayOpacity: overlayOpacityAttr,
             backgroundBlendMode, overlayBlendMode, backgroundImageFit, backgroundImagePosition,
-            overlayGradientType, overlayGradientAngle, overlayGradientAngleMode, overlayGradientColor1, overlayGradientColor2, overlayCustomGradient
+            overlayGradientType, overlayGradientAngle, overlayGradientAngleMode, overlayGradientColor1, overlayGradientColor2, overlayCustomGradient,
+            animatedSvgBackground, svgBlendMode
         } = attributes;
         
         // Get theme colors and media
@@ -68,6 +69,17 @@ export default function Edit({ attributes, setAttributes }) {
             { label: __('Bottom Left', 'sigil'), value: 'bottom left' },
             { label: __('Bottom Right', 'sigil'), value: 'bottom right' }
         ];
+        
+        // Animated SVG options
+        const animatedSvgOptions = [
+            { label: __('None', 'sigil'), value: '' },
+            { label: __('Proton', 'sigil'), value: 'proton.svg' },
+            { label: __('Ripple Wave', 'sigil'), value: 'ripple-wave.svg' },
+            { label: __('Spiral', 'sigil'), value: 'spiral.svg' },
+            { label: __('Field Flux', 'sigil'), value: 'field-flux.svg' },
+            { label: __('Wave', 'sigil'), value: 'wave.svg' },
+            { label: __('Ripple', 'sigil'), value: 'ripple.svg' }
+        ];
         const blockProps = useBlockProps();
 
         return (
@@ -79,11 +91,7 @@ export default function Edit({ attributes, setAttributes }) {
                             value={heading}
                             onChange={(value) => setAttributes({ heading: value })}
                         />
-                        <TextControl
-                            label={__('Subheading', 'sigil')}
-                            value={subheading}
-                            onChange={(value) => setAttributes({ subheading: value })}
-                        />
+
                         <TextControl
                             label={__('Button Text', 'sigil')}
                             value={buttonText}
@@ -323,7 +331,37 @@ export default function Edit({ attributes, setAttributes }) {
                                 )}
                             </>
                         )}
-                        
+
+                    </PanelBody>
+                    
+                    <PanelBody title={__('Animated SVG Overlay', 'sigil')} initialOpen={false}>
+                        <SelectControl
+                            label={__('Animated SVG', 'sigil')}
+                            value={animatedSvgBackground}
+                            options={animatedSvgOptions}
+                            onChange={(value) => setAttributes({ animatedSvgBackground: value })}
+                            help={__('Choose an animated SVG overlay that will appear over your background', 'sigil')}
+                        />
+                        {animatedSvgBackground && (
+                            <>
+                                <RangeControl
+                                    label={__('SVG Opacity', 'sigil')}
+                                    value={backgroundOpacity}
+                                    onChange={(value) => setAttributes({ backgroundOpacity: value })}
+                                    min={0}
+                                    max={1}
+                                    step={0.1}
+                                    help={__('Adjust transparency of animated SVG overlay', 'sigil')}
+                                />
+                                <SelectControl
+                                    label={__('SVG Blend Mode', 'sigil')}
+                                    value={svgBlendMode}
+                                    options={blendModeOptions}
+                                    onChange={(value) => setAttributes({ svgBlendMode: value })}
+                                    help={__('How the animated SVG blends with layers below', 'sigil')}
+                                />
+                            </>
+                        )}
 
                     </PanelBody>
                     
@@ -493,53 +531,118 @@ export default function Edit({ attributes, setAttributes }) {
                     </PanelBody>
                 </InspectorControls>
                 
-                <div className="simple-centered-editor" style={{
+                <div className="hero-editor" style={{
+                    position: 'relative',
                     textAlign: 'center',
                     padding: '2rem',
                     border: '1px dashed #ccc',
                     borderRadius: '4px',
-                    position: 'relative',
                     minHeight: '200px',
                     overflow: 'hidden',
-                    backgroundColor: sectionColor || (backgroundType === 'color' ? (backgroundColorLight || 'transparent') : 'transparent'),
-                    backgroundImage: backgroundType === 'image' && backgroundImage ? `url(${backgroundImage.url})` : 'none',
-                    backgroundSize: backgroundImageFit || 'cover',
-                    backgroundPosition: backgroundImagePosition || 'center',
-                    opacity: backgroundType !== 'none' ? backgroundOpacity : 1,
-                    mixBlendMode: backgroundBlendMode || 'normal'
+                    backgroundColor: sectionColor || 'transparent'
                 }}>
-                    <RichText
-                        tagName="h1"
-                        value={heading}
-                        onChange={(value) => setAttributes({ heading: value })}
-                        placeholder={__('Enter heading...', 'sigil')}
-                        style={{
-                            color: headingColorLight || 'inherit',
-                            marginBottom: '1rem'
-                        }}
-                    />
-                    <RichText
-                        tagName="p"
-                        value={subheading}
-                        onChange={(value) => setAttributes({ subheading: value })}
-                        placeholder={__('Enter text...', 'sigil')}
-                        style={{
-                            color: textColorLight || 'inherit',
-                            marginBottom: buttonText ? '1.5rem' : '0'
-                        }}
-                    />
-                    {buttonText && (
-                        <a href={buttonUrl} className="simple-centered-button" style={{
-                            display: 'inline-block',
-                            padding: '0.75rem 1.5rem',
-                            backgroundColor: '#007cba',
-                            color: 'white',
-                            textDecoration: 'none',
-                            borderRadius: '4px'
-                        }}>
-                            {buttonText}
-                        </a>
+                    {/* Background Image Layer */}
+                    {backgroundType === 'image' && backgroundImage && (
+                        <div style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            backgroundImage: `url(${backgroundImage.url})`,
+                            backgroundSize: backgroundImageFit || 'cover',
+                            backgroundPosition: backgroundImagePosition || 'center',
+                            backgroundRepeat: 'no-repeat',
+                            opacity: backgroundOpacity,
+                            mixBlendMode: backgroundBlendMode || 'normal',
+                            zIndex: 1
+                        }} />
                     )}
+                    
+                    {/* Background Color Layer */}
+                    {backgroundType === 'color' && (backgroundColorLight || backgroundColorDark) && (
+                        <div style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            backgroundColor: backgroundColorLight || 'transparent',
+                            opacity: backgroundOpacity,
+                            mixBlendMode: backgroundBlendMode || 'normal',
+                            zIndex: 1
+                        }} />
+                    )}
+                    
+                    {/* Animated SVG Overlay Layer */}
+                    {animatedSvgBackground && (
+                        <div style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            backgroundImage: `url(/wp-content/themes/sigil/static/images/animated-svgs/${animatedSvgBackground})`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            backgroundRepeat: 'no-repeat',
+                            opacity: backgroundOpacity,
+                            mixBlendMode: svgBlendMode || 'normal',
+                            zIndex: 2
+                        }} />
+                    )}
+                    
+                    {/* Color/Gradient Overlay Layer */}
+                    {overlayType === 'color' && overlayColor && (
+                        <div style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            backgroundColor: overlayColor,
+                            opacity: overlayOpacityAttr || 0.5,
+                            mixBlendMode: overlayBlendMode || 'normal',
+                            zIndex: 5
+                        }} />
+                    )}
+                    
+                    {/* Content Layer */}
+                    <div style={{ position: 'relative', zIndex: 10 }}>
+                        <RichText
+                            tagName="h1"
+                            value={heading}
+                            onChange={(value) => setAttributes({ heading: value })}
+                            placeholder={__('Enter heading...', 'sigil')}
+                            style={{
+                                color: headingColorLight || 'inherit',
+                                marginBottom: '1rem'
+                            }}
+                        />
+                        <RichText
+                            tagName="div"
+                            value={subheading}
+                            onChange={(value) => setAttributes({ subheading: value })}
+                            placeholder={__('Enter subheading text (supports bold, italic, links)...', 'sigil')}
+                            allowedFormats={['core/bold', 'core/italic', 'core/link', 'core/strikethrough']}
+                            style={{
+                                color: textColorLight || 'inherit',
+                                marginBottom: buttonText ? '1.5rem' : '0'
+                            }}
+                        />
+                        {buttonText && (
+                            <a href={buttonUrl} className="hero-button" style={{
+                                display: 'inline-block',
+                                padding: '0.75rem 1.5rem',
+                                backgroundColor: '#007cba',
+                                color: 'white',
+                                textDecoration: 'none',
+                                borderRadius: '4px'
+                            }}>
+                                {buttonText}
+                            </a>
+                        )}
+                    </div>
                 </div>
             </div>
         );

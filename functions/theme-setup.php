@@ -31,10 +31,6 @@ function sigil_setup() {
     add_theme_support('responsive-embeds');
     add_theme_support('editor-styles');
     
-    // Register navigation menus
-    register_nav_menus([
-        'primary' => __('Primary Menu', 'sigil'),
-        'footer'  => __('Footer Menu', 'sigil'),
-    ]);
+    // Navigation menus are registered in functions/off-canvas-menu.php
 }
 add_action('after_setup_theme', 'sigil_setup'); 

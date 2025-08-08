@@ -1,6 +1,10 @@
 import { registerBlockType } from '@wordpress/blocks';
 import Edit from './edit';
 
+// Import styles
+import './style.scss'; // Frontend styles
+import './editor.scss'; // Editor styles
+
 // Import block metadata
 import blockMetadata from './block.json';
 

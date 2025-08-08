@@ -163,6 +163,10 @@ blockquote *,
     }
 }
 
+.wp-block-columns {
+    padding-block-start: var(--space-l);
+}
+
 // Debug helper - remove this after testing
 // .debug-colors {
 //     position: fixed;

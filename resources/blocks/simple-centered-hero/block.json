@@ -129,11 +129,18 @@
         "backgroundImagePosition": {
             "type": "string",
             "default": "center"
+        },
+        "animatedSvgBackground": {
+            "type": "string",
+            "default": ""
+        },
+        "svgBlendMode": {
+            "type": "string",
+            "default": "normal"
         }
     },
     "supports": {
-        "html": false,
-        "align": ["wide", "full"]
+        "html": false
     },
     "editorScript": "file:./index.js",
     "editorStyle": "file:./index.css",

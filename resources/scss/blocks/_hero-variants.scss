@@ -1,0 +1,283 @@
+// Hero Variants - Examples of Different Hero Types
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+@use "hero-base" as *;
+
+// Split Hero - Content on left, image on right
+.split-hero {
+    @extend .hero;
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: var(--space-xl);
+    min-height: 60vh;
+    text-align: left;
+    
+    .content {
+        padding-right: var(--space-xl);
+        max-width: none;
+    }
+    
+    .media-section {
+        position: relative;
+        z-index: 2;
+        
+        img, video {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+    }
+    
+    @media (width <= 768px) {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        gap: var(--space-l);
+        
+        .content {
+            padding-right: 0;
+        }
+    }
+}
+
+// Full Screen Hero - Takes full viewport
+.fullscreen-hero {
+    @extend .hero;
+    
+    min-height: 100vh;
+    padding: var(--space-2xl);
+    
+    @supports (min-height: 100dvh) {
+        min-height: 100dvh;
+    }
+    
+    .content {
+        max-width: 1200px;
+        text-align: center;
+    }
+    
+    .heading {
+        font-size: var(--font-4xl);
+        margin-bottom: var(--space-xl);
+    }
+    
+    .text {
+        font-size: 1.4rem;
+        max-width: 800px;
+        margin: 0 auto var(--space-xl) auto;
+    }
+    
+    @media (width <= 768px) {
+        padding: var(--space-l);
+        
+        .heading {
+            font-size: var(--font-3xl);
+        }
+        
+        .text {
+            font-size: 1.2rem;
+        }
+    }
+}
+
+// Minimal Hero - Clean and simple
+.minimal-hero {
+    @extend .hero;
+    
+    padding: var(--space-xl) var(--space-l);
+    min-height: 40vh;
+    background-color: var(--background-subtle);
+    text-align: left;
+    
+    .content {
+        max-width: 600px;
+        margin-left: 0;
+    }
+    
+    .heading {
+        font-size: var(--font-2xl);
+        font-weight: 400;
+        margin-bottom: var(--space-m);
+    }
+    
+    .text {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+    }
+    
+    .btn {
+        background: transparent;
+        color: var(--primary);
+        border: 2px solid var(--primary);
+        
+        &:hover {
+            background: var(--primary);
+            color: white;
+        }
+    }
+}
+
+// Card Hero - Content in a floating card
+.card-hero {
+    @extend .hero;
+    
+    padding: var(--space-2xl) var(--space-l);
+    min-height: 70vh;
+    
+    .content {
+        background: rgba(255, 255, 255, 0.95);
+        padding: var(--space-xl);
+        border-radius: 12px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        max-width: 600px;
+        
+        &::before {
+            display: none; // Disable default backdrop
+        }
+    }
+    
+    .heading {
+        font-size: var(--font-3xl);
+        color: var(--text-dark);
+    }
+    
+    .text {
+        color: var(--text-muted);
+    }
+    
+    @media (width <= 768px) {
+        padding: var(--space-l) var(--space-m);
+        
+        .content {
+            padding: var(--space-l);
+        }
+    }
+}
+
+// Overlay Hero - Strong overlay for text readability
+.overlay-hero {
+    @extend .hero;
+    
+    padding: var(--space-2xl);
+    min-height: 80vh;
+    
+    // Always show strong overlay for this variant
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+        z-index: 8;
+        pointer-events: none;
+    }
+    
+    .content {
+        z-index: 10;
+        max-width: 800px;
+        
+        &::before {
+            display: none; // Use the hero's overlay instead
+        }
+    }
+    
+    .heading {
+        font-size: var(--font-4xl);
+        color: white;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    .text {
+        font-size: 1.3rem;
+        color: rgba(255, 255, 255, 0.9);
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+    
+    .btn {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(10px);
+        
+        &:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.8);
+        }
+    }
+}
+
+// Parallax Hero - For backgrounds that move at different speeds
+.parallax-hero {
+    @extend .hero;
+    
+    padding: var(--space-2xl);
+    min-height: 100vh;
+    
+    .background-image,
+    .animated-svg-overlay {
+        // Parallax effect can be added via JavaScript
+        transform: translateZ(0); // Force hardware acceleration
+        will-change: transform;
+    }
+    
+    .content {
+        max-width: 700px;
+    }
+    
+    .heading {
+        font-size: var(--font-4xl);
+        opacity: 0;
+        animation: fadeInUp 1s ease-out 0.3s forwards;
+    }
+    
+    .text {
+        font-size: 1.3rem;
+        opacity: 0;
+        animation: fadeInUp 1s ease-out 0.6s forwards;
+    }
+    
+    .actions {
+        opacity: 0;
+        animation: fadeInUp 1s ease-out 0.9s forwards;
+    }
+}
+
+// Animation keyframes
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// Usage Examples:
+// 
+// For a split hero:
+// <section class="hero split-hero">
+//   <div class="content">...</div>
+//   <div class="media-section">...</div>
+// </section>
+//
+// For a card hero with animated SVG:
+// <section class="hero card-hero">
+//   <div class="animated-svg-overlay"></div>
+//   <div class="content">...</div>
+// </section>
+//
+// All heroes can use any combination of:
+// - .background-image
+// - .background-color
+// - .background-video
+// - .animated-svg-overlay
+// - .static-svg-overlay
+// - .pattern-overlay
+// - .color-overlay
+// - .gradient-overlay

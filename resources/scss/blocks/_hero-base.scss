@@ -1,0 +1,328 @@
+// Hero Base - Reusable Structure for Multiple Hero Variants
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+// Hero Base Class - Use this as foundation for all hero types
+.hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    
+    // Section color support (base layer)
+    background-color: var(--section-color, transparent);
+    
+    // All background and overlay layers - semantic naming
+    .background-image,
+    .background-color,
+    .background-video,
+    .animated-svg-overlay,
+    .static-svg-overlay,
+    .color-overlay,
+    .gradient-overlay,
+    .pattern-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+    }
+    
+    // Layer Z-Index Stack (bottom to top)
+    // Base background layers (z-index: 1)
+    .background-image,
+    .background-color,
+    .background-video {
+        z-index: 1;
+    }
+    
+    // Background Image Layer
+    .background-image {
+        background-image: var(--background-image);
+        background-repeat: no-repeat;
+        background-size: var(--background-image-size, cover);
+        background-position: var(--background-image-position, center);
+        opacity: var(--background-opacity, 1);
+        mix-blend-mode: var(--background-blend-mode, normal);
+    }
+    
+    // Background Color Layer
+    .background-color {
+        background-color: var(--background-color-light, transparent);
+        opacity: var(--background-opacity, 1);
+        mix-blend-mode: var(--background-blend-mode, normal);
+        
+        // Dark mode support
+        @media (prefers-color-scheme: dark) {
+            background-color: var(--background-color-dark, var(--background-color-light, transparent));
+        }
+        
+        :root[data-theme="dark"] &,
+        .dark & {
+            background-color: var(--background-color-dark, var(--background-color-light, transparent));
+        }
+    }
+    
+    // Background Video Layer
+    .background-video {
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: var(--background-opacity, 1);
+        }
+    }
+    
+    // SVG overlay layers (z-index: 2-3)
+    .animated-svg-overlay,
+    .static-svg-overlay {
+        z-index: 2;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        opacity: var(--background-opacity, 1);
+        mix-blend-mode: var(--svg-blend-mode, normal);
+    }
+    
+    .animated-svg-overlay {
+        background-image: var(--animated-svg-background);
+    }
+    
+    .static-svg-overlay {
+        background-image: var(--static-svg-background);
+    }
+    
+    // Pattern overlays (z-index: 3)
+    .pattern-overlay {
+        z-index: 3;
+        background-image: var(--pattern-background);
+        background-repeat: repeat;
+        background-size: var(--pattern-size, 100px);
+        opacity: var(--pattern-opacity, 0.1);
+        mix-blend-mode: var(--pattern-blend-mode, multiply);
+    }
+    
+    // Color/gradient overlays (z-index: 5)
+    .color-overlay,
+    .gradient-overlay {
+        z-index: 5;
+        opacity: var(--overlay-opacity, 0.5);
+        mix-blend-mode: var(--overlay-blend-mode, normal);
+    }
+    
+    .color-overlay {
+        background-color: var(--overlay-color, transparent);
+    }
+    
+    .gradient-overlay {
+        background: var(--overlay-gradient, transparent);
+    }
+    
+    // Content Layer (z-index: 10)
+    .content {
+        position: relative;
+        z-index: 10;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        
+        // Adaptive backdrop for readability
+        &::before {
+            content: '';
+            position: absolute;
+            top: -2rem;
+            left: -2rem;
+            right: -2rem;
+            bottom: -2rem;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(1px);
+        }
+        
+        // Show backdrop when any background layers are present
+        .hero:has(.background-image) &::before,
+        .hero:has(.background-color) &::before,
+        .hero:has(.background-video) &::before,
+        .hero:has(.animated-svg-overlay) &::before,
+        .hero:has(.static-svg-overlay) &::before,
+        .hero:has(.pattern-overlay) &::before,
+        .hero:has(.color-overlay) &::before,
+        .hero:has(.gradient-overlay) &::before {
+            opacity: 0.2;
+        }
+        
+        // Enhanced backdrop for multiple layers
+        .hero:has(.animated-svg-overlay):has(.background-image) &::before,
+        .hero:has(.color-overlay):has(.background-image) &::before,
+        .hero:has(.pattern-overlay):has(.background-image) &::before {
+            opacity: 0.4;
+            background: rgba(0, 0, 0, 0.2);
+        }
+    }
+    
+    // Typography Base Styles
+    .heading {
+        margin: 0;
+        line-height: 1.2;
+        font-weight: bold;
+        
+        // Light mode color (default)
+        color: var(--heading-color-light, inherit);
+        
+        // Dark mode color support
+        @media (prefers-color-scheme: dark) {
+            color: var(--heading-color-dark, var(--heading-color-light, inherit));
+        }
+        
+        // Force dark mode when body has dark class
+        :root[data-theme="dark"] &,
+        .dark & {
+            color: var(--heading-color-dark, var(--heading-color-light, inherit));
+        }
+    }
+    
+    .text {
+        margin: 0;
+        line-height: 1.4;
+        
+        // Light mode color (default)
+        color: var(--text-color-light, inherit);
+        
+        // Dark mode color support
+        @media (prefers-color-scheme: dark) {
+            color: var(--text-color-dark, var(--text-color-light, inherit));
+        }
+        
+        // Force dark mode when body has dark class
+        :root[data-theme="dark"] &,
+        .dark & {
+            color: var(--text-color-dark, var(--text-color-light, inherit));
+        }
+    }
+    
+    .actions {
+        margin-top: var(--space-s);
+    }
+    
+    .btn {
+        display: inline-block;
+        padding: 1rem 2rem;
+        background: var(--primary);
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        
+        &:hover,
+        &:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            color: white;
+            text-decoration: none;
+            background: var(--primary-hover);
+        }
+        
+        &:focus {
+            outline: 2px solid var(--primary-hover);
+            outline-offset: 2px;
+        }
+    }
+}
+
+// Breakout Grid Support
+.hero.breakout-wide {
+    width: 100%;
+}
+
+.hero.breakout-full {
+    width: 100%;
+    max-width: none;
+}
+
+// Accessibility Support
+@media (prefers-contrast: high) {
+    .hero .content::before {
+        opacity: 0.6 !important;
+        background: rgba(0, 0, 0, 0.8);
+    }
+}
+
+// Reduced Motion Support
+@media (prefers-reduced-motion: reduce) {
+    .hero {
+        .animated-svg-overlay,
+        .background-video video {
+            // Animations are handled by the content itself
+            // This ensures layers remain but motion stops
+            filter: none;
+        }
+        
+        .content::before {
+            transition: none;
+        }
+    }
+}
+
+// Enhanced Blend Mode Support
+@supports (mix-blend-mode: multiply) {
+    .hero {
+        .background-image,
+        .background-color,
+        .background-video,
+        .animated-svg-overlay,
+        .static-svg-overlay,
+        .pattern-overlay,
+        .color-overlay,
+        .gradient-overlay {
+            isolation: isolate;
+        }
+    }
+}
+
+// Fallback for Browsers Without Blend Mode Support
+@supports not (mix-blend-mode: multiply) {
+    .hero {
+        .background-image,
+        .background-color,
+        .background-video,
+        .animated-svg-overlay,
+        .static-svg-overlay,
+        .pattern-overlay {
+            mix-blend-mode: normal !important;
+        }
+        
+        .color-overlay,
+        .gradient-overlay {
+            mix-blend-mode: normal !important;
+            opacity: calc(var(--overlay-opacity, 0.5) * 0.7);
+        }
+    }
+}
+
+// Print Styles
+@media print {
+    .hero {
+        .background-video,
+        .animated-svg-overlay,
+        .static-svg-overlay,
+        .pattern-overlay,
+        .color-overlay,
+        .gradient-overlay {
+            display: none;
+        }
+        
+        .background-image,
+        .background-color {
+            opacity: 0.1 !important;
+        }
+    }
+}

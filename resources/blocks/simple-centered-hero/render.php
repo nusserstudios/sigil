@@ -36,14 +36,18 @@ $background_blend_mode = $attributes['backgroundBlendMode'] ?? 'normal';
 $overlay_blend_mode = $attributes['overlayBlendMode'] ?? 'normal';
 $background_image_fit = $attributes['backgroundImageFit'] ?? 'cover';
 $background_image_position = $attributes['backgroundImagePosition'] ?? 'center';
+$animated_svg_background = $attributes['animatedSvgBackground'] ?? '';
+$svg_blend_mode = $attributes['svgBlendMode'] ?? 'normal';
 
 
 
 // Generate unique ID for this block instance
 $unique_id = 'simple-centered-' . uniqid();
 
-// Build CSS classes
-$css_classes = ['wp-block-sigil-simple-centered'];
+// CSS variables are handled in the existing $style_vars array below
+
+// Build CSS classes - using semantic approach instead of BEM
+$css_classes = ['hero', 'centered-hero'];
 
 // Add breakout class if not normal
 if ($breakout_type !== 'normal') {
@@ -112,6 +116,14 @@ if ($background_image && $background_type === 'image') {
 if ($background_blend_mode !== 'normal') {
     $style_vars[] = '--background-blend-mode: ' . esc_attr($background_blend_mode);
 }
+
+// Animated SVG backgrounds (now separate from background type)
+if ($animated_svg_background) {
+    $svg_path = get_template_directory_uri() . '/static/images/animated-svgs/' . $animated_svg_background;
+    $style_vars[] = '--animated-svg-background: url(' . esc_url($svg_path) . ')';
+    $style_vars[] = '--svg-blend-mode: ' . esc_attr($svg_blend_mode);
+}
+
 if ($overlay_color && $overlay_type === 'color') {
     $style_vars[] = '--overlay-color: ' . esc_attr($overlay_color);
 }
@@ -151,27 +163,40 @@ $style_string = !empty($style_vars) ? implode('; ', $style_vars) : '';
     data-overlay-type="<?php echo esc_attr($overlay_type); ?>"
     <?php if ($style_string): ?>style="<?php echo esc_attr($style_string); ?>"<?php endif; ?>
 >
-
-    
-    <?php if ($overlay_type === 'color' && $overlay_color): ?>
-        <div class="simple-centered__overlay simple-centered__overlay--color"></div>
-    <?php elseif (($overlay_type === 'linear-gradient' || $overlay_type === 'radial-gradient') && ($overlay_custom_gradient || ($overlay_gradient_color1 && $overlay_gradient_color2))): ?>
-        <div class="simple-centered__overlay simple-centered__overlay--gradient"></div>
+    <!-- Background Image Layer -->
+    <?php if ($background_type === 'image' && $background_image): ?>
+        <div class="background-image"></div>
     <?php endif; ?>
     
-
+    <!-- Background Color Layer -->
+    <?php if ($background_type === 'color' && ($background_color_light || $background_color_dark)): ?>
+        <div class="background-color"></div>
+    <?php endif; ?>
     
-    <div class="simple-centered__content">
+    <!-- Animated SVG Overlay Layer -->
+    <?php if ($animated_svg_background): ?>
+        <div class="animated-svg-overlay"></div>
+    <?php endif; ?>
+    
+    <!-- Color/Gradient Overlay Layer -->
+    <?php if ($overlay_type === 'color' && $overlay_color): ?>
+        <div class="color-overlay"></div>
+    <?php elseif (($overlay_type === 'linear-gradient' || $overlay_type === 'radial-gradient') && ($overlay_custom_gradient || ($overlay_gradient_color1 && $overlay_gradient_color2))): ?>
+        <div class="gradient-overlay"></div>
+    <?php endif; ?>
+    
+    <!-- Content Layer -->
+    <div class="content">
         <?php if (!empty($heading)): ?>
-            <h1 class="simple-centered__heading"><?php echo wp_kses_post($heading); ?></h1>
+            <h1 class="heading"><?php echo wp_kses_post($heading); ?></h1>
         <?php endif; ?>
 
         <?php if (!empty($subheading)): ?>
-            <p class="simple-centered__text"><?php echo wp_kses_post($subheading); ?></p>
+            <div class="text"><?php echo wp_kses_post($subheading); ?></div>
         <?php endif; ?>
 
         <?php if (!empty($button_text) && !empty($button_url)): ?>
-            <div class="simple-centered__actions">
+            <div class="actions">
                 <a href="<?php echo esc_url($button_url); ?>" class="btn">
                     <?php echo esc_html($button_text); ?>
                 </a>

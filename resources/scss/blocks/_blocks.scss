@@ -1,9 +1,13 @@
 // All Block Styles
 // This file imports all individual block stylesheets
 
+// Hero Base System (import first)
+@use "hero-base";
+
 // Custom Sigil Blocks
 @use "containers";
 @use "hero-banner";
 @use "simple-centered";
+@use "hero-variants"; // Optional - examples of other hero types
 @use "breakout-grid";
 @use "breakout-section"; 

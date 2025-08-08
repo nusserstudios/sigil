@@ -28,6 +28,16 @@
 		margin-bottom: 0; // Grid gap handles spacing
 	}
 	
+	// Page content defaults to wide on pages (not singles)
+	&.page-content > * {
+		grid-column: wide;
+	}
+	
+	// Single posts keep normal content width
+	&.single-content > * {
+		grid-column: content;
+	}
+	
 	// Wide content spans the wide area
 	> .breakout-wide {
 		grid-column: wide;
@@ -50,6 +60,11 @@
 		
 		// On small screens, wide content becomes content width
 		> .breakout-wide {
+			grid-column: content;
+		}
+		
+		// On small screens, page content also becomes content width
+		&.page-content > * {
 			grid-column: content;
 		}
 	}

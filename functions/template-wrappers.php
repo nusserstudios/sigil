@@ -14,7 +14,16 @@ if (!defined('ABSPATH')) {
  * Output opening breakout grid wrapper
  */
 function sigil_breakout_grid_open() {
-    echo '<div class="wp-block-sigil-breakout-grid content-wrapper">';
+    $class = 'wp-block-sigil-breakout-grid content-wrapper';
+    
+    // Add specific class based on content type
+    if (is_page()) {
+        $class .= ' page-content';
+    } elseif (is_single()) {
+        $class .= ' single-content';
+    }
+    
+    echo '<div class="' . esc_attr($class) . '">';
 }
 
 /**
@@ -74,8 +83,17 @@ function sigil_wrap_content_in_breakout_grid($content) {
         return $content;
     }
     
+    // Determine the appropriate class based on content type
+    $class = 'wp-block-sigil-breakout-grid content-wrapper';
+    
+    if (is_page()) {
+        $class .= ' page-content';
+    } elseif (is_single()) {
+        $class .= ' single-content';
+    }
+    
     // Wrap the content
-    return '<div class="wp-block-sigil-breakout-grid content-wrapper">' . $content . '</div>';
+    return '<div class="' . esc_attr($class) . '">' . $content . '</div>';
 }
 
 // Apply the wrapper to the_content
