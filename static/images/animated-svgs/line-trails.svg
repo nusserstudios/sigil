@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 2000" preserveAspectRatio="xMidYMid" style="shape-rendering: auto; display: block; background: transparent;" width="3000" height="2000" xmlns:xlink="http://www.w3.org/1999/xlink"><g><defs>
+  <filter height="370.08" width="10.08" y="-5.04" x="-5.04" filterUnits="userSpaceOnUse" id="f-zo34tvimi7r">
+    <feGaussianBlur result="blur1" stdDeviation="3.50"></feGaussianBlur>
+    <feMorphology result="dilate" in="SourceGraphic" radius="0.88" operator="dilate"></feMorphology>
+    <feComponentTransfer result="dark" in="dilate">
+    <feFuncR slope="0.33" type="linear"></feFuncR>
+    <feFuncG slope="0.33" type="linear"></feFuncG>
+    <feFuncB slope="0.33" type="linear"></feFuncB>
+    </feComponentTransfer>
+    <feGaussianBlur result="blur2" in="dark" stdDeviation="1.75"></feGaussianBlur>
+    <feMerge>
+      <feMergeNode in="blur1"></feMergeNode>
+      <feMergeNode in="blur2"></feMergeNode>
+      <feMergeNode in="SourceGraphic"></feMergeNode>
+    </feMerge>
+  </filter>
+</defs><path stroke-width="0.4" stroke="#404141" d="M96.77 0L96.77 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#4eb31b" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-11.14s" keyTimes="0;1" values="96.77 -370.08;96.77 2000" repeatCount="indefinite" dur="25s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M193.55 0L193.55 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#f45d2c" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-0.02s" keyTimes="0;1" values="193.55 -370.08;193.55 2000" repeatCount="indefinite" dur="16.67s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M290.32 0L290.32 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#4eb31b" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-9.55s" keyTimes="0;1" values="290.32 -370.08;290.32 2000" repeatCount="indefinite" dur="25s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M387.10 0L387.10 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#4eb31b" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-2.93s" keyTimes="0;1" values="387.10 -370.08;387.10 2000" repeatCount="indefinite" dur="16.67s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M483.87 0L483.87 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#f45d2c" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-13.70s" keyTimes="0;1" values="483.87 -370.08;483.87 2000" repeatCount="indefinite" dur="16.67s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M580.65 0L580.65 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#b2e51a" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-1.67s" keyTimes="0;1" values="580.65 -370.08;580.65 2000" repeatCount="indefinite" dur="50s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M677.42 0L677.42 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#f45d2c" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-32.89s" keyTimes="0;1" values="677.42 -370.08;677.42 2000" repeatCount="indefinite" dur="50s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M774.19 0L774.19 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#4eb31b" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-16.69s" keyTimes="0;1" values="774.19 -370.08;774.19 2000" repeatCount="indefinite" dur="50s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M870.97 0L870.97 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#b2e51a" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-5.33s" keyTimes="0;1" values="870.97 -370.08;870.97 2000" repeatCount="indefinite" dur="16.67s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M967.74 0L967.74 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#b2e51a" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-7.42s" keyTimes="0;1" values="967.74 -370.08;967.74 2000" repeatCount="indefinite" dur="50s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M1064.52 0L1064.52 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#4eb31b" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-9.09s" keyTimes="0;1" values="1064.52 -370.08;1064.52 2000" repeatCount="indefinite" dur="50s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M1161.29 0L1161.29 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#c52f21" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-9.58s" keyTimes="0;1" values="1161.29 -370.08;1161.29 2000" repeatCount="indefinite" dur="16.67s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M1258.06 0L1258.06 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#4eb31b" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-11.39s" keyTimes="0;1" values="1258.06 -370.08;1258.06 2000" repeatCount="indefinite" dur="16.67s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M1354.84 0L1354.84 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#c52f21" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-7.01s" keyTimes="0;1" values="1354.84 -370.08;1354.84 2000" repeatCount="indefinite" dur="25s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M1451.61 0L1451.61 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#f45d2c" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-11.77s" keyTimes="0;1" values="1451.61 -370.08;1451.61 2000" repeatCount="indefinite" dur="50s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M1548.39 0L1548.39 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#c52f21" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-11.07s" keyTimes="0;1" values="1548.39 -370.08;1548.39 2000" repeatCount="indefinite" dur="16.67s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M1645.16 0L1645.16 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#f2df0d" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-19.11s" keyTimes="0;1" values="1645.16 -370.08;1645.16 2000" repeatCount="indefinite" dur="50s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M1741.94 0L1741.94 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#b2e51a" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-14.98s" keyTimes="0;1" values="1741.94 -370.08;1741.94 2000" repeatCount="indefinite" dur="50s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M1838.71 0L1838.71 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#b2e51a" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-11.54s" keyTimes="0;1" values="1838.71 -370.08;1838.71 2000" repeatCount="indefinite" dur="16.67s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M1935.48 0L1935.48 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#4eb31b" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-15.77s" keyTimes="0;1" values="1935.48 -370.08;1935.48 2000" repeatCount="indefinite" dur="50s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M2032.26 0L2032.26 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#f45d2c" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-2.94s" keyTimes="0;1" values="2032.26 -370.08;2032.26 2000" repeatCount="indefinite" dur="16.67s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M2129.03 0L2129.03 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#c52f21" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-7.33s" keyTimes="0;1" values="2129.03 -370.08;2129.03 2000" repeatCount="indefinite" dur="16.67s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M2225.81 0L2225.81 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#4eb31b" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-11.82s" keyTimes="0;1" values="2225.81 -370.08;2225.81 2000" repeatCount="indefinite" dur="50s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M2322.58 0L2322.58 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#f2df0d" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-7.78s" keyTimes="0;1" values="2322.58 -370.08;2322.58 2000" repeatCount="indefinite" dur="16.67s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M2419.35 0L2419.35 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#f45d2c" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-3.27s" keyTimes="0;1" values="2419.35 -370.08;2419.35 2000" repeatCount="indefinite" dur="25s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M2516.13 0L2516.13 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#c52f21" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-36.57s" keyTimes="0;1" values="2516.13 -370.08;2516.13 2000" repeatCount="indefinite" dur="50s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M2612.90 0L2612.90 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#f2df0d" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-4.53s" keyTimes="0;1" values="2612.90 -370.08;2612.90 2000" repeatCount="indefinite" dur="16.67s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M2709.68 0L2709.68 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#4eb31b" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-28.05s" keyTimes="0;1" values="2709.68 -370.08;2709.68 2000" repeatCount="indefinite" dur="50s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M2806.45 0L2806.45 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#b2e51a" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-6.55s" keyTimes="0;1" values="2806.45 -370.08;2806.45 2000" repeatCount="indefinite" dur="16.67s" type="translate" attributeName="transform"></animateTransform>
+</path><path stroke-width="0.4" stroke="#404141" d="M2903.23 0L2903.23 2000"></path>
+<path filter="url(#f-zo34tvimi7r)" fill="#4eb31b" d="M0 0L-1.54 360 A1.54 1.54 0 0 0 1.54 360 Z">
+<animateTransform begin="-8.73s" keyTimes="0;1" values="2903.23 -370.08;2903.23 2000" repeatCount="indefinite" dur="16.67s" type="translate" attributeName="transform"></animateTransform>
+</path><g></g></g><!-- [ldio] generated by https://loading.io --></svg>

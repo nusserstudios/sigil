@@ -72,7 +72,187 @@
             height: 100%;
             object-fit: cover;
             opacity: var(--background-opacity, 1);
+            mix-blend-mode: var(--background-blend-mode, normal);
         }
+        
+        // Video fallback and optimization
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        // Ensure video is behind content
+        z-index: 1;
+        
+        // Video source optimization
+        source {
+            // Ensure proper source handling
+            display: block;
+        }
+        
+        // Video format optimization
+        video[data-format="webm"] {
+            // WebM specific optimizations
+            will-change: transform;
+        }
+        
+        video[data-format="mp4"] {
+            // MP4 specific optimizations
+            will-change: transform;
+        }
+        
+        video[data-format="ogg"] {
+            // OGG specific optimizations
+            will-change: transform;
+        }
+        
+        // Video quality optimization
+        video[data-quality="high"] {
+            // High quality video optimizations
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+        
+        video[data-quality="medium"] {
+            // Medium quality video optimizations
+            image-rendering: auto;
+        }
+        
+        video[data-quality="low"] {
+            // Low quality video optimizations
+            image-rendering: pixelated;
+        }
+        
+        // Video orientation optimization
+        video[data-orientation="landscape"] {
+            // Landscape video optimizations
+            object-fit: cover;
+        }
+        
+        video[data-orientation="portrait"] {
+            // Portrait video optimizations
+            object-fit: cover;
+        }
+        
+        video[data-orientation="square"] {
+            // Square video optimizations
+            object-fit: cover;
+        }
+        
+        // Video aspect ratio optimization
+        video[data-aspect-ratio="16:9"] {
+            // 16:9 aspect ratio optimizations
+            object-fit: cover;
+        }
+        
+        video[data-aspect-ratio="4:3"] {
+            // 4:3 aspect ratio optimizations
+            object-fit: cover;
+        }
+        
+        video[data-aspect-ratio="1:1"] {
+            // 1:1 aspect ratio optimizations
+            object-fit: cover;
+        }
+        
+        video[data-aspect-ratio="21:9"] {
+            // 21:9 aspect ratio optimizations
+            object-fit: cover;
+        }
+        
+        // Video bitrate optimization
+        video[data-bitrate="high"] {
+            // High bitrate video optimizations
+            image-rendering: -webkit-optimize-contrast;
+        }
+        
+        video[data-bitrate="medium"] {
+            // Medium bitrate video optimizations
+            image-rendering: auto;
+        }
+        
+        video[data-bitrate="low"] {
+            // Low bitrate video optimizations
+            image-rendering: pixelated;
+        }
+        
+        // Video codec optimization
+        video[data-codec="h264"] {
+            // H.264 codec optimizations
+            image-rendering: auto;
+        }
+        
+        video[data-codec="h265"] {
+            // H.265 codec optimizations
+            image-rendering: auto;
+        }
+        
+        video[data-codec="vp8"] {
+            // VP8 codec optimizations
+            image-rendering: auto;
+        }
+        
+        video[data-codec="vp9"] {
+            // VP9 codec optimizations
+            image-rendering: auto;
+        }
+        
+        // Video optimization for mobile
+        @media (width <= 768px) {
+            video {
+                object-fit: cover;
+            }
+        }
+        
+        // Video optimization for small screens
+        @media (width <= 480px) {
+            video {
+                object-fit: cover;
+            }
+        }
+        
+        // Video optimization for reduced motion
+        @media (prefers-reduced-motion: reduce) {
+            video {
+                animation: none;
+            }
+        }
+        
+        // Video optimization for print
+        @media print {
+            display: none;
+        }
+        
+        // Video loading state
+        &:not(:has(video[readyState="4"])) {
+            &::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 40px;
+                height: 40px;
+                border: 3px solid rgba(255, 255, 255, 0.3);
+                border-top: 3px solid rgba(255, 255, 255, 0.8);
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+                z-index: 2;
+            }
+        }
+    }
+    
+    // Video loading animation
+    @keyframes spin {
+        0% { transform: translate(-50%, -50%) rotate(0deg); }
+        100% { transform: translate(-50%, -50%) rotate(360deg); }
     }
     
     // SVG overlay layers (z-index: 2-3)
@@ -80,10 +260,279 @@
     .static-svg-overlay {
         z-index: 2;
         background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-        opacity: var(--background-opacity, 1);
+        background-size: var(--svg-background-size, cover);
+        background-position: var(--svg-background-position, center);
+        opacity: var(--svg-opacity, 1);
         mix-blend-mode: var(--svg-blend-mode, normal);
+        transition: opacity 0.3s ease, mix-blend-mode 0.3s ease;
+        
+        // Default animation speed (normal) - must come before @supports
+        animation-duration: 1.5s;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+        
+        // Animation speed control
+        &[data-animation-speed="slow"] {
+            animation-duration: 3s !important;
+        }
+        
+        &[data-animation-speed="fast"] {
+            animation-duration: 0.5s !important;
+        }
+        
+        // Fallback for browsers that don't support mix-blend-mode
+        @supports not (mix-blend-mode: normal) {
+            mix-blend-mode: normal;
+            opacity: calc(var(--svg-opacity, 1) * 0.8);
+        }
+        
+        // Responsive behavior
+        @media (width <= 768px) {
+            animation-duration: 2s; // Slightly slower on mobile for better performance
+        }
+        
+        @media (width <= 480px) {
+            animation-duration: 2.5s; // Even slower on small screens
+        }
+        
+        // Blend mode optimizations
+        &[style*="mix-blend-mode: multiply"],
+        &[style*="mix-blend-mode: darken"] {
+            filter: brightness(1.1) contrast(1.1);
+        }
+        
+        &[style*="mix-blend-mode: screen"],
+        &[style*="mix-blend-mode: lighten"] {
+            filter: brightness(0.9) contrast(1.1);
+        }
+        
+        // Content-specific optimizations
+        .hero:has(.content) & {
+            // Ensure SVG doesn't interfere with text readability
+            filter: contrast(1.1);
+        }
+        
+        // Video-specific content optimizations
+        .hero:has(.background-video):has(.content) & {
+            // Enhanced backdrop for video backgrounds with content
+            opacity: calc(var(--svg-opacity, 1) * 0.9);
+        }
+        
+        // Optimize for different background types
+        .hero:has(.background-image) & {
+            opacity: calc(var(--svg-opacity, 1) * 0.9);
+        }
+        
+        .hero:has(.background-color) & {
+            opacity: calc(var(--svg-opacity, 1) * 1.1);
+        }
+        
+        // Optimize for different overlay types
+        .hero:has(.color-overlay) &,
+        .hero:has(.gradient-overlay) & {
+            opacity: calc(var(--svg-opacity, 1) * 0.8);
+        }
+        
+        // Video-specific overlay optimizations
+        .hero:has(.background-video):has(.color-overlay) &,
+        .hero:has(.background-video):has(.gradient-overlay) & {
+            opacity: calc(var(--svg-opacity, 1) * 0.7);
+        }
+        
+        // Ensure SVG works well with pattern overlays
+        .hero:has(.pattern-overlay) & {
+            opacity: calc(var(--svg-opacity, 1) * 0.7);
+        }
+        
+        // Video-specific pattern overlay optimizations
+        .hero:has(.background-video):has(.pattern-overlay) & {
+            opacity: calc(var(--svg-opacity, 1) * 0.6);
+        }
+        
+        // Loading state optimizations
+        .hero:not(:has(.content)) & {
+            // Reduce animation when content is loading
+            animation-play-state: paused;
+        }
+        
+        // Video loading state optimizations
+        .hero:has(.background-video):not(:has(.content)) & {
+            // Reduce animation when video is loading
+            animation-play-state: paused;
+            opacity: calc(var(--svg-opacity, 1) * 0.8);
+        }
+        
+        // Performance optimizations for reduced motion
+        @media (prefers-reduced-motion: reduce) {
+            animation-play-state: paused;
+            transition: none;
+        }
+        
+        // Video performance optimizations
+        .hero:has(.background-video) {
+            // Optimize video performance
+            will-change: transform;
+            transform: translateZ(0);
+        }
+        
+        // High contrast mode support
+        @media (prefers-contrast: high) {
+            filter: contrast(1.5) brightness(1.2);
+        }
+        
+        // Video high contrast mode support
+        .hero:has(.background-video) {
+            @media (prefers-contrast: high) {
+                .background-video::before {
+                    background: rgba(0, 0, 0, 0.4);
+                }
+            }
+        }
+        
+        // Viewport-specific optimizations
+        @media (orientation: landscape) and (max-height: 500px) {
+            // Reduce animation on short landscape screens
+            animation-duration: 2.5s;
+        }
+        
+        // Video viewport-specific optimizations
+        .hero:has(.background-video) {
+            @media (orientation: landscape) and (max-height: 500px) {
+                .background-video video {
+                    object-fit: cover;
+                }
+            }
+        }
+        
+        @media (orientation: portrait) and (max-width: 500px) {
+            // Optimize for narrow portrait screens
+            background-size: contain;
+            animation-duration: 2s;
+        }
+        
+        // Video portrait orientation optimizations
+        .hero:has(.background-video) {
+            @media (orientation: portrait) and (max-width: 500px) {
+                .background-video video {
+                    object-fit: cover;
+                }
+            }
+        }
+        
+        // Large screen optimizations
+        @media (min-width: 1440px) {
+            // Enhance animation on large screens
+            animation-duration: 1.2s;
+        }
+        
+        // Video large screen optimizations
+        .hero:has(.background-video) {
+            @media (min-width: 1440px) {
+                .background-video video {
+                    object-fit: cover;
+                }
+            }
+        }
+        
+        // Theme-specific optimizations
+        :root[data-theme="dark"] &,
+        .dark & {
+            // Enhance visibility in dark mode
+            filter: brightness(1.1) contrast(1.2);
+        }
+        
+        // Video theme-specific optimizations
+        .hero:has(.background-video) {
+            :root[data-theme="dark"] &,
+            .dark & {
+                .background-video::before {
+                    background: rgba(0, 0, 0, 0.3);
+                }
+            }
+        }
+        
+        :root[data-theme="light"] &,
+        .light & {
+            // Optimize for light mode
+            filter: brightness(0.95) contrast(1.1);
+        }
+        
+        // Video light theme optimizations
+        .hero:has(.background-video) {
+            :root[data-theme="light"] &,
+            .light & {
+                .background-video::before {
+                    background: rgba(0, 0, 0, 0.2);
+                }
+            }
+        }
+        
+        // Color scheme optimizations
+        @media (prefers-color-scheme: dark) {
+            filter: brightness(1.1) contrast(1.2);
+        }
+        
+        @media (prefers-color-scheme: light) {
+            filter: brightness(0.95) contrast(1.1);
+        }
+        
+        // Video color scheme optimizations
+        .hero:has(.background-video) {
+            @media (prefers-color-scheme: dark) {
+                .background-video::before {
+                    background: rgba(0, 0, 0, 0.3);
+                }
+            }
+            
+            @media (prefers-color-scheme: light) {
+                .background-video::before {
+                    background: rgba(0, 0, 0, 0.2);
+                }
+            }
+        }
+        
+        // Interaction state optimizations
+        .hero:hover & {
+            // Enhance animation on hover
+            animation-duration: 1s;
+            filter: brightness(1.1) contrast(1.1);
+        }
+        
+        // Video interaction state optimizations
+        .hero:has(.background-video):hover {
+            .background-video::before {
+                background: rgba(0, 0, 0, 0.2);
+            }
+        }
+        
+        .hero:focus-within & {
+            // Optimize when content is focused
+            animation-duration: 1.2s;
+            filter: brightness(1.05) contrast(1.1);
+        }
+        
+        // Video focus state optimizations
+        .hero:has(.background-video):focus-within {
+            .background-video::before {
+                background: rgba(0, 0, 0, 0.25);
+            }
+        }
+        
+        // Print optimizations
+        @media print {
+            animation: none;
+            opacity: 0.3;
+        }
+        
+        // Video print optimizations
+        .hero:has(.background-video) {
+            @media print {
+                .background-video {
+                    display: none;
+                }
+            }
+        }
     }
     
     .animated-svg-overlay {
@@ -156,12 +605,26 @@
             opacity: 0.2;
         }
         
+        // Enhanced backdrop for video backgrounds
+        .hero:has(.background-video) &::before {
+            opacity: 0.3;
+            background: rgba(0, 0, 0, 0.25);
+        }
+        
         // Enhanced backdrop for multiple layers
         .hero:has(.animated-svg-overlay):has(.background-image) &::before,
         .hero:has(.color-overlay):has(.background-image) &::before,
         .hero:has(.pattern-overlay):has(.background-image) &::before {
             opacity: 0.4;
             background: rgba(0, 0, 0, 0.2);
+        }
+        
+        // Enhanced backdrop for video with overlays
+        .hero:has(.animated-svg-overlay):has(.background-video) &::before,
+        .hero:has(.color-overlay):has(.background-video) &::before,
+        .hero:has(.pattern-overlay):has(.background-video) &::before {
+            opacity: 0.5;
+            background: rgba(0, 0, 0, 0.3);
         }
     }
     

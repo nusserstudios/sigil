@@ -66,6 +66,18 @@
             "type": "number",
             "default": 0
         },
+        "backgroundVideo": {
+            "type": "object",
+            "default": null
+        },
+        "backgroundVideoId": {
+            "type": "number",
+            "default": 0
+        },
+        "backgroundVideoSources": {
+            "type": "array",
+            "default": []
+        },
         "backgroundOpacity": {
             "type": "number",
             "default": 1
@@ -135,6 +147,22 @@
             "default": ""
         },
         "svgBlendMode": {
+            "type": "string",
+            "default": "normal"
+        },
+        "svgOpacity": {
+            "type": "number",
+            "default": 1
+        },
+        "svgBackgroundSize": {
+            "type": "string",
+            "default": "cover"
+        },
+        "svgBackgroundPosition": {
+            "type": "string",
+            "default": "center"
+        },
+        "svgAnimationSpeed": {
             "type": "string",
             "default": "normal"
         }

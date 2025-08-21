@@ -258,8 +258,9 @@ body.menu-open {
         }
 
         polyline {
-            stroke: var(--muted-color);
+            stroke: var(--text-color);
             stroke-width: 8;
+            opacity: 0.5;
         }
 
         // Active state rotation (click-based only)
@@ -472,8 +473,9 @@ body.menu-open {
                 }
 
                 polyline {
-                    stroke: var(--muted-color);
+                    stroke: var(--text-color);
                     stroke-width: 8;
+                    opacity: 0.5;
                 }
             }
 

@@ -8,21 +8,24 @@ export default function Edit({ attributes, setAttributes }) {
             heading, subheading, buttonText, buttonUrl, overlayOpacity, breakoutType, 
             headingColorLight, headingColorDark, textColorLight, textColorDark,
             backgroundColorLight, backgroundColorDark, backgroundImage, backgroundImageId,
-            backgroundOpacity, backgroundType, sectionColor,
+            backgroundVideo, backgroundVideoId, backgroundVideoSources, backgroundOpacity, backgroundType, sectionColor,
             overlayType, overlayColor, overlayOpacity: overlayOpacityAttr,
             backgroundBlendMode, overlayBlendMode, backgroundImageFit, backgroundImagePosition,
             overlayGradientType, overlayGradientAngle, overlayGradientAngleMode, overlayGradientColor1, overlayGradientColor2, overlayCustomGradient,
-            animatedSvgBackground, svgBlendMode
+            animatedSvgBackground, svgBlendMode, svgOpacity, svgBackgroundSize, svgBackgroundPosition, svgAnimationSpeed
         } = attributes;
         
+
+        
         // Get theme colors and media
-        const { colors, media } = useSelect((select) => {
+        const { colors, media, videoMedia } = useSelect((select) => {
             const settings = select('core/block-editor').getSettings();
             return {
                 colors: settings.colors || [],
-                media: backgroundImageId ? select('core').getMedia(backgroundImageId) : null
+                media: backgroundImageId ? select('core').getMedia(backgroundImageId) : null,
+                videoMedia: backgroundVideoId ? select('core').getMedia(backgroundVideoId) : null
             };
-        }, [backgroundImageId]);
+        }, [backgroundImageId, backgroundVideoId]);
         
 
         
@@ -70,6 +73,13 @@ export default function Edit({ attributes, setAttributes }) {
             { label: __('Bottom Right', 'sigil'), value: 'bottom right' }
         ];
         
+        // Animation speed options
+        const animationSpeedOptions = [
+            { label: __('Slow', 'sigil'), value: 'slow' },
+            { label: __('Normal', 'sigil'), value: 'normal' },
+            { label: __('Fast', 'sigil'), value: 'fast' }
+        ];
+        
         // Animated SVG options
         const animatedSvgOptions = [
             { label: __('None', 'sigil'), value: '' },
@@ -78,7 +88,20 @@ export default function Edit({ attributes, setAttributes }) {
             { label: __('Spiral', 'sigil'), value: 'spiral.svg' },
             { label: __('Field Flux', 'sigil'), value: 'field-flux.svg' },
             { label: __('Wave', 'sigil'), value: 'wave.svg' },
-            { label: __('Ripple', 'sigil'), value: 'ripple.svg' }
+            { label: __('Ripple', 'sigil'), value: 'ripple.svg' },
+            { label: __('Boxes Black', 'sigil'), value: 'boxes-black.svg' },
+            { label: __('Bokeh Green', 'sigil'), value: 'bokeh-green.svg' },
+            { label: __('Trianglify Lime Linear', 'sigil'), value: 'trianglify-lime-linear.svg' },
+            { label: __('Trianglify Lime Radial', 'sigil'), value: 'trianglify-lime-radial.svg' },
+            { label: __('Triangles', 'sigil'), value: 'triangles.svg' },
+            { label: __('Swell Waves', 'sigil'), value: 'swell-waves.svg' },
+            { label: __('Circular Half Tone', 'sigil'), value: 'circular-half-tone.svg' },
+            { label: __('Gradient Sun', 'sigil'), value: 'gradient-sun.svg' },
+            { label: __('Line Trails', 'sigil'), value: 'line-trails.svg' },
+            { label: __('Luminous Trails', 'sigil'), value: 'luminous-trails.svg' },
+            { label: __('Seaweed', 'sigil'), value: 'seaweed.svg' },
+            { label: __('Stacked Gray Bars', 'sigil'), value: 'stacked-gray-bars.svg' },
+            { label: __('Wave Layers', 'sigil'), value: 'wave-layers.svg' }
         ];
         const blockProps = useBlockProps();
 
@@ -182,16 +205,22 @@ export default function Edit({ attributes, setAttributes }) {
                     </PanelBody>
                     
                     <PanelBody title={__('Background', 'sigil')} initialOpen={false}>
+
                         <SelectControl
                             label={__('Background Type', 'sigil')}
                             value={backgroundType}
                             options={[
                                 { label: __('Color', 'sigil'), value: 'color' },
                                 { label: __('Image', 'sigil'), value: 'image' },
+                                { label: __('Video', 'sigil'), value: 'video' },
                                 { label: __('None', 'sigil'), value: 'none' }
                             ]}
-                            onChange={(value) => setAttributes({ backgroundType: value })}
+                            onChange={(value) => {
+        
+                                setAttributes({ backgroundType: value });
+                            }}
                         />
+                        
                         
                         {backgroundType === 'color' && (
                             <>
@@ -331,6 +360,116 @@ export default function Edit({ attributes, setAttributes }) {
                                 )}
                             </>
                         )}
+                        
+                        {backgroundType === 'video' && (
+                            <>
+                                <h4>{__('Background Video', 'sigil')}</h4>
+                                
+
+                                <MediaUploadCheck>
+                                    <MediaUpload
+                                        onSelect={(media) => {
+                                            const finalMimeType = media.mime_type || (media.subtype ? `video/${media.subtype}` : 'video/mp4');
+                                            
+                                            const newSources = [...(backgroundVideoSources || []), {
+                                                id: media.id,
+                                                url: media.url || media.source_url,
+                                                filename: media.filename || media.title,
+                                                mime_type: finalMimeType,
+                                                alt: media.alt_text || media.alt || media.title
+                                            }];
+
+                                            setAttributes({ 
+                                                backgroundVideoSources: newSources
+                                            });
+                                        }}
+                                        allowedTypes={['video']}
+                                        multiple={false}
+                                        render={({ open }) => (
+                                            <Button
+                                                onClick={open}
+                                                variant="secondary"
+                                                style={{ marginBottom: '16px' }}
+                                            >
+                                                {__('Add Video Source', 'sigil')}
+                                            </Button>
+                                        )}
+                                    />
+                                </MediaUploadCheck>
+                                
+                                {backgroundVideoSources && backgroundVideoSources.length > 0 && (
+                                    <div style={{ marginBottom: '16px' }}>
+                                        <h5 style={{ fontSize: '1rem', marginBottom: '8px' }}>
+                                            {__('Video Sources:', 'sigil')}
+                                        </h5>
+                                        {backgroundVideoSources.map((source, index) => (
+                                            <div 
+                                                key={source.id} 
+                                                style={{ 
+                                                    display: 'flex', 
+                                                    justifyContent: 'space-between', 
+                                                    alignItems: 'center',
+                                                    padding: '8px',
+                                                    border: '1px solid #ddd',
+                                                    borderRadius: '4px',
+                                                    marginBottom: '8px',
+                                                    backgroundColor: '#f9f9f9'
+                                                }}
+                                            >
+                                                <div style={{ flex: 1 }}>
+                                                    <div style={{ fontWeight: '500', fontSize: '0.875rem' }}>
+                                                        {source.filename}
+                                                    </div>
+                                                    <div style={{ fontSize: '0.75rem', color: '#666' }}>
+                                                        {source.mime_type}
+                                                    </div>
+                                                </div>
+                                                <Button
+                                                    onClick={() => {
+                                                        const newSources = backgroundVideoSources.filter((_, i) => i !== index);
+                                                        setAttributes({ backgroundVideoSources: newSources });
+                                                    }}
+                                                    variant="tertiary"
+                                                    isDestructive
+                                                    size="small"
+                                                >
+                                                    {__('Remove', 'sigil')}
+                                                </Button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                                
+                                {backgroundVideoSources && backgroundVideoSources.length > 0 && (
+                                    <Button
+                                        onClick={() => setAttributes({ backgroundVideoSources: [] })}
+                                        variant="tertiary"
+                                        isDestructive
+                                        style={{ width: '100%', marginBottom: '16px' }}
+                                    >
+                                        {__('Clear All Video Sources', 'sigil')}
+                                    </Button>
+                                )}
+                                
+                                <RangeControl
+                                    label={__('Video Opacity', 'sigil')}
+                                    value={backgroundOpacity}
+                                    onChange={(value) => setAttributes({ backgroundOpacity: value })}
+                                    min={0}
+                                    max={1}
+                                    step={0.1}
+                                    help={__('Adjust transparency of background video', 'sigil')}
+                                />
+                                
+                                <SelectControl
+                                    label={__('Video Blend Mode', 'sigil')}
+                                    value={backgroundBlendMode}
+                                    options={blendModeOptions}
+                                    onChange={(value) => setAttributes({ backgroundBlendMode: value })}
+                                    help={__('How the video blends with content below', 'sigil')}
+                                />
+                            </>
+                        )}
 
                     </PanelBody>
                     
@@ -346,8 +485,8 @@ export default function Edit({ attributes, setAttributes }) {
                             <>
                                 <RangeControl
                                     label={__('SVG Opacity', 'sigil')}
-                                    value={backgroundOpacity}
-                                    onChange={(value) => setAttributes({ backgroundOpacity: value })}
+                                    value={svgOpacity}
+                                    onChange={(value) => setAttributes({ svgOpacity: value })}
                                     min={0}
                                     max={1}
                                     step={0.1}
@@ -359,6 +498,27 @@ export default function Edit({ attributes, setAttributes }) {
                                     options={blendModeOptions}
                                     onChange={(value) => setAttributes({ svgBlendMode: value })}
                                     help={__('How the animated SVG blends with layers below', 'sigil')}
+                                />
+                                <SelectControl
+                                    label={__('SVG Background Size', 'sigil')}
+                                    value={svgBackgroundSize}
+                                    options={objectFitOptions}
+                                    onChange={(value) => setAttributes({ svgBackgroundSize: value })}
+                                    help={__('How the SVG should be sized within the container', 'sigil')}
+                                />
+                                <SelectControl
+                                    label={__('SVG Background Position', 'sigil')}
+                                    value={svgBackgroundPosition}
+                                    options={positionOptions}
+                                    onChange={(value) => setAttributes({ svgBackgroundPosition: value })}
+                                    help={__('How the SVG should be positioned within the container', 'sigil')}
+                                />
+                                <SelectControl
+                                    label={__('SVG Animation Speed', 'sigil')}
+                                    value={svgAnimationSpeed}
+                                    options={animationSpeedOptions}
+                                    onChange={(value) => setAttributes({ svgAnimationSpeed: value })}
+                                    help={__('Control the speed of SVG animations', 'sigil')}
                                 />
                             </>
                         )}
@@ -574,6 +734,39 @@ export default function Edit({ attributes, setAttributes }) {
                         }} />
                     )}
                     
+                    {/* Background Video Layer */}
+                    {backgroundType === 'video' && backgroundVideoSources && backgroundVideoSources.length > 0 && (
+                        <div style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            opacity: backgroundOpacity,
+                            mixBlendMode: backgroundBlendMode || 'normal',
+                            zIndex: 1,
+                            overflow: 'hidden'
+                        }}>
+                            <video
+                                autoPlay
+                                muted
+                                loop
+                                playsInline
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover',
+                                    objectPosition: 'center'
+                                }}
+                            >
+                                {backgroundVideoSources.map((source, index) => (
+                                    <source key={source.id} src={source.url} type={source.mime_type} />
+                                ))}
+                                {__('Your browser does not support the video tag.', 'sigil')}
+                            </video>
+                        </div>
+                    )}
+                    
                     {/* Animated SVG Overlay Layer */}
                     {animatedSvgBackground && (
                         <div style={{
@@ -583,10 +776,10 @@ export default function Edit({ attributes, setAttributes }) {
                             right: 0,
                             bottom: 0,
                             backgroundImage: `url(/wp-content/themes/sigil/static/images/animated-svgs/${animatedSvgBackground})`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
+                            backgroundSize: svgBackgroundSize || 'cover',
+                            backgroundPosition: svgBackgroundPosition || 'center',
                             backgroundRepeat: 'no-repeat',
-                            opacity: backgroundOpacity,
+                            opacity: svgOpacity,
                             mixBlendMode: svgBlendMode || 'normal',
                             zIndex: 2
                         }} />

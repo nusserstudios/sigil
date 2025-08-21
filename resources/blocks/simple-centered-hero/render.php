@@ -1,7 +1,7 @@
 <?php
 /**
- * Simple Centered Block Template
- */
+* Simple Centered Block Template
+*/
 
 // Extract attributes with defaults
 $heading = $attributes['heading'] ?? 'Your Heading Here';
@@ -18,9 +18,14 @@ $background_color_light = $attributes['backgroundColorLight'] ?? '';
 $background_color_dark = $attributes['backgroundColorDark'] ?? '';
 $background_image = $attributes['backgroundImage'] ?? null;
 $background_image_id = $attributes['backgroundImageId'] ?? 0;
+$background_video = $attributes['backgroundVideo'] ?? null;
+$background_video_id = $attributes['backgroundVideoId'] ?? 0;
+$background_video_sources = $attributes['backgroundVideoSources'] ?? [];
 
 $background_opacity = $attributes['backgroundOpacity'] ?? 1;
 $background_type = $attributes['backgroundType'] ?? 'color';
+
+
 $section_color = $attributes['sectionColor'] ?? '';
 $overlay_type = $attributes['overlayType'] ?? 'none';
 
@@ -38,6 +43,10 @@ $background_image_fit = $attributes['backgroundImageFit'] ?? 'cover';
 $background_image_position = $attributes['backgroundImagePosition'] ?? 'center';
 $animated_svg_background = $attributes['animatedSvgBackground'] ?? '';
 $svg_blend_mode = $attributes['svgBlendMode'] ?? 'normal';
+$svg_opacity = $attributes['svgOpacity'] ?? 1;
+$svg_background_size = $attributes['svgBackgroundSize'] ?? 'cover';
+$svg_background_position = $attributes['svgBackgroundPosition'] ?? 'center';
+$svg_animation_speed = $attributes['svgAnimationSpeed'] ?? 'normal';
 
 
 
@@ -117,11 +126,38 @@ if ($background_blend_mode !== 'normal') {
     $style_vars[] = '--background-blend-mode: ' . esc_attr($background_blend_mode);
 }
 
+// Video background support
+if ($background_video_sources && count($background_video_sources) > 0 && $background_type === 'video') {
+    // Use the first video source for CSS background fallback
+    $first_video = $background_video_sources[0];
+    if (isset($first_video['url']) && !empty($first_video['url'])) {
+        $style_vars[] = '--background-video: url(' . esc_url($first_video['url']) . ')';
+        $mime_type_var = $first_video['mime_type'] ?? 'video/mp4';
+        // Fix mime_type if it's missing the video/ prefix
+        if (!empty($mime_type_var) && !str_starts_with($mime_type_var, 'video/')) {
+            $mime_type_var = 'video/' . $mime_type_var;
+        }
+        $style_vars[] = '--background-video-mime-type: ' . esc_attr($mime_type_var);
+    }
+}
+
 // Animated SVG backgrounds (now separate from background type)
 if ($animated_svg_background) {
     $svg_path = get_template_directory_uri() . '/static/images/animated-svgs/' . $animated_svg_background;
     $style_vars[] = '--animated-svg-background: url(' . esc_url($svg_path) . ')';
     $style_vars[] = '--svg-blend-mode: ' . esc_attr($svg_blend_mode);
+    if ($svg_opacity !== 1) {
+        $style_vars[] = '--svg-opacity: ' . floatval($svg_opacity);
+    }
+    if ($svg_background_size !== 'cover') {
+        $style_vars[] = '--svg-background-size: ' . esc_attr($svg_background_size);
+    }
+    if ($svg_background_position !== 'center') {
+        $style_vars[] = '--svg-background-position: ' . esc_attr($svg_background_position);
+    }
+    if ($svg_animation_speed !== 'normal') {
+        $style_vars[] = '--svg-animation-speed: ' . esc_attr($svg_animation_speed);
+    }
 }
 
 if ($overlay_color && $overlay_type === 'color') {
@@ -173,9 +209,60 @@ $style_string = !empty($style_vars) ? implode('; ', $style_vars) : '';
         <div class="background-color"></div>
     <?php endif; ?>
     
+    <!-- Background Video Layer -->
+    <?php if ($background_type === 'video' && $background_video_sources && count($background_video_sources) > 0): ?>
+        <div class="background-video">
+            <video 
+                autoplay 
+                muted 
+                loop 
+                playsinline
+                style="
+                    width: 100%; 
+                    height: 100%; 
+                    object-fit: cover; 
+                    object-position: center;
+                    opacity: <?php echo esc_attr($background_opacity); ?>;
+                    mix-blend-mode: <?php echo esc_attr($background_blend_mode); ?>;
+                "
+            >
+                <?php foreach ($background_video_sources as $source): ?>
+                    <?php if (isset($source['url']) && !empty($source['url'])): ?>
+                        <?php 
+                        $mime_type = $source['mime_type'] ?? 'video/mp4';
+                        // Fix mime_type if it's missing the video/ prefix
+                        if (!empty($mime_type) && !str_starts_with($mime_type, 'video/')) {
+                            $mime_type = 'video/' . $mime_type;
+                        }
+                        ?>
+                        <source src="<?php echo esc_url($source['url']); ?>" type="<?php echo esc_attr($mime_type); ?>">
+                    <?php endif; ?>
+                <?php endforeach; ?>
+                
+                <?php 
+                // Create fallback download links
+                $download_links = [];
+                foreach ($background_video_sources as $source) {
+                    if (isset($source['url']) && !empty($source['url'])) {
+                        $extension = pathinfo($source['url'], PATHINFO_EXTENSION);
+                        $format = strtoupper($extension);
+                        $download_links[] = '<a href="' . esc_url($source['url']) . '">' . esc_html($format) . '</a>';
+                    }
+                }
+                
+                if (!empty($download_links)) {
+                    echo esc_html__('Download the ', 'sigil') . implode(' or ', $download_links) . ' video.';
+                } else {
+                    echo esc_html__('Your browser does not support the video tag.', 'sigil');
+                }
+                ?>
+            </video>
+        </div>
+    <?php endif; ?>
+    
     <!-- Animated SVG Overlay Layer -->
     <?php if ($animated_svg_background): ?>
-        <div class="animated-svg-overlay"></div>
+        <div class="animated-svg-overlay" data-animation-speed="<?php echo esc_attr($svg_animation_speed); ?>"></div>
     <?php endif; ?>
     
     <!-- Color/Gradient Overlay Layer -->

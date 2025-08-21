@@ -58,6 +58,7 @@
         // Adjust animated SVG for mobile
         .animated-svg-overlay {
             background-size: contain;
+            animation-duration: 2s; // Slightly slower on mobile for better performance
         }
     }
 }

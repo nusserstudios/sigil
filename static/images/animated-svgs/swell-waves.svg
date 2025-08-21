@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2734 2000" preserveAspectRatio="xMidYMid" style="shape-rendering: auto; display: block; background: transparent;" width="2734" height="2000" xmlns:xlink="http://www.w3.org/1999/xlink"><g><linearGradient y2="1" y1="0" x2="0" x1="0" id="lg-2qagz67cx3l-0">
+  <stop offset="0" stop-color="#033452"></stop>
+  <stop offset="1" stop-color="#2060df"></stop>
+</linearGradient><linearGradient y2="1" y1="0" x2="0" x1="0" id="lg-2qagz67cx3l-1">
+  <stop offset="0" stop-color="#2060df"></stop>
+  <stop offset="1" stop-color="#748bf8"></stop>
+</linearGradient><linearGradient y2="1" y1="0" x2="0" x1="0" id="lg-2qagz67cx3l-2">
+  <stop offset="0" stop-color="#748bf8"></stop>
+  <stop offset="1" stop-color="#51b4ff"></stop>
+</linearGradient><linearGradient y2="1" y1="0" x2="0" x1="0" id="lg-2qagz67cx3l-3">
+  <stop offset="0" stop-color="#51b4ff"></stop>
+  <stop offset="1" stop-color="#25dddd"></stop>
+</linearGradient><linearGradient y2="1" y1="0" x2="0" x1="0" id="lg-2qagz67cx3l-4">
+  <stop offset="0" stop-color="#25dddd"></stop>
+  <stop offset="1" stop-color="#defc85"></stop>
+</linearGradient><linearGradient y2="1" y1="0" x2="0" x1="0" id="lg-2qagz67cx3l-5">
+  <stop offset="0" stop-color="#defc85"></stop>
+  <stop offset="1" stop-color="#cbf4b6"></stop>
+</linearGradient><linearGradient y2="1" y1="0" x2="0" x1="0" id="lg-2qagz67cx3l-6">
+  <stop offset="0" stop-color="#cbf4b6"></stop>
+  <stop offset="1" stop-color="#033452"></stop>
+</linearGradient><path fill-opacity="0.88" fill="url(#lg-2qagz67cx3l-0)" d="M0 0L0 1711.12Q273.40 1737.23 546.80 1709.61T1093.60 1842.25T1640.40 1702.70T2187.20 1676.93T2734 1759.20L2734 0Z">
+  <animate values="M0 0L0 1711.12Q273.40 1737.23 546.80 1709.61T1093.60 1842.25T1640.40 1702.70T2187.20 1676.93T2734 1759.20L2734 0Z;M0 0L0 1731.47Q273.40 1794.65 546.80 1771.07T1093.60 1709.07T1640.40 1728.62T2187.20 1717.29T2734 1831.34L2734 0Z;M0 0L0 1755.84Q273.40 1823.41 546.80 1797.35T1093.60 1900.76T1640.40 1766.90T2187.20 1744.28T2734 1787.94L2734 0Z;M0 0L0 1711.12Q273.40 1737.23 546.80 1709.61T1093.60 1842.25T1640.40 1702.70T2187.20 1676.93T2734 1759.20L2734 0Z" begin="0s" keySplines="0.5 0 0.5 1;0.5 0 0.5 1;0.5 0 0.5 1" calcMode="spline" keyTimes="0;0.333;0.667;1" repeatCount="indefinite" dur="10s" attributeName="d"></animate>
+</path><path fill-opacity="0.88" fill="url(#lg-2qagz67cx3l-1)" d="M0 0L0 1484.96Q273.40 1508.28 546.80 1482.96T1093.60 1583.12T1640.40 1401.19T2187.20 1440.70T2734 1591.87L2734 0Z">
+  <animate values="M0 0L0 1484.96Q273.40 1508.28 546.80 1482.96T1093.60 1583.12T1640.40 1401.19T2187.20 1440.70T2734 1591.87L2734 0Z;M0 0L0 1449.68Q273.40 1633.30 546.80 1610.50T1093.60 1395.42T1640.40 1572.05T2187.20 1523.51T2734 1522.73L2734 0Z;M0 0L0 1546.46Q273.40 1658 546.80 1613.33T1093.60 1426.12T1640.40 1502.09T2187.20 1458.36T2734 1617.49L2734 0Z;M0 0L0 1484.96Q273.40 1508.28 546.80 1482.96T1093.60 1583.12T1640.40 1401.19T2187.20 1440.70T2734 1591.87L2734 0Z" begin="-1.67s" keySplines="0.5 0 0.5 1;0.5 0 0.5 1;0.5 0 0.5 1" calcMode="spline" keyTimes="0;0.333;0.667;1" repeatCount="indefinite" dur="10s" attributeName="d"></animate>
+</path><path fill-opacity="0.88" fill="url(#lg-2qagz67cx3l-2)" d="M0 0L0 1276.37Q273.40 1174.51 546.80 1141.30T1093.60 1115.35T1640.40 1134.28T2187.20 1110.16T2734 1166.93L2734 0Z">
+  <animate values="M0 0L0 1276.37Q273.40 1174.51 546.80 1141.30T1093.60 1115.35T1640.40 1134.28T2187.20 1110.16T2734 1166.93L2734 0Z;M0 0L0 1199.95Q273.40 1308.58 546.80 1279.09T1093.60 1060.75T1640.40 1073.57T2187.20 1286.94T2734 1299.63L2734 0Z;M0 0L0 1231.85Q273.40 1158.16 546.80 1133.77T1093.60 1289.74T1640.40 1190.27T2187.20 1340.51T2734 1277.63L2734 0Z;M0 0L0 1276.37Q273.40 1174.51 546.80 1141.30T1093.60 1115.35T1640.40 1134.28T2187.20 1110.16T2734 1166.93L2734 0Z" begin="-3.33s" keySplines="0.5 0 0.5 1;0.5 0 0.5 1;0.5 0 0.5 1" calcMode="spline" keyTimes="0;0.333;0.667;1" repeatCount="indefinite" dur="10s" attributeName="d"></animate>
+</path><path fill-opacity="0.88" fill="url(#lg-2qagz67cx3l-3)" d="M0 0L0 897.37Q273.40 951.64 546.80 919.28T1093.60 976.52T1640.40 1004.92T2187.20 808.96T2734 779.93L2734 0Z">
+  <animate values="M0 0L0 897.37Q273.40 951.64 546.80 919.28T1093.60 976.52T1640.40 1004.92T2187.20 808.96T2734 779.93L2734 0Z;M0 0L0 993.57Q273.40 904.91 546.80 858.29T1093.60 938.84T1640.40 1019.74T2187.20 996.48T2734 940.15L2734 0Z;M0 0L0 1010.07Q273.40 886.01 546.80 869.56T1093.60 795.20T1640.40 955.88T2187.20 794.50T2734 808.97L2734 0Z;M0 0L0 897.37Q273.40 951.64 546.80 919.28T1093.60 976.52T1640.40 1004.92T2187.20 808.96T2734 779.93L2734 0Z" begin="-5s" keySplines="0.5 0 0.5 1;0.5 0 0.5 1;0.5 0 0.5 1" calcMode="spline" keyTimes="0;0.333;0.667;1" repeatCount="indefinite" dur="10s" attributeName="d"></animate>
+</path><path fill-opacity="0.88" fill="url(#lg-2qagz67cx3l-4)" d="M0 0L0 662.94Q273.40 744.69 546.80 699.70T1093.60 571.66T1640.40 744.88T2187.20 570.71T2734 678.62L2734 0Z">
+  <animate values="M0 0L0 662.94Q273.40 744.69 546.80 699.70T1093.60 571.66T1640.40 744.88T2187.20 570.71T2734 678.62L2734 0Z;M0 0L0 660.65Q273.40 562.32 546.80 543.14T1093.60 670.42T1640.40 626.18T2187.20 731.20T2734 488.71L2734 0Z;M0 0L0 516.93Q273.40 544.59 546.80 509.22T1093.60 511.35T1640.40 619.64T2187.20 612.80T2734 588.05L2734 0Z;M0 0L0 662.94Q273.40 744.69 546.80 699.70T1093.60 571.66T1640.40 744.88T2187.20 570.71T2734 678.62L2734 0Z" begin="-6.67s" keySplines="0.5 0 0.5 1;0.5 0 0.5 1;0.5 0 0.5 1" calcMode="spline" keyTimes="0;0.333;0.667;1" repeatCount="indefinite" dur="10s" attributeName="d"></animate>
+</path><path fill-opacity="0.88" fill="url(#lg-2qagz67cx3l-5)" d="M0 0L0 255.05Q273.40 308.56 546.80 288.28T1093.60 418.58T1640.40 237.33T2187.20 404T2734 250.59L2734 0Z">
+  <animate values="M0 0L0 255.05Q273.40 308.56 546.80 288.28T1093.60 418.58T1640.40 237.33T2187.20 404T2734 250.59L2734 0Z;M0 0L0 376.88Q273.40 242.03 546.80 202.43T1093.60 398.54T1640.40 228.16T2187.20 392.83T2734 429.03L2734 0Z;M0 0L0 259.44Q273.40 259.95 546.80 243.67T1093.60 376T1640.40 206.34T2187.20 347.55T2734 338.85L2734 0Z;M0 0L0 255.05Q273.40 308.56 546.80 288.28T1093.60 418.58T1640.40 237.33T2187.20 404T2734 250.59L2734 0Z" begin="-8.33s" keySplines="0.5 0 0.5 1;0.5 0 0.5 1;0.5 0 0.5 1" calcMode="spline" keyTimes="0;0.333;0.667;1" repeatCount="indefinite" dur="10s" attributeName="d"></animate>
+</path><g></g></g><!-- [ldio] generated by https://loading.io --></svg>

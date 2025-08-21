@@ -4,16 +4,16 @@
 
 .wp-block-sigil-breakout-grid {
 	// Grid configuration
-	--content-width: 56rem; /* max-w-4xl = 896px */
-	--wide-width: 80rem; /* 1280px */
-	--grid-padding: 2rem; /* Side padding */
+	--content-width: 52rem; /* max-w-4xl = 896px */
+	--wide-width: 78rem; /* 1248px */
+	--grid-padding: clamp(1.125rem, 1.0833rem + 0.2083vw, 1.25rem); /* Side padding */
 	
 	// Create the breakout grid
 	display: grid;
 	grid-template-columns:
 		[full-start] 1fr
 		[wide-start] minmax(0, calc((var(--wide-width) - var(--content-width)) / 2))
-		[content-start] min(100% - var(--grid-padding), var(--content-width))
+		[content-start] min(100% - calc(var(--grid-padding) * 0), var(--content-width))
 		[content-end] minmax(0, calc((var(--wide-width) - var(--content-width)) / 2))
 		[wide-end] 1fr
 		[full-end];
