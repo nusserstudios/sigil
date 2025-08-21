@@ -782,8 +782,50 @@ function sigil_get_resolved_foreground_color($color_type) {
     if ($mode === 'custom') {
         return get_theme_mod("sigil_{$color_type}_custom_color", '#1a1a1a');
     } else {
-        $color_name = get_theme_mod("sigil_{$color_type}_color", 'grey-800');
-        return sigil_get_pico_color_hex($color_name);
+        $color_name = get_theme_mod("sigil_{$color_type}_color_name", 'grey');
+        $color_shade = get_theme_mod("sigil_{$color_type}_color_shade", '800');
+        
+        // Handle white and black specially (no shade variations)
+        if ($color_name === 'white' || $color_name === 'black') {
+            $pico_color_name = $color_name;
+        } else {
+            $pico_color_name = $color_name . '-' . $color_shade;
+        }
+        
+        return sigil_get_pico_color_hex($pico_color_name);
+    }
+}
+
+/**
+ * Get resolved foreground text color value based on mode (preset or custom)
+ */
+function sigil_get_resolved_foreground_text_color($color_type) {
+    $mode = get_theme_mod("sigil_{$color_type}_color_mode", 'preset');
+    
+    if ($mode === 'custom') {
+        $custom_color = get_theme_mod("sigil_{$color_type}_custom_color", $color_type === 'light_fg_text' ? '#374151' : '#d1d5db');
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log("Foreground Text Color Debug - Custom: {$custom_color}");
+        }
+        return $custom_color;
+    } else {
+        $color_name = get_theme_mod("sigil_{$color_type}_color_name", 'grey');
+        $color_shade = get_theme_mod("sigil_{$color_type}_color_shade", $color_type === 'light_fg_text' ? '800' : '200');
+        
+        // Handle white and black specially (no shade variations)
+        if ($color_name === 'white' || $color_name === 'black') {
+            $pico_color_name = $color_name;
+        } else {
+            $pico_color_name = $color_name . '-' . $color_shade;
+        }
+        
+        $hex_color = sigil_get_pico_color_hex($pico_color_name);
+        
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log("Foreground Text Color Debug - Preset: {$pico_color_name} = {$hex_color}");
+        }
+        
+        return $hex_color;
     }
 }
 
@@ -1717,19 +1759,30 @@ function sigil_output_dynamic_css() {
         $light_bg_color = sigil_get_resolved_color('light_bg');
         $dark_bg_color = sigil_get_resolved_color('dark_bg');
         
-        // Use Background Colors for body/page background (REORGANIZED)
-        $light_body_color = $light_bg_color;  // Background colors now control body
-        $dark_body_color = $dark_bg_color;    // Background colors now control body
+        // Background colors control the page/body background
+        $light_body_color = $light_bg_color;
+        $dark_body_color = $dark_bg_color;
         
-        // Get resolved text colors (converted from old body colors)
+        // Text colors should come from the dedicated text color options (light_body and dark_body)
         $light_text_color = sigil_get_resolved_body_color('light_body');
         $dark_text_color = sigil_get_resolved_body_color('dark_body');
+        
+        // Get resolved foreground text colors (new)
+        $light_fg_text_color = sigil_get_resolved_foreground_text_color('light_fg_text');
+        $dark_fg_text_color = sigil_get_resolved_foreground_text_color('dark_fg_text');
         
         // Debug: Show what we're getting
         echo '<!-- Debug Light Body (from BG): ' . esc_html($light_body_color) . ' -->' . PHP_EOL;
         echo '<!-- Debug Dark Body (from BG): ' . esc_html($dark_body_color) . ' -->' . PHP_EOL;
         echo '<!-- Debug Light Text (from old Body): ' . esc_html($light_text_color) . ' -->' . PHP_EOL;
         echo '<!-- Debug Dark Text (from old Body): ' . esc_html($dark_text_color) . ' -->' . PHP_EOL;
+        echo '<!-- Debug Light FG Text: ' . esc_html($light_fg_text_color) . ' -->' . PHP_EOL;
+        echo '<!-- Debug Dark FG Text: ' . esc_html($dark_fg_text_color) . ' -->' . PHP_EOL;
+        echo '<!-- Debug Light FG: ' . esc_html($light_fg_color) . ' -->' . PHP_EOL;
+        echo '<!-- Debug Dark FG: ' . esc_html($dark_fg_color) . ' -->' . PHP_EOL;
+        echo '<!-- Debug Primary: ' . esc_html($primary_color) . ' -->' . PHP_EOL;
+        echo '<!-- Debug Secondary: ' . esc_html($secondary_color) . ' -->' . PHP_EOL;
+        echo '<!-- Debug Accent: ' . esc_html($accent_color) . ' -->' . PHP_EOL;
         
         // Generate color variations
         $primary_vars = sigil_generate_color_variations($primary_color);
@@ -1737,8 +1790,19 @@ function sigil_output_dynamic_css() {
         $accent_vars = sigil_generate_color_variations($accent_color);
     
     ?>
-    <style id="sigil-dynamic-colors">
+            <style id="sigil-dynamic-colors">
         /* Sigil Dynamic Colors - Generated <?php echo date('Y-m-d H:i:s'); ?> */
+        
+        /* Debug: Show the actual values being used */
+        /* Light Text Color: <?php echo esc_attr($light_text_color); ?> */
+        /* Light Background Color: <?php echo esc_attr($light_bg_color); ?> */
+        /* Light Foreground Color: <?php echo esc_attr($light_fg_color); ?> */
+        /* Light Foreground Text Color: <?php echo esc_attr($light_fg_text_color); ?> */
+        /* Dark Text Color: <?php echo esc_attr($dark_text_color); ?> */
+        /* Dark Background Color: <?php echo esc_attr($dark_bg_color); ?> */
+        /* Dark Foreground Color: <?php echo esc_attr($dark_fg_color); ?> */
+        /* Dark Foreground Text Color: <?php echo esc_attr($dark_fg_text_color); ?> */
+        
         :root {
             /* Primary Color System */
             --primary: <?php echo esc_attr($primary_vars['base']); ?>;
@@ -1774,21 +1838,42 @@ function sigil_output_dynamic_css() {
             --form-element-focus-color: <?php echo esc_attr($primary_vars['focus']); ?>;
             
             /* Background Colors */
-            --background-color: <?php echo esc_attr($light_bg_color); ?>;
-            --card-background-color: <?php echo esc_attr($light_bg_color); ?>;
+            --sigil-background-color: <?php echo esc_attr($light_bg_color); ?>;
+            --sigil-card-background-color: <?php echo esc_attr($light_bg_color); ?>;
             
             /* Body Colors (now uses Background Colors) */
-            --body-background-color: <?php echo esc_attr($light_body_color); ?>;
+            --sigil-body-background-color: <?php echo esc_attr($light_body_color); ?>;
             /* Debug: Light body color = <?php echo esc_attr($light_body_color); ?> */
             
             /* Text Colors (converted from old Body Colors) */
-            --text-color: <?php echo esc_attr($light_text_color); ?>;
-            --heading-color: <?php echo esc_attr($light_text_color); ?>;
+            --sigil-text-color: <?php echo esc_attr($light_text_color); ?>;
+            --sigil-heading-color: <?php echo esc_attr($light_text_color); ?>;
             
             /* Foreground Colors (for cards/content areas) */
-            --foreground-color: <?php echo esc_attr($light_fg_color); ?>;
-            --card-foreground-color: <?php echo esc_attr($light_fg_color); ?>;
-            --blockquote-color: <?php echo esc_attr($light_fg_color); ?>;
+            --sigil-foreground-color: <?php echo esc_attr($light_fg_color); ?>;
+            --sigil-card-foreground-color: <?php echo esc_attr($light_fg_color); ?>;
+            --sigil-blockquote-color: <?php echo esc_attr($light_fg_color); ?>;
+            
+            /* Foreground Text Colors (new) */
+            --sigil-foreground-text-color: <?php echo esc_attr($light_fg_text_color); ?>;
+            --sigil-card-text-color: <?php echo esc_attr($light_fg_text_color); ?>;
+            
+            /* Additional Pico CSS variables */
+            --color: <?php echo esc_attr($light_text_color); ?>;
+            --h1-color: <?php echo esc_attr($light_text_color); ?>;
+            --h2-color: <?php echo esc_attr($light_text_color); ?>;
+            --h3-color: <?php echo esc_attr($light_text_color); ?>;
+            --h4-color: <?php echo esc_attr($light_text_color); ?>;
+            --h5-color: <?php echo esc_attr($light_text_color); ?>;
+            --h6-color: <?php echo esc_attr($light_text_color); ?>;
+            --code-color: <?php echo esc_attr($light_text_color); ?>;
+            --kbd-color: <?php echo esc_attr($light_text_color); ?>;
+            --mark-color: <?php echo esc_attr($light_text_color); ?>;
+            
+            /* Additional theme variables */
+            --muted-color: <?php echo esc_attr($light_fg_color); ?>;
+            --muted-border-color: <?php echo esc_attr($light_fg_color); ?>;
+            --muted-background-color: <?php echo esc_attr($light_bg_color); ?>;
         }
         
         /* Dark mode adjustments */
@@ -1818,21 +1903,89 @@ function sigil_output_dynamic_css() {
             --form-element-focus-color: <?php echo esc_attr($primary_vars['focus']); ?>;
             
             /* Background Colors */
-            --background-color: <?php echo esc_attr($dark_bg_color); ?>;
-            --card-background-color: <?php echo esc_attr($dark_bg_color); ?>;
+            --sigil-background-color: <?php echo esc_attr($dark_bg_color); ?>;
+            --sigil-card-background-color: <?php echo esc_attr($dark_bg_color); ?>;
             
             /* Body Colors (now uses Background Colors) */
-            --body-background-color: <?php echo esc_attr($dark_body_color); ?>;
+            --sigil-body-background-color: <?php echo esc_attr($dark_body_color); ?>;
             /* Debug: Dark body color = <?php echo esc_attr($dark_body_color); ?> */
             
             /* Text Colors (converted from old Body Colors) */
-            --text-color: <?php echo esc_attr($dark_text_color); ?>;
-            --heading-color: <?php echo esc_attr($dark_text_color); ?>;
+            --sigil-text-color: <?php echo esc_attr($dark_text_color); ?>;
+            --sigil-heading-color: <?php echo esc_attr($dark_text_color); ?>;
             
             /* Foreground Colors (for cards/content areas) */
-            --foreground-color: <?php echo esc_attr($dark_fg_color); ?>;
-            --card-foreground-color: <?php echo esc_attr($dark_fg_color); ?>;
-            --blockquote-color: <?php echo esc_attr($dark_fg_color); ?>;
+            --sigil-foreground-color: <?php echo esc_attr($dark_fg_color); ?>;
+            --sigil-card-foreground-color: <?php echo esc_attr($dark_fg_color); ?>;
+            --sigil-blockquote-color: <?php echo esc_attr($dark_fg_color); ?>;
+            
+            /* Foreground Text Colors (new) */
+            --sigil-foreground-text-color: <?php echo esc_attr($dark_fg_text_color); ?>;
+            --sigil-card-text-color: <?php echo esc_attr($dark_fg_text_color); ?>;
+            
+            /* Additional Pico CSS variables */
+            --color: <?php echo esc_attr($dark_text_color); ?>;
+            --h1-color: <?php echo esc_attr($dark_text_color); ?>;
+            --h2-color: <?php echo esc_attr($dark_text_color); ?>;
+            --h3-color: <?php echo esc_attr($dark_text_color); ?>;
+            --h4-color: <?php echo esc_attr($dark_text_color); ?>;
+            --h5-color: <?php echo esc_attr($dark_text_color); ?>;
+            --h6-color: <?php echo esc_attr($dark_text_color); ?>;
+            --code-color: <?php echo esc_attr($dark_text_color); ?>;
+            --kbd-color: <?php echo esc_attr($dark_text_color); ?>;
+            --mark-color: <?php echo esc_attr($dark_text_color); ?>;
+            
+            /* Additional theme variables */
+            --muted-color: <?php echo esc_attr($dark_fg_color); ?>;
+            --muted-border-color: <?php echo esc_attr($dark_fg_color); ?>;
+            --muted-background-color: <?php echo esc_attr($dark_bg_color); ?>;
+        }
+        
+        /* Force dynamic variables to override SCSS fallbacks with !important */
+        /* These rules ensure theme options take precedence over compiled CSS */
+        :root {
+            --color: var(--sigil-text-color) !important;
+            --background-color: var(--sigil-body-background-color) !important;
+            --card-background-color: var(--sigil-card-background-color) !important;
+            --card-foreground-color: var(--sigil-card-foreground-color) !important;
+            --muted-color: var(--sigil-foreground-color) !important;
+            --text-color: var(--sigil-text-color) !important;
+            --heading-color: var(--sigil-text-color) !important;
+            --body-background-color: var(--sigil-body-background-color) !important;
+            
+            /* Override any other CSS variables that might be defined in compiled CSS */
+            --foreground-color: var(--sigil-foreground-color) !important;
+            --card-color: var(--sigil-card-foreground-color) !important;
+        }
+        
+        .dark {
+            --color: var(--sigil-text-color) !important;
+            --background-color: var(--sigil-body-background-color) !important;
+            --card-background-color: var(--sigil-card-background-color) !important;
+            --card-foreground-color: var(--sigil-foreground-text-color) !important;
+            --muted-color: var(--sigil-foreground-color) !important;
+            --text-color: var(--sigil-text-color) !important;
+            --heading-color: var(--sigil-text-color) !important;
+            --body-background-color: var(--sigil-body-background-color) !important;
+            
+            /* Override any other CSS variables that might be defined in compiled CSS */
+            --foreground-color: var(--sigil-foreground-color) !important;
+            --card-color: var(--sigil-foreground-text-color) !important;
+        }
+        
+        .light {
+            --color: var(--sigil-text-color) !important;
+            --background-color: var(--sigil-body-background-color) !important;
+            --card-background-color: var(--sigil-card-background-color) !important;
+            --card-foreground-color: var(--sigil-foreground-text-color) !important;
+            --muted-color: var(--sigil-foreground-color) !important;
+            --text-color: var(--sigil-text-color) !important;
+            --heading-color: var(--sigil-text-color) !important;
+            --body-background-color: var(--sigil-body-background-color) !important;
+            
+            /* Override any other CSS variables that might be defined in compiled CSS */
+            --foreground-color: var(--sigil-foreground-color) !important;
+            --card-color: var(--sigil-foreground-text-color) !important;
         }
     </style>
     <?php
@@ -1853,6 +2006,174 @@ function sigil_output_dynamic_css() {
     }
 }
 add_action('wp_head', 'sigil_output_dynamic_css', 20); // Load after other styles
+
+/**
+ * Initialize default theme mods if they don't exist
+ */
+function sigil_initialize_default_theme_mods() {
+    // Only run once per session
+    if (get_transient('sigil_defaults_initialized')) {
+        return;
+    }
+    
+    // Set default values for all color options if they don't exist
+    $defaults = [
+        // Primary colors
+        'sigil_primary_color_mode' => 'preset',
+        'sigil_primary_color_name' => 'blue',
+        'sigil_primary_color_shade' => '450',
+        'sigil_primary_custom_color' => '#5c7ef8',
+        
+        // Secondary colors
+        'sigil_secondary_color_mode' => 'preset',
+        'sigil_secondary_color_name' => 'green',
+        'sigil_secondary_color_shade' => '450',
+        'sigil_secondary_custom_color' => '#47a417',
+        
+        // Accent colors
+        'sigil_accent_color_mode' => 'preset',
+        'sigil_accent_color_name' => 'purple',
+        'sigil_accent_color_shade' => '450',
+        'sigil_accent_custom_color' => '#c652dc',
+        
+        // Light mode background colors
+        'sigil_light_bg_color_mode' => 'preset',
+        'sigil_light_bg_color_name' => 'grey',
+        'sigil_light_bg_color_shade' => '50',
+        'sigil_light_bg_custom_color' => '#ffffff',
+        
+        // Dark mode background colors
+        'sigil_dark_bg_color_mode' => 'preset',
+        'sigil_dark_bg_color_name' => 'grey',
+        'sigil_dark_bg_color_shade' => '950',
+        'sigil_dark_bg_custom_color' => '#111111',
+        
+        // Light mode foreground colors
+        'sigil_light_fg_color_mode' => 'preset',
+        'sigil_light_fg_color_name' => 'grey',
+        'sigil_light_fg_color_shade' => '950',
+        'sigil_light_fg_custom_color' => '#000000',
+        
+        // Dark mode foreground colors
+        'sigil_dark_fg_color_mode' => 'preset',
+        'sigil_dark_fg_color_name' => 'grey',
+        'sigil_dark_fg_color_shade' => '50',
+        'sigil_dark_fg_custom_color' => '#ffffff',
+        
+        // Body colors (text colors)
+        'sigil_light_body_color_mode' => 'preset',
+        'sigil_light_body_color_name' => 'grey',
+        'sigil_light_body_color_shade' => '950',
+        'sigil_light_body_custom_color' => '#000000',
+        
+        'sigil_dark_body_color_mode' => 'preset',
+        'sigil_dark_body_color_name' => 'grey',
+        'sigil_dark_body_color_shade' => '50',
+        'sigil_dark_body_custom_color' => '#ffffff',
+        
+        // Foreground text colors (new)
+        'sigil_light_fg_text_color_mode' => 'preset',
+        'sigil_light_fg_text_color_name' => 'grey',
+        'sigil_light_fg_text_color_shade' => '800',
+        'sigil_light_fg_text_custom_color' => '#374151',
+        
+        'sigil_dark_fg_text_color_mode' => 'preset',
+        'sigil_dark_fg_text_color_name' => 'grey',
+        'sigil_dark_fg_text_color_shade' => '200',
+        'sigil_dark_fg_text_custom_color' => '#d1d5db',
+    ];
+    
+    foreach ($defaults as $key => $default_value) {
+        if (get_theme_mod($key) === false) {
+            set_theme_mod($key, $default_value);
+        }
+    }
+    
+    // Set transient to prevent running again this session
+    set_transient('sigil_defaults_initialized', true, HOUR_IN_SECONDS);
+}
+add_action('init', 'sigil_initialize_default_theme_mods');
+
+/**
+ * Manual function to reset theme defaults (for debugging)
+ * Add ?reset_sigil_defaults=1 to any URL to trigger this
+ */
+function sigil_manual_reset_defaults() {
+    if (current_user_can('manage_options') && isset($_GET['reset_sigil_defaults'])) {
+        delete_transient('sigil_defaults_initialized');
+        
+        // Clear all existing theme mods
+        $all_mods = get_theme_mods();
+        if ($all_mods) {
+            foreach (array_keys($all_mods) as $mod_key) {
+                if (strpos($mod_key, 'sigil_') === 0) {
+                    remove_theme_mod($mod_key);
+                }
+            }
+        }
+        
+        // Force re-initialization
+        sigil_initialize_default_theme_mods();
+        
+        echo '<div style="position: fixed; top: 50px; right: 20px; background: white; border: 2px solid #ccc; padding: 15px; z-index: 9999;">';
+        echo '<h4>Sigil Defaults Reset</h4>';
+        echo '<p>Theme defaults have been reset and re-initialized.</p>';
+        echo '<p><a href="' . remove_query_arg('reset_sigil_defaults') . '">Close</a></p>';
+        echo '</div>';
+    }
+}
+add_action('wp_footer', 'sigil_manual_reset_defaults');
+add_action('admin_footer', 'sigil_manual_reset_defaults');
+
+/**
+ * Debug function to show current color values and theme mods
+ * Add ?debug_sigil_colors=1 to any URL to see this debug info
+ */
+function sigil_debug_color_system() {
+    if (current_user_can('manage_options') && isset($_GET['debug_sigil_colors'])) {
+        echo '<div style="position: fixed; top: 100px; right: 20px; background: white; border: 2px solid #ccc; padding: 15px; z-index: 9999; max-width: 400px; font-family: monospace; font-size: 12px; max-height: 80vh; overflow-y: auto;">';
+        echo '<h4>Sigil Color System Debug</h4>';
+        
+        // Show all current theme mods
+        echo '<h5>Current Theme Mods:</h5>';
+        $all_mods = get_theme_mods();
+        if ($all_mods) {
+            foreach ($all_mods as $key => $value) {
+                if (strpos($key, 'sigil_') === 0) {
+                    echo '<p><strong>' . esc_html($key) . ':</strong> ' . esc_html($value) . '</p>';
+                }
+            }
+        } else {
+            echo '<p>No theme mods found</p>';
+        }
+        
+        // Test color resolution functions
+        echo '<hr><h5>Color Resolution Test:</h5>';
+        echo '<p><strong>Primary:</strong> ' . sigil_get_resolved_color('primary') . '</p>';
+        echo '<p><strong>Secondary:</strong> ' . sigil_get_resolved_color('secondary') . '</p>';
+        echo '<p><strong>Accent:</strong> ' . sigil_get_resolved_color('accent') . '</p>';
+        echo '<p><strong>Light BG:</strong> ' . sigil_get_resolved_color('light_bg') . '</p>';
+        echo '<p><strong>Dark BG:</strong> ' . sigil_get_resolved_color('dark_bg') . '</p>';
+        echo '<p><strong>Light FG:</strong> ' . sigil_get_resolved_foreground_color('light_fg') . '</p>';
+        echo '<p><strong>Dark FG:</strong> ' . sigil_get_resolved_foreground_color('dark_fg') . '</p>';
+        echo '<p><strong>Light FG Text:</strong> ' . sigil_get_resolved_foreground_text_color('light_fg_text') . '</p>';
+        echo '<p><strong>Dark FG Text:</strong> ' . sigil_get_resolved_foreground_text_color('dark_fg_text') . '</p>';
+        echo '<p><strong>Light Body:</strong> ' . sigil_get_resolved_body_color('light_body') . '</p>';
+        echo '<p><strong>Dark Body:</strong> ' . sigil_get_resolved_body_color('dark_body') . '</p>';
+        
+        // Test Pico color function
+        echo '<hr><h5>Pico Color Test:</h5>';
+        echo '<p><strong>Sand-600:</strong> ' . sigil_get_pico_color_hex('sand-600') . '</p>';
+        echo '<p><strong>Grey-950:</strong> ' . sigil_get_pico_color_hex('grey-950') . '</p>';
+        echo '<p><strong>Blue-450:</strong> ' . sigil_get_pico_color_hex('blue-450') . '</p>';
+        
+        echo '<p><small>Add ?debug_sigil_colors=1 to URL to see this debug info</small></p>';
+        echo '<p><a href="' . remove_query_arg('debug_sigil_colors') . '">Close</a></p>';
+        echo '</div>';
+    }
+}
+add_action('wp_footer', 'sigil_debug_color_system');
+add_action('admin_footer', 'sigil_debug_color_system');
 
 // Force test removed - dynamic CSS is working correctly
 
@@ -1890,14 +2211,29 @@ function sigil_clear_customizer_conflicts() {
     // Remove any old customizer settings that might conflict
     $conflicting_settings = [
         'sigil_light_bg_color',
+        'sigil_light_bg_color_name',
+        'sigil_light_bg_color_shade',
+        'sigil_light_bg_custom_color',
         'sigil_dark_bg_color',
+        'sigil_dark_bg_color_name',
+        'sigil_dark_bg_color_shade',
+        'sigil_dark_bg_custom_color',
         'sigil_light_fg_color',
+        'sigil_light_fg_color_name',
+        'sigil_light_fg_color_shade',
+        'sigil_light_fg_custom_color',
         'sigil_dark_fg_color',
+        'sigil_dark_fg_color_name',
+        'sigil_dark_fg_color_shade',
+        'sigil_dark_fg_custom_color',
     ];
     
     foreach ($conflicting_settings as $setting) {
         remove_theme_mod($setting);
     }
+    
+    // Clear the defaults initialization transient
+    delete_transient('sigil_defaults_initialized');
 }
 add_action('after_switch_theme', 'sigil_clear_customizer_conflicts');
 
@@ -2012,6 +2348,9 @@ function sigil_theme_options_page() {
             // Body colors (new)
             'sigil_light_body_color_mode', 'sigil_light_body_color_name', 'sigil_light_body_color_shade', 'sigil_light_body_custom_color',
             'sigil_dark_body_color_mode', 'sigil_dark_body_color_name', 'sigil_dark_body_color_shade', 'sigil_dark_body_custom_color',
+            // Foreground text colors (new)
+            'sigil_light_fg_text_color_mode', 'sigil_light_fg_text_color_name', 'sigil_light_fg_text_color_shade', 'sigil_light_fg_text_custom_color',
+            'sigil_dark_fg_text_color_mode', 'sigil_dark_fg_text_color_name', 'sigil_dark_fg_text_color_shade', 'sigil_dark_fg_text_custom_color',
         ];
         
         foreach ($options_to_save as $option) {
@@ -2019,6 +2358,9 @@ function sigil_theme_options_page() {
                 set_theme_mod($option, sanitize_text_field($_POST[$option]));
             }
         }
+        
+        // Clear the defaults initialization transient so defaults can be re-checked
+        delete_transient('sigil_defaults_initialized');
         
         echo '<div class="notice notice-success is-dismissible"><p>' . __('Settings saved!', 'sigil') . '</p></div>';
     }
@@ -2050,13 +2392,24 @@ function sigil_render_theme_options_form() {
     // New body color options
     $light_body_color_mode = get_theme_mod('sigil_light_body_color_mode', 'preset');
     $light_body_color_name = get_theme_mod('sigil_light_body_color_name', 'grey');
-    $light_body_color_shade = get_theme_mod('sigil_light_body_color_shade', '50');
-    $light_body_custom_color = get_theme_mod('sigil_light_body_custom_color', '#fefefe');
+    $light_body_color_shade = get_theme_mod('sigil_light_body_color_shade', '950');
+    $light_body_custom_color = get_theme_mod('sigil_light_body_custom_color', '#000000');
     
     $dark_body_color_mode = get_theme_mod('sigil_dark_body_color_mode', 'preset');
     $dark_body_color_name = get_theme_mod('sigil_dark_body_color_name', 'grey');
     $dark_body_color_shade = get_theme_mod('sigil_dark_body_color_shade', '900');
     $dark_body_custom_color = get_theme_mod('sigil_dark_body_custom_color', '#11191f');
+    
+    // Foreground text colors (new)
+    $light_fg_text_color_mode = get_theme_mod('sigil_light_fg_text_color_mode', 'preset');
+    $light_fg_text_color_name = get_theme_mod('sigil_light_fg_text_color_name', 'grey');
+    $light_fg_text_color_shade = get_theme_mod('sigil_light_fg_text_color_shade', '800');
+    $light_fg_text_custom_color = get_theme_mod('sigil_light_fg_text_custom_color', '#374151');
+    
+    $dark_fg_text_color_mode = get_theme_mod('sigil_dark_fg_text_color_mode', 'preset');
+    $dark_fg_text_color_name = get_theme_mod('sigil_dark_fg_text_color_name', 'grey');
+    $dark_fg_text_color_shade = get_theme_mod('sigil_dark_fg_text_color_shade', '200');
+    $dark_fg_text_custom_color = get_theme_mod('sigil_dark_fg_text_custom_color', '#d1d5db');
     
     // Background and foreground colors (existing)
     $light_bg_color_mode = get_theme_mod('sigil_light_bg_color_mode', 'preset');
@@ -2140,6 +2493,18 @@ function sigil_render_theme_options_form() {
                     
                     <h3><?php _e('Dark Mode Background', 'sigil'); ?></h3>
                     <?php sigil_render_color_controls('dark_bg', $dark_bg_color_mode, $dark_bg_color_name, $dark_bg_color_shade, $dark_bg_custom_color, __('Dark Background Color', 'sigil')); ?>
+                </div>
+
+                <!-- Foreground Text Colors -->
+                <div class="sigil-color-section">
+                    <h2><?php _e('Foreground Text Colors', 'sigil'); ?></h2>
+                    <p><?php _e('Set the text colors for cards, content areas, and other foreground elements. These are separate from the main page text colors.', 'sigil'); ?></p>
+                    
+                    <h3><?php _e('Light Mode Foreground Text Color', 'sigil'); ?></h3>
+                    <?php sigil_render_color_controls('light_fg_text', $light_fg_text_color_mode, $light_fg_text_color_name, $light_fg_text_color_shade, $light_fg_text_custom_color, __('Light Foreground Text Color', 'sigil')); ?>
+                    
+                    <h3><?php _e('Dark Mode Foreground Text Color', 'sigil'); ?></h3>
+                    <?php sigil_render_color_controls('dark_fg_text', $dark_fg_text_color_mode, $dark_fg_text_color_name, $dark_fg_text_color_shade, $dark_fg_text_custom_color, __('Dark Foreground Text Color', 'sigil')); ?>
                 </div>
 
                 <!-- Foreground Colors -->
