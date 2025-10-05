@@ -2196,7 +2196,7 @@ function sigil_add_theme_options_page_old() {
         __('Sigil Theme Options', 'sigil'),           // Page title
         __('Sigil Theme', 'sigil'),                   // Menu title
         'edit_theme_options',                         // Capability
-        'sigil-theme-options',                        // Menu slug
+        'sigil-theme-options-old',                        // Menu slug
         'sigil_theme_options_page_old',                   // Callback function
         'dashicons-art',                              // Icon (paint brush)
         30                                            // Position (after Appearance)
