@@ -12,8 +12,11 @@ export default defineConfig({
         'app': resolve(__dirname, 'resources/js/app.js'),
         'editor': resolve(__dirname, 'resources/js/editor.js'),
         'breakout-enhancements': resolve(__dirname, 'resources/js/breakout-enhancements.jsx'),
+        'customizer-tabs': resolve(__dirname, 'resources/js/customizer-tabs.js'),
+        'customizer-preview': resolve(__dirname, 'resources/js/customizer-preview.js'),
         'app-css': resolve(__dirname, 'resources/scss/app.scss'),
         'editor-style': resolve(__dirname, 'resources/scss/editor-style.scss'),
+        'customizer-tabs-css': resolve(__dirname, 'resources/scss/customizer-tabs.scss'),
       },
       external: [
         '@wordpress/blocks',
