@@ -64,11 +64,7 @@
         font-size: 1.5rem;
         font-weight: 600;
         margin: 0;
-        color: #111827;
-        
-        [data-theme="dark"] & {
-            color: #ffffff;
-        }
+        color: var(--sigil-text-color);
     }
 }
 
@@ -76,12 +72,8 @@
     font-size: 0.875rem; // text-sm
     line-height: 1.5; // /6 equivalent
     text-wrap: balance;
-    color: #4b5563; // text-gray-600
+    color: var(--sigil-text-color);
     margin: 0;
-    
-    [data-theme="dark"] & {
-        color: #9ca3af; // dark:text-gray-400
-    }
 }
 
 .footer-social {
@@ -91,19 +83,11 @@
 }
 
 .footer-social-link {
-    color: #4b5563; // text-gray-600
+    color: var(--sigil-text-color);
     transition: color 0.2s ease;
     
     &:hover {
-        color: #1f2937; // hover:text-gray-800
-    }
-    
-    [data-theme="dark"] & {
-        color: #9ca3af; // dark:text-gray-400
-        
-        &:hover {
-            color: #d1d5db; // dark:hover:text-gray-300
-        }
+        opacity: 0.8;
     }
     
     .social-icon {
@@ -151,12 +135,8 @@
     font-size: 0.875rem; // text-sm
     line-height: 1.5; // /6 equivalent
     font-weight: 600; // font-semibold
-    color: #111827; // text-gray-900
+    color: var(--sigil-text-color);
     margin: 0 0 1.5rem 0;
-    
-    [data-theme="dark"] & {
-        color: #ffffff; // dark:text-white
-    }
 }
 
 .footer-menu-list {
@@ -171,20 +151,12 @@
 .footer-menu-link {
     font-size: 0.875rem; // text-sm
     line-height: 1.5; // /6 equivalent
-    color: #4b5563; // text-gray-600
+    color: var(--sigil-text-color);
     text-decoration: none;
     transition: color 0.2s ease;
     
     &:hover {
-        color: #111827; // hover:text-gray-900
-    }
-    
-    [data-theme="dark"] & {
-        color: #9ca3af; // dark:text-gray-400
-        
-        &:hover {
-            color: #d1d5db; // dark:hover:text-gray-300
-        }
+        opacity: 0.8;
     }
 }
 
@@ -209,12 +181,8 @@
 .footer-copyright {
     font-size: 0.875rem; // text-sm
     line-height: 1.5; // /6 equivalent
-    color: #4b5563; // text-gray-600
+    color: var(--sigil-text-color);
     margin: 0;
-    
-    [data-theme="dark"] & {
-        color: #9ca3af; // dark:text-gray-400
-    }
 }
 
 // Screen reader only utility
