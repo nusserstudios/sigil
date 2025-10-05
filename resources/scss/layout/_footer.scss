@@ -91,6 +91,7 @@
 
 .footer-social {
     display: flex;
+    flex-direction: row;
     gap: 1.5rem; // gap-x-6
 }
 
@@ -111,8 +112,9 @@
     }
     
     .social-icon {
-        width: 1.5rem; // size-6
-        height: 1.5rem;
+        width: 100%;
+        height: auto;
+        max-width: 1.125rem; // 18px
     }
 }
 
