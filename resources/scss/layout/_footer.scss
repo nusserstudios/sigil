@@ -2,12 +2,7 @@
 // Converted from Tailwind CSS to SCSS following the user's requirements
 
 .site-footer {
-    background-color: #ffffff;
-    
-    // Dark mode support
-    [data-theme="dark"] & {
-        background-color: #111827;
-    }
+    background-color: var(--sigil-body-background-color);
 }
 
 .footer-container {
