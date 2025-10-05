@@ -678,63 +678,6 @@ function sigil_sanitize_color_shade($input) {
 }
 
 /**
- * Get color name choices for dropdowns
- */
-function sigil_get_color_name_choices() {
-    return [
-        'white' => __('White', 'sigil'),
-        'black' => __('Black', 'sigil'),
-        'red' => __('Red', 'sigil'),
-        'pink' => __('Pink', 'sigil'),
-        'fuchsia' => __('Fuchsia', 'sigil'),
-        'purple' => __('Purple', 'sigil'),
-        'violet' => __('Violet', 'sigil'),
-        'indigo' => __('Indigo', 'sigil'),
-        'blue' => __('Blue', 'sigil'),
-        'azure' => __('Azure', 'sigil'),
-        'cyan' => __('Cyan', 'sigil'),
-        'jade' => __('Jade', 'sigil'),
-        'green' => __('Green', 'sigil'),
-        'lime' => __('Lime', 'sigil'),
-        'yellow' => __('Yellow', 'sigil'),
-        'amber' => __('Amber', 'sigil'),
-        'pumpkin' => __('Pumpkin', 'sigil'),
-        'orange' => __('Orange', 'sigil'),
-        'sand' => __('Sand', 'sigil'),
-        'grey' => __('Grey', 'sigil'),
-        'zinc' => __('Zinc', 'sigil'),
-        'slate' => __('Slate', 'sigil'),
-    ];
-}
-
-/**
- * Get color shade choices for dropdowns
- */
-function sigil_get_color_shade_choices() {
-    return [
-        '50' => __('50 (Lightest)', 'sigil'),
-        '100' => __('100', 'sigil'),
-        '150' => __('150', 'sigil'),
-        '200' => __('200', 'sigil'),
-        '250' => __('250', 'sigil'),
-        '300' => __('300', 'sigil'),
-        '350' => __('350', 'sigil'),
-        '400' => __('400', 'sigil'),
-        '450' => __('450 (Default)', 'sigil'),
-        '500' => __('500', 'sigil'),
-        '550' => __('550', 'sigil'),
-        '600' => __('600', 'sigil'),
-        '650' => __('650', 'sigil'),
-        '700' => __('700', 'sigil'),
-        '750' => __('750', 'sigil'),
-        '800' => __('800', 'sigil'),
-        '850' => __('850', 'sigil'),
-        '900' => __('900', 'sigil'),
-        '950' => __('950 (Darkest)', 'sigil'),
-    ];
-}
-
-/**
  * Get resolved color value based on mode (preset or custom)
  */
 function sigil_get_resolved_color($color_type) {
