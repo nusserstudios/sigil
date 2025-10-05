@@ -20,17 +20,17 @@
             var $tabsNav = $('<ul class="sigil-tabs-nav"></ul>');
             var $tabsContent = $('<div class="sigil-tabs-content"></div>');
             
-            // Define tabs
+            // Define tabs (Colors first, then Header, then Footer)
             var tabs = [
-                {
-                    id: 'header',
-                    title: 'Header',
-                    sections: ['sigil_header']
-                },
                 {
                     id: 'colors', 
                     title: 'Colors',
                     sections: ['sigil_colors']
+                },
+                {
+                    id: 'header',
+                    title: 'Header',
+                    sections: ['sigil_header']
                 },
                 {
                     id: 'footer',
