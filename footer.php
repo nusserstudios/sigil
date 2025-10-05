@@ -53,7 +53,7 @@
                             foreach ($social_links as $platform => $data) {
                                 $url = get_theme_mod('sigil_footer_' . $platform);
                                 if ($url): ?>
-                                    <a href="<?php echo esc_url($url); ?>" class="footer-social-link" aria-label="<?php echo esc_attr($data['label']); ?>">
+                                    <a href="<?php echo esc_url($url); ?>" class="footer-social-link" aria-label="<?php echo esc_attr($data['label']); ?>" target="_blank" rel="noopener nofollow">
                                         <span class="sr-only"><?php echo esc_html($data['label']); ?></span>
                                         <?php echo sigil_get_social_icon($data['icon']); ?>
                                     </a>
