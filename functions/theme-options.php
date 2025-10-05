@@ -2351,6 +2351,9 @@ function sigil_theme_options_page() {
             // Foreground text colors (new)
             'sigil_light_fg_text_color_mode', 'sigil_light_fg_text_color_name', 'sigil_light_fg_text_color_shade', 'sigil_light_fg_text_custom_color',
             'sigil_dark_fg_text_color_mode', 'sigil_dark_fg_text_color_name', 'sigil_dark_fg_text_color_shade', 'sigil_dark_fg_text_custom_color',
+            // Footer options
+            'sigil_footer_logo', 'sigil_footer_logo_dark', 'sigil_footer_description', 'sigil_footer_copyright',
+            'sigil_footer_facebook', 'sigil_footer_instagram', 'sigil_footer_twitter', 'sigil_footer_github', 'sigil_footer_youtube',
         ];
         
         foreach ($options_to_save as $option) {
@@ -2517,6 +2520,58 @@ function sigil_render_theme_options_form() {
                     
                     <h3><?php _e('Dark Mode Foreground', 'sigil'); ?></h3>
                     <?php sigil_render_color_controls('dark_fg', $dark_fg_color_mode, $dark_fg_color_name, $dark_fg_color_shade, $dark_fg_custom_color, __('Dark Foreground Color', 'sigil')); ?>
+                </div>
+
+                <!-- Footer Options -->
+                <div class="sigil-color-section">
+                    <h2><?php _e('Footer Settings', 'sigil'); ?></h2>
+                    <p><?php _e('Configure your site footer appearance and content.', 'sigil'); ?></p>
+                    
+                    <div class="sigil-color-row">
+                        <label class="sigil-color-label" for="sigil_footer_logo"><?php _e('Footer Logo URL', 'sigil'); ?></label>
+                        <input type="url" id="sigil_footer_logo" name="sigil_footer_logo" value="<?php echo esc_attr(get_theme_mod('sigil_footer_logo', '')); ?>" class="regular-text" placeholder="https://example.com/logo.svg" />
+                    </div>
+                    
+                    <div class="sigil-color-row">
+                        <label class="sigil-color-label" for="sigil_footer_logo_dark"><?php _e('Footer Logo URL (Dark Mode)', 'sigil'); ?></label>
+                        <input type="url" id="sigil_footer_logo_dark" name="sigil_footer_logo_dark" value="<?php echo esc_attr(get_theme_mod('sigil_footer_logo_dark', '')); ?>" class="regular-text" placeholder="https://example.com/logo-dark.svg" />
+                    </div>
+                    
+                    <div class="sigil-color-row">
+                        <label class="sigil-color-label" for="sigil_footer_description"><?php _e('Footer Description', 'sigil'); ?></label>
+                        <textarea id="sigil_footer_description" name="sigil_footer_description" rows="3" class="large-text"><?php echo esc_textarea(get_theme_mod('sigil_footer_description', 'Making the world a better place through constructing elegant hierarchies.')); ?></textarea>
+                    </div>
+                    
+                    <div class="sigil-color-row">
+                        <label class="sigil-color-label" for="sigil_footer_copyright"><?php _e('Footer Copyright Text', 'sigil'); ?></label>
+                        <input type="text" id="sigil_footer_copyright" name="sigil_footer_copyright" value="<?php echo esc_attr(get_theme_mod('sigil_footer_copyright', '© 2024 Your Company, Inc. All rights reserved.')); ?>" class="large-text" />
+                    </div>
+                    
+                    <h3><?php _e('Social Media Links', 'sigil'); ?></h3>
+                    <div class="sigil-color-row">
+                        <label class="sigil-color-label" for="sigil_footer_facebook"><?php _e('Facebook URL', 'sigil'); ?></label>
+                        <input type="url" id="sigil_footer_facebook" name="sigil_footer_facebook" value="<?php echo esc_attr(get_theme_mod('sigil_footer_facebook', '')); ?>" class="regular-text" />
+                    </div>
+                    
+                    <div class="sigil-color-row">
+                        <label class="sigil-color-label" for="sigil_footer_instagram"><?php _e('Instagram URL', 'sigil'); ?></label>
+                        <input type="url" id="sigil_footer_instagram" name="sigil_footer_instagram" value="<?php echo esc_attr(get_theme_mod('sigil_footer_instagram', '')); ?>" class="regular-text" />
+                    </div>
+                    
+                    <div class="sigil-color-row">
+                        <label class="sigil-color-label" for="sigil_footer_twitter"><?php _e('X (Twitter) URL', 'sigil'); ?></label>
+                        <input type="url" id="sigil_footer_twitter" name="sigil_footer_twitter" value="<?php echo esc_attr(get_theme_mod('sigil_footer_twitter', '')); ?>" class="regular-text" />
+                    </div>
+                    
+                    <div class="sigil-color-row">
+                        <label class="sigil-color-label" for="sigil_footer_github"><?php _e('GitHub URL', 'sigil'); ?></label>
+                        <input type="url" id="sigil_footer_github" name="sigil_footer_github" value="<?php echo esc_attr(get_theme_mod('sigil_footer_github', '')); ?>" class="regular-text" />
+                    </div>
+                    
+                    <div class="sigil-color-row">
+                        <label class="sigil-color-label" for="sigil_footer_youtube"><?php _e('YouTube URL', 'sigil'); ?></label>
+                        <input type="url" id="sigil_footer_youtube" name="sigil_footer_youtube" value="<?php echo esc_attr(get_theme_mod('sigil_footer_youtube', '')); ?>" class="regular-text" />
+                    </div>
                 </div>
             </div>
             

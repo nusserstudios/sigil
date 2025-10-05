@@ -32,6 +32,7 @@ $function_files = [
     'admin.php',            // Admin functionality
     'theme-options.php',    // Theme options and customizer
     'seo.php',              // SEO enhancements and meta tags
+    'footer-menus.php',     // Footer menu functionality
 ];
 
 foreach ($function_files as $file) {
