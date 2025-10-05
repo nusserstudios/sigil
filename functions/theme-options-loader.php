@@ -17,11 +17,11 @@ function sigil_load_theme_options_modules() {
     // Define the theme options directory
     $theme_options_dir = get_template_directory() . '/functions/theme-options/';
     
-    // List of theme options files to load
+    // List of theme options files to load (in tab order)
     $theme_options_files = [
-        'header-options.php',
-        'colors-options.php', 
-        'footer-options.php',
+        'colors-options.php',   // Colors tab (first/default)
+        'header-options.php',   // Header tab (second)
+        'footer-options.php',   // Footer tab (third)
     ];
     
     // Load each theme options file
@@ -40,13 +40,13 @@ function sigil_register_all_theme_options($wp_customize) {
     // Load the modules first
     sigil_load_theme_options_modules();
     
-    // Register each module's options
-    if (function_exists('sigil_register_header_options')) {
-        sigil_register_header_options($wp_customize);
-    }
-    
+    // Register each module's options (in tab order)
     if (function_exists('sigil_register_colors_options')) {
         sigil_register_colors_options($wp_customize);
+    }
+    
+    if (function_exists('sigil_register_header_options')) {
+        sigil_register_header_options($wp_customize);
     }
     
     if (function_exists('sigil_register_footer_options')) {

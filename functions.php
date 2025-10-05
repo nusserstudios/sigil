@@ -31,7 +31,6 @@ $function_files = [
     'theme-options-loader.php', // Modular theme options loader
     'pagination.php',       // Pagination helpers
     'admin.php',            // Admin functionality
-    'theme-options.php',    // Theme options and customizer
     'seo.php',              // SEO enhancements and meta tags
     'footer-menus.php',     // Footer menu functionality
 ];
