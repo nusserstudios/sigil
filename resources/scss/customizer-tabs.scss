@@ -1,0 +1,115 @@
+/**
+ * Customizer Tabs Styles
+ * 
+ * Styles for the tabbed interface in WordPress Customizer
+ */
+
+.sigil-customizer-tabs {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.sigil-tabs-nav {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: #f9f9f9;
+    border-radius: 4px 4px 0 0;
+}
+
+.sigil-tab-nav-item {
+    flex: 1;
+    margin: 0;
+}
+
+.sigil-tab-link {
+    display: block;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    text-align: center;
+    border-right: 1px solid #ddd;
+    transition: all 0.2s ease;
+}
+
+.sigil-tab-nav-item:last-child .sigil-tab-link {
+    border-right: none;
+}
+
+.sigil-tab-link:hover {
+    background: #fff;
+    color: #0073aa;
+}
+
+.sigil-tab-nav-item.active .sigil-tab-link {
+    background: #fff;
+    color: #0073aa;
+    border-bottom: 2px solid #0073aa;
+}
+
+.sigil-tabs-content {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+}
+
+.sigil-tab-content {
+    display: none;
+    padding: 20px;
+}
+
+.sigil-tab-content.active {
+    display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sigil-tabs-nav {
+        flex-direction: column;
+    }
+    
+    .sigil-tab-link {
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .sigil-tab-nav-item:last-child .sigil-tab-link {
+        border-bottom: none;
+    }
+    
+    .sigil-tab-nav-item.active .sigil-tab-link {
+        border-bottom: 1px solid #ddd;
+        border-left: 3px solid #0073aa;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .sigil-tabs-nav {
+        background: #2c2c2c;
+    }
+    
+    .sigil-tab-link {
+        color: #ccc;
+        border-color: #444;
+    }
+    
+    .sigil-tab-link:hover {
+        background: #333;
+        color: #4a9eff;
+    }
+    
+    .sigil-tab-nav-item.active .sigil-tab-link {
+        background: #333;
+        color: #4a9eff;
+        border-bottom-color: #4a9eff;
+    }
+    
+    .sigil-tabs-content {
+        background: #333;
+        border-color: #444;
+    }
+}

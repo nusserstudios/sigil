@@ -28,6 +28,7 @@ $function_files = [
     'debug-blocks.php',     // Temporary block debug info (remove when blocks work)
     'off-canvas-menu.php',  // Off-canvas menu functionality
     'walkers.php',          // Walker functionality
+    'theme-options-loader.php', // Modular theme options loader
     'pagination.php',       // Pagination helpers
     'admin.php',            // Admin functionality
     'theme-options.php',    // Theme options and customizer
