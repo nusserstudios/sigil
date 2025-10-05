@@ -285,6 +285,13 @@ function sigil_theme_options_page() {
         gap: 20px;
     }
     
+    /* 3-column grid for larger screens */
+    @media (min-width: 1024px) {
+        .sigil-colors-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+    
     .sigil-color-section {
         background: #fff;
         border: 1px solid #ccd0d4;
