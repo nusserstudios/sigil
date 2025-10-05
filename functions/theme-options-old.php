@@ -2191,18 +2191,18 @@ function sigil_get_theme_option($option_name, $default = '') {
 /**
  * Add theme options page as top-level menu
  */
-function sigil_add_theme_options_page() {
+function sigil_add_theme_options_page_old() {
     add_menu_page(
         __('Sigil Theme Options', 'sigil'),           // Page title
         __('Sigil Theme', 'sigil'),                   // Menu title
         'edit_theme_options',                         // Capability
         'sigil-theme-options',                        // Menu slug
-        'sigil_theme_options_page',                   // Callback function
+        'sigil_theme_options_page_old',                   // Callback function
         'dashicons-art',                              // Icon (paint brush)
         30                                            // Position (after Appearance)
     );
 }
-add_action('admin_menu', 'sigil_add_theme_options_page');
+add_action('admin_menu', 'sigil_add_theme_options_page_old');
 
 /**
  * Clear any conflicting customizer settings on theme activation
@@ -2326,7 +2326,7 @@ add_action('admin_footer', 'sigil_test_color_resolution');
 /**
  * Theme options page content
  */
-function sigil_theme_options_page() {
+function sigil_theme_options_page_old() {
     // Handle form submission
     if (isset($_POST['submit']) && wp_verify_nonce($_POST['sigil_options_nonce'], 'sigil_options')) {
         // Save all the options

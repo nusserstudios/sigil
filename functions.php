@@ -30,6 +30,7 @@ $function_files = [
     'walkers.php',          // Walker functionality
     'theme-options-loader.php', // Modular theme options loader
     'theme-options-admin.php', // Theme options admin pages
+    'theme-options-old.php', // CSS variables output (temporary)
     'pagination.php',       // Pagination helpers
     'admin.php',            // Admin functionality
     'seo.php',              // SEO enhancements and meta tags
