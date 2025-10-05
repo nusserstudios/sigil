@@ -543,6 +543,7 @@ function sigil_render_social_options() {
         </div>
         <?php
     }
+    ?>
     
     <p class="description">
         <a href="<?php echo admin_url('customize.php?autofocus[section]=sigil_footer'); ?>">
