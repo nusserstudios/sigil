@@ -60,60 +60,206 @@ function sigil_theme_options_page() {
     <div class="wrap">
         <h1><?php _e('Sigil Theme Options', 'sigil'); ?></h1>
         
-        <div class="sigil-options-grid">
-            <div class="sigil-option-card">
-                <h2><?php _e('Colors', 'sigil'); ?></h2>
-                <p><?php _e('Customize your theme colors including background, text, and accent colors for both light and dark modes.', 'sigil'); ?></p>
-                <a href="<?php echo admin_url('themes.php?page=sigil-colors'); ?>" class="button button-primary">
-                    <?php _e('Manage Colors', 'sigil'); ?>
-                </a>
-            </div>
-            
-            <div class="sigil-option-card">
-                <h2><?php _e('Header', 'sigil'); ?></h2>
-                <p><?php _e('Configure your header layout, logo, and styling options. Choose from multiple header styles.', 'sigil'); ?></p>
-                <a href="<?php echo admin_url('themes.php?page=sigil-header'); ?>" class="button button-primary">
-                    <?php _e('Manage Header', 'sigil'); ?>
-                </a>
-            </div>
-            
-            <div class="sigil-option-card">
-                <h2><?php _e('Footer', 'sigil'); ?></h2>
-                <p><?php _e('Set up your footer content, social media links, and choose from different footer layouts.', 'sigil'); ?></p>
-                <a href="<?php echo admin_url('themes.php?page=sigil-footer'); ?>" class="button button-primary">
-                    <?php _e('Manage Footer', 'sigil'); ?>
-                </a>
-            </div>
-            
-            <div class="sigil-option-card">
-                <h2><?php _e('Customizer', 'sigil'); ?></h2>
-                <p><?php _e('Use the WordPress Customizer for live preview of your changes with the tabbed interface.', 'sigil'); ?></p>
-                <a href="<?php echo admin_url('customize.php'); ?>" class="button button-secondary">
-                    <?php _e('Open Customizer', 'sigil'); ?>
-                </a>
-            </div>
-        </div>
+        <!-- Tab Navigation -->
+        <nav class="sigil-tab-nav">
+            <button class="sigil-tab-button active" data-tab="colors"><?php _e('Colors', 'sigil'); ?></button>
+            <button class="sigil-tab-button" data-tab="header"><?php _e('Header', 'sigil'); ?></button>
+            <button class="sigil-tab-button" data-tab="footer"><?php _e('Footer', 'sigil'); ?></button>
+            <button class="sigil-tab-button" data-tab="customizer"><?php _e('Customizer', 'sigil'); ?></button>
+        </nav>
         
-        <div class="sigil-options-info">
-            <h3><?php _e('Quick Links', 'sigil'); ?></h3>
-            <p>
-                <a href="<?php echo admin_url('themes.php?page=sigil-colors'); ?>"><?php _e('Colors', 'sigil'); ?></a> |
-                <a href="<?php echo admin_url('themes.php?page=sigil-header'); ?>"><?php _e('Header', 'sigil'); ?></a> |
-                <a href="<?php echo admin_url('themes.php?page=sigil-footer'); ?>"><?php _e('Footer', 'sigil'); ?></a> |
-                <a href="<?php echo admin_url('customize.php'); ?>"><?php _e('Customizer', 'sigil'); ?></a>
-            </p>
+        <!-- Tab Content -->
+        <div class="sigil-tab-content">
+            <!-- Colors Tab -->
+            <div id="colors-tab" class="sigil-tab-panel active">
+                <div class="sigil-tab-header">
+                    <h2><?php _e('Colors', 'sigil'); ?></h2>
+                    <p><?php _e('Customize your theme colors including background, text, and accent colors for both light and dark modes.', 'sigil'); ?></p>
+                    <a href="<?php echo admin_url('customize.php?autofocus[section]=sigil_colors'); ?>" class="button button-primary">
+                        <?php _e('Open in Customizer', 'sigil'); ?>
+                    </a>
+                </div>
+                
+                <div class="sigil-colors-grid">
+                    <div class="sigil-color-section">
+                        <h3><?php _e('Primary Colors', 'sigil'); ?></h3>
+                        <?php sigil_render_color_options('primary'); ?>
+                    </div>
+                    
+                    <div class="sigil-color-section">
+                        <h3><?php _e('Background Colors', 'sigil'); ?></h3>
+                        <?php sigil_render_color_options('light_bg'); ?>
+                        <?php sigil_render_color_options('dark_bg'); ?>
+                    </div>
+                    
+                    <div class="sigil-color-section">
+                        <h3><?php _e('Text Colors', 'sigil'); ?></h3>
+                        <?php sigil_render_color_options('light_text'); ?>
+                        <?php sigil_render_color_options('dark_text'); ?>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Header Tab -->
+            <div id="header-tab" class="sigil-tab-panel">
+                <div class="sigil-tab-header">
+                    <h2><?php _e('Header', 'sigil'); ?></h2>
+                    <p><?php _e('Configure your header layout, logo, and styling options. Choose from multiple header styles.', 'sigil'); ?></p>
+                    <a href="<?php echo admin_url('customize.php?autofocus[section]=sigil_header'); ?>" class="button button-primary">
+                        <?php _e('Open in Customizer', 'sigil'); ?>
+                    </a>
+                </div>
+                
+                <div class="sigil-header-options">
+                    <div class="sigil-option-group">
+                        <h3><?php _e('Header Style', 'sigil'); ?></h3>
+                        <?php sigil_render_header_options(); ?>
+                    </div>
+                    
+                    <div class="sigil-option-group">
+                        <h3><?php _e('Logo Settings', 'sigil'); ?></h3>
+                        <?php sigil_render_logo_options(); ?>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer Tab -->
+            <div id="footer-tab" class="sigil-tab-panel">
+                <div class="sigil-tab-header">
+                    <h2><?php _e('Footer', 'sigil'); ?></h2>
+                    <p><?php _e('Set up your footer content, social media links, and choose from different footer layouts.', 'sigil'); ?></p>
+                    <a href="<?php echo admin_url('customize.php?autofocus[section]=sigil_footer'); ?>" class="button button-primary">
+                        <?php _e('Open in Customizer', 'sigil'); ?>
+                    </a>
+                </div>
+                
+                <div class="sigil-footer-options">
+                    <div class="sigil-option-group">
+                        <h3><?php _e('Footer Style', 'sigil'); ?></h3>
+                        <?php sigil_render_footer_options(); ?>
+                    </div>
+                    
+                    <div class="sigil-option-group">
+                        <h3><?php _e('Social Media Links', 'sigil'); ?></h3>
+                        <?php sigil_render_social_options(); ?>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Customizer Tab -->
+            <div id="customizer-tab" class="sigil-tab-panel">
+                <div class="sigil-tab-header">
+                    <h2><?php _e('WordPress Customizer', 'sigil'); ?></h2>
+                    <p><?php _e('Use the WordPress Customizer for live preview of your changes with the tabbed interface.', 'sigil'); ?></p>
+                    <a href="<?php echo admin_url('customize.php'); ?>" class="button button-primary">
+                        <?php _e('Open Customizer', 'sigil'); ?>
+                    </a>
+                </div>
+                
+                <div class="sigil-customizer-info">
+                    <h3><?php _e('Customizer Features', 'sigil'); ?></h3>
+                    <ul>
+                        <li><?php _e('Live preview of all changes', 'sigil'); ?></li>
+                        <li><?php _e('Tabbed interface for easy navigation', 'sigil'); ?></li>
+                        <li><?php _e('Real-time color changes', 'sigil'); ?></li>
+                        <li><?php _e('Instant header and footer updates', 'sigil'); ?></li>
+                    </ul>
+                    
+                    <h3><?php _e('Quick Links', 'sigil'); ?></h3>
+                    <p>
+                        <a href="<?php echo admin_url('customize.php?autofocus[section]=sigil_colors'); ?>"><?php _e('Colors', 'sigil'); ?></a> |
+                        <a href="<?php echo admin_url('customize.php?autofocus[section]=sigil_header'); ?>"><?php _e('Header', 'sigil'); ?></a> |
+                        <a href="<?php echo admin_url('customize.php?autofocus[section]=sigil_footer'); ?>"><?php _e('Footer', 'sigil'); ?></a>
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
     
     <style>
-    .sigil-options-grid {
+    /* Tab Navigation Styles */
+    .sigil-tab-nav {
+        display: flex;
+        border-bottom: 1px solid #ccd0d4;
+        margin: 20px 0 0 0;
+        background: #f6f7f7;
+        border-radius: 4px 4px 0 0;
+    }
+    
+    .sigil-tab-button {
+        background: none;
+        border: none;
+        padding: 12px 20px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        color: #646970;
+        border-bottom: 3px solid transparent;
+        transition: all 0.2s ease;
+        margin: 0;
+    }
+    
+    .sigil-tab-button:hover {
+        color: #2271b1;
+        background: #fff;
+    }
+    
+    .sigil-tab-button.active {
+        color: #2271b1;
+        background: #fff;
+        border-bottom-color: #2271b1;
+    }
+    
+    /* Tab Content Styles */
+    .sigil-tab-content {
+        background: #fff;
+        border: 1px solid #ccd0d4;
+        border-top: none;
+        border-radius: 0 0 4px 4px;
+        min-height: 400px;
+    }
+    
+    .sigil-tab-panel {
+        display: none;
+        padding: 20px;
+    }
+    
+    .sigil-tab-panel.active {
+        display: block;
+    }
+    
+    .sigil-tab-header {
+        background: #f0f0f1;
+        border-left: 4px solid #2271b1;
+        padding: 15px;
+        margin: 0 0 20px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .sigil-tab-header h2 {
+        margin: 0;
+        color: #1d2327;
+    }
+    
+    .sigil-tab-header p {
+        margin: 5px 0 0 0;
+        color: #646970;
+        flex: 1;
+        min-width: 300px;
+    }
+    
+    /* Colors Grid */
+    .sigil-colors-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 20px;
-        margin: 20px 0;
     }
     
-    .sigil-option-card {
+    .sigil-color-section {
         background: #fff;
         border: 1px solid #ccd0d4;
         border-radius: 4px;
@@ -121,36 +267,127 @@ function sigil_theme_options_page() {
         box-shadow: 0 1px 1px rgba(0,0,0,.04);
     }
     
-    .sigil-option-card h2 {
+    .sigil-color-section h3 {
         margin-top: 0;
         color: #1d2327;
     }
     
-    .sigil-option-card p {
-        color: #646970;
-        margin-bottom: 15px;
+    /* Header and Footer Options */
+    .sigil-header-options,
+    .sigil-footer-options {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
     }
     
-    .sigil-options-info {
-        background: #f0f0f1;
-        border-left: 4px solid #2271b1;
-        padding: 15px;
-        margin: 20px 0;
+    .sigil-option-group {
+        background: #fff;
+        border: 1px solid #ccd0d4;
+        border-radius: 4px;
+        padding: 20px;
+        box-shadow: 0 1px 1px rgba(0,0,0,.04);
     }
     
-    .sigil-options-info h3 {
+    .sigil-option-group h3 {
         margin-top: 0;
+        color: #1d2327;
     }
     
-    .sigil-options-info a {
+    /* Customizer Info */
+    .sigil-customizer-info {
+        background: #f0f0f1;
+        border: 1px solid #ccd0d4;
+        border-radius: 4px;
+        padding: 20px;
+    }
+    
+    .sigil-customizer-info h3 {
+        margin-top: 0;
+        color: #1d2327;
+    }
+    
+    .sigil-customizer-info ul {
+        margin: 10px 0;
+        padding-left: 20px;
+    }
+    
+    .sigil-customizer-info li {
+        margin-bottom: 5px;
+        color: #646970;
+    }
+    
+    .sigil-customizer-info a {
         text-decoration: none;
         color: #2271b1;
     }
     
-    .sigil-options-info a:hover {
+    .sigil-customizer-info a:hover {
         text-decoration: underline;
     }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .sigil-tab-nav {
+            flex-wrap: wrap;
+        }
+        
+        .sigil-tab-button {
+            flex: 1;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .sigil-tab-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .sigil-tab-header p {
+            min-width: auto;
+        }
+        
+        .sigil-colors-grid,
+        .sigil-header-options,
+        .sigil-footer-options {
+            grid-template-columns: 1fr;
+        }
+    }
     </style>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tab functionality
+        const tabButtons = document.querySelectorAll('.sigil-tab-button');
+        const tabPanels = document.querySelectorAll('.sigil-tab-panel');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const targetTab = this.getAttribute('data-tab');
+                
+                // Remove active class from all buttons and panels
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabPanels.forEach(panel => panel.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding panel
+                this.classList.add('active');
+                const targetPanel = document.getElementById(targetTab + '-tab');
+                if (targetPanel) {
+                    targetPanel.classList.add('active');
+                }
+            });
+        });
+        
+        // Handle URL hash for direct tab access
+        const hash = window.location.hash;
+        if (hash) {
+            const tabName = hash.substring(1); // Remove the # symbol
+            const tabButton = document.querySelector(`[data-tab="${tabName}"]`);
+            if (tabButton) {
+                tabButton.click();
+            }
+        }
+    });
+    </script>
     <?php
 }
 
